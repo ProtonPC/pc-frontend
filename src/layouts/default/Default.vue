@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-app-bar>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Application {{ variavel }}</v-toolbar-title>
       icon
     </v-app-bar>
 
@@ -23,6 +23,6 @@
 
 <script>
   export default {
-    data: () => ({ drawer: null }),
+    data: () => ({ drawer: null, variavel: 'nome' }),
   }
 </script>
