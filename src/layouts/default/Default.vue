@@ -1,12 +1,28 @@
 <template>
-  <v-app>
-    <default-bar />
+  <v-app id="inspire">
+    <v-app-bar>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>Application</v-toolbar-title>
+      icon
+    </v-app-bar>
 
-    <default-view />
+    <v-navigation-drawer v-model="drawer">
+      <v-list>
+        <v-list-item title="Navigation drawer">teste 1</v-list-item>
+        <v-list-item title="Navigation drawer">teste 2</v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-main>
+      <!--  -->
+      Conteudo
+      <router-view />
+    </v-main>
   </v-app>
 </template>
 
-<script setup>
-  import DefaultBar from './AppBar.vue'
-  import DefaultView from './View.vue'
+<script>
+  export default {
+    data: () => ({ drawer: null }),
+  }
 </script>
