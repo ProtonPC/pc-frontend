@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-app-bar>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application {{ variavel }}</v-toolbar-title>
+      <v-toolbar-title> {{ variavel }}</v-toolbar-title>
       icon
     </v-app-bar>
 
