@@ -8,8 +8,13 @@
 
     <v-navigation-drawer v-model="drawer">
       <v-list>
-        <v-list-item title="Navigation drawer">teste 1</v-list-item>
-        <v-list-item title="Navigation drawer">teste 2</v-list-item>
+        <router-link to="/test">
+          <v-list-item title="Navigation drawer">teste 1</v-list-item>
+        </router-link>
+
+        <router-link to="/">
+          <v-list-item title="Navigation drawer">teste 2</v-list-item>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
 
@@ -23,6 +28,12 @@
 
 <script>
   export default {
-    data: () => ({ drawer: null, variavel: 'nome' }),
+    data: () => ({ drawer: null, variavel: 'Purchase Order Control' }),
   }
 </script>
+
+<style>
+a{
+  text-decoration: none;
+}
+</style>
