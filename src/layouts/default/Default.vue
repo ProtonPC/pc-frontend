@@ -21,6 +21,10 @@
         <router-link to="/entries" class="text-white">
           <v-list-item prepend-icon="mdi-home" title="Entries"></v-list-item>
         </router-link>
+
+        <router-link to="/products" class="text-white">
+          <v-list-item prepend-icon="mdi-home" title="Products"></v-list-item>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
 
