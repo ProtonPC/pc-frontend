@@ -36,6 +36,7 @@ const router = createRouter({
 router.beforeResolve((to, from, next) => {
   if (to.name) {
       NProgress.start();
+      document.title = to.name + " - Purchase Order Control";
   }
   next();
 });
