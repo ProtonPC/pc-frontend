@@ -33,6 +33,10 @@
         <router-link to="/trucking-companies" class="text-white">
           <v-list-item prepend-icon="mdi-home" title="Trucking Companies"></v-list-item>
         </router-link>
+
+        <router-link to="/users" class="text-white">
+          <v-list-item prepend-icon="mdi-home" title="Users"></v-list-item>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
 
