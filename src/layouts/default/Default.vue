@@ -3,7 +3,11 @@
   <v-app>
     <v-app-bar color="primary">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title> {{ variavel }}</v-toolbar-title>
+        <v-toolbar-title>
+          <router-link to="/" class="text-white">
+            {{ variavel }}
+          </router-link>
+        </v-toolbar-title>
       icon
     </v-app-bar>
 
@@ -22,7 +26,6 @@
 
     <v-main>
       <!--  -->
-      Conteudo
       <router-view />
     </v-main>
   </v-app>
@@ -35,8 +38,8 @@
 </script>
 
 <style scoped>
-a{
+a {
   text-decoration: none;
-  font-size: x-large;
+  font-size: larger;
 }
 </style>
