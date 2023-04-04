@@ -9,12 +9,12 @@
 
     <v-navigation-drawer v-model="drawer">
       <v-list>
-        <router-link to="/test">
-          <v-list-item title="Navigation drawer">teste 1</v-list-item>
+        <router-link to="/">
+          <v-list-item title="Home"></v-list-item>
         </router-link>
 
-        <router-link to="/">
-          <v-list-item title="Navigation drawer">teste 2</v-list-item>
+        <router-link to="/entries">
+          <v-list-item title="Entries"></v-list-item>
         </router-link>
       </v-list>
     </v-navigation-drawer>
