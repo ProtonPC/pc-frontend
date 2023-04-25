@@ -18,8 +18,8 @@
           </v-list-item>
         </router-link>
 
-        <router-link to="/entries" class="text-white">
-          <v-list-item prepend-icon="mdi-home" title="Entries"></v-list-item>
+        <router-link to="/product-types" class="text-white">
+          <v-list-item prepend-icon="mdi-home" title="Product Types"></v-list-item>
         </router-link>
 
         <router-link to="/products" class="text-white">
@@ -56,6 +56,6 @@
 <style scoped>
 a {
   text-decoration: none;
-  font-size: larger;
+  font-size: smaller;
 }
 </style>
