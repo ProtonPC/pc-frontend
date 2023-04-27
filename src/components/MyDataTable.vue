@@ -82,7 +82,10 @@ export default {
     },
     filterData() {
       this.itemsLocal = this.items.filter((item) => {
-        return item.name.toLowerCase().includes(this.search.toLowerCase());
+        for(let attribute in item) {
+          if (item[attribute].toString().toLowerCase().includes(this.search.toLowerCase()))
+            return true;
+        }
       });
     },
     onClear() {
