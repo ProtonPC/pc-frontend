@@ -4,7 +4,7 @@
     <div class="d-flex justify-space-between">
       <div class="">Select product type to change</div>
       <div class="">
-        <v-btn @click="createNew" rounded="xl" color="primary" append-icon="mdi-plus"
+        <v-btn @click="$router.push('product-types/new')" rounded="xl" color="primary" append-icon="mdi-plus"
           >Add product type</v-btn
         >
       </div>
@@ -21,7 +21,6 @@ export default {
     return {
       headers: [],
       items: [],
-      id: "new",
     };
   },
   mounted() {
@@ -78,9 +77,6 @@ export default {
         },
       ]
     },
-    createNew() {
-      this.$router.push(`product-types/${this.id}`);
-    }
   }
 };
 </script>
