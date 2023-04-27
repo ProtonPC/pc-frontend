@@ -26,6 +26,10 @@
           <v-list-item prepend-icon="mdi-home" title="Products"></v-list-item>
         </router-link>
 
+        <router-link to="/ports" class="text-white">
+          <v-list-item prepend-icon="mdi-home" title="Ports"></v-list-item>
+        </router-link>
+
         <router-link to="/suppliers" class="text-white">
           <v-list-item prepend-icon="mdi-home" title="Suppliers"></v-list-item>
         </router-link>
