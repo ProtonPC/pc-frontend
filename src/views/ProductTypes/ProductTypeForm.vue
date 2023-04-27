@@ -19,9 +19,9 @@
         v-model="productType.notes"
         label="Notes"
       ></v-textarea>
-      <v-btn @click="submit(1)" color="primary" class="mt-2">Submit</v-btn>
-      <v-btn @click="submit(2)" color="secondary" class="ms-5 mt-2">Save and add another</v-btn>
-      <v-btn @click="submit(3)" color="secondary" class="ms-5 mt-2">Save and continue editing</v-btn>
+      <v-btn @click="submit()" color="primary" class="mt-2">Submit</v-btn>
+      <v-btn @click="submitAndCreateNew()" color="secondary" class="ms-5 mt-2">Save and add another</v-btn>
+      <v-btn @click="submitAndEdit()" color="secondary" class="ms-5 mt-2">Save and continue editing</v-btn>
     </v-form>
   </v-sheet>
   </div>
@@ -50,21 +50,22 @@ export default {
       const newProductType = id; // Backend query searching for id
       return newProductType;
     },
-    submit(submit_type = 1) {
-      // save and get id
-      const newItemId = '5';
+    submit() {
+      // save product type
       // after saving
-      this.redirect(submit_type, newItemId);
+      this.$router.push('/product-types');
     },
-    redirect(submit_type, newItemId) {
-      if(submit_type === 1) {
-        this.$router.push('/product-types')
-      } else if(submit_type === 2) {
-        this.$router.push('/product-types/new')
-      } else if(submit_type === 3) {
-        this.$router.push(`/product-types/${newItemId}`)
-      }
-    }
+    submitAndCreateNew() {
+      // save product type
+      // after saving
+      this.$router.push('/product-types/new');
+    },
+    submitAndEdit() {
+      // save product type and get id
+      const id = 5 // response.data.id
+      // after saving
+      this.$router.push(`/product-types/${id}`);
+    },
   }
 };
 </script>
