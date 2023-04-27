@@ -3,10 +3,10 @@
   <div class="py-5 px-5">
     <h3 class="py-5">
       <v-tooltip text="Go back" location="top">
-            <template v-slot:activator="{ props }">
-              <v-btn v-bind="props" @click="$router.push('/product-types')" color="primary" variant="text" icon="mdi-arrow-left"></v-btn>
-            </template>
-          </v-tooltip>
+        <template v-slot:activator="{ props }">
+          <v-btn v-bind="props" @click="$router.push('/product-types')" color="primary" variant="text" icon="mdi-arrow-left"></v-btn>
+        </template>
+      </v-tooltip>
       {{ $route.params.id === 'new' ? 'Add' : 'Edit' }} product type
     </h3>
     <v-sheet class="mx-auto">
