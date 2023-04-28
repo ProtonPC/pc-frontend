@@ -50,8 +50,17 @@ export default {
       const newProductType = id; // Backend query searching for id
       return newProductType;
     },
-    submit() {
+    async submit() {
       // save product type
+      await fetch("/api/productTypes", {
+        method: "POST",
+        body: JSON.stringify(this.productType),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+      })
+      .then(response => response.json())
+      .then(console.log)
       // after saving
       this.$router.push('/product-types');
     },

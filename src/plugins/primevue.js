@@ -15,9 +15,11 @@ console.log(`loaded`)
 export function registerPrimeVue(appRef){
   appRef.use(PrimeVue);
 
+  appRef
+  .component('DataTable', DataTable)
+  .component('Column', Column)
+  .component('ColumnGroup', ColumnGroup)
+  .component('Row', Row)
+
   return appRef
-  .use('DataTable', DataTable)
-  .use('Column', Column)
-  .use('ColumnGroup', ColumnGroup)
-  .use('Row', Row)
 }

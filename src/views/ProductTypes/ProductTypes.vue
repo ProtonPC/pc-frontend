@@ -16,6 +16,8 @@
   </div>
 </template>
 <script>
+//const store = useCounterStore()
+
 export default {
   data() {
     return {
@@ -23,59 +25,26 @@ export default {
       items: [],
     };
   },
-  mounted() {
-    this.loadData();
+  async mounted() {
+    await this.loadData();
   },
   methods: {
-    loadData() {
+    async loadData() {
+      let vm  = this
       this.headers = [
         {
           name: "Name",
-          calories: "Calories",
+          notes: "Notes",
         }
-      ],
-      this.items = [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-        },
-        {
-          name: "Donut",
-          calories: 452,
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-        },
       ]
+      await fetch("/api/productTypes")
+      .then(response => response.json())
+      .then(data => {
+        //store.set
+        //const doubleValue = computed(() => store.doubleCount)
+        console.log(data)
+        vm.items =  data;
+      })
     },
   }
 };
