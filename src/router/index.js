@@ -33,6 +33,22 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/ProductTypes/ProductTypeForm.vue'),
       },
       {
+        path: 'ports',
+        name: 'Ports',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Ports/Ports.vue'),
+      },
+      {
+        path: 'ports/:id',
+        name: 'PortsForm',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Ports/PortsForm.vue'),
+      },
+      {
         path: 'products',
         name: 'Products',
         // route level code-splitting
@@ -49,12 +65,20 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/Suppliers.vue'),
       },
       {
-        path: 'trucking-companies',
-        name: 'Trucking Companies',
+        path: 'warehouses',
+        name: 'warehouses',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/TruckingCompanies.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Warehouses/Warehouses.vue'),
+      },
+      {
+        path: 'warehouses/:id',
+        name: 'Warehouses',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Warehouses/WarehouseForm.vue'),
       },
       {
         path: 'users',
