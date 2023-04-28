@@ -6,6 +6,7 @@
 
 // Plugins
 import { loadFonts } from './webfontloader'
+import { registerPrimeVue } from './primevue'
 import vuetify from './vuetify'
 import pinia from '../store'
 import router from '../router'
@@ -13,7 +14,10 @@ import router from '../router'
 export function registerPlugins (app) {
   loadFonts()
   app
-    .use(vuetify)
-    .use(router)
-    .use(pinia)
+  .use(vuetify)
+  .use(router)
+  .use(pinia)
+  registerPrimeVue(app)
+
+
 }
