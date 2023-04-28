@@ -15,7 +15,7 @@ console.log(`loaded`)
 export function registerPrimeVue(appRef){
   appRef.use(PrimeVue);
 
-  appRef
+  return appRef
   .use('DataTable', DataTable)
   .use('Column', Column)
   .use('ColumnGroup', ColumnGroup)
