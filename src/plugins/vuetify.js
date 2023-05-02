@@ -25,6 +25,8 @@ export default createVuetify({
           warning: '#FFC107',
           help: '#2196F3',
           danger: '#FF5252',
+          white: '#FFFFFF',
+          black: '#000000',
         },
       },
     },
