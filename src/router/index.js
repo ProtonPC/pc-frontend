@@ -66,7 +66,7 @@ const routes = [
       },
       {
         path: 'warehouses',
-        name: 'warehouses',
+        name: 'Warehouses',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -74,11 +74,27 @@ const routes = [
       },
       {
         path: 'warehouses/:id',
-        name: 'Warehouses',
+        name: 'WarehouseForm',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "home" */ '@/views/Warehouses/WarehouseForm.vue'),
+      },
+      {
+        path: 'customers',
+        name: 'Customers',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Customers/Customers.vue'),
+      },
+      {
+        path: 'customers/:id',
+        name: 'CustomerForm',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Customers/CustomerForm.vue'),
       },
       {
         path: 'users',
