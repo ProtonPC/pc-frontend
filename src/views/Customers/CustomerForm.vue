@@ -40,21 +40,21 @@
           </span>
           <v-row>
             <v-col cols="4">
-              <v-text-field v-model="address.phone" label="Customer phone"></v-text-field>
+              <v-text-field v-model="address.phone" label="Address/Customer phone"></v-text-field>
             </v-col>
             <v-col cols="4">
               <v-text-field v-model="address.country" label="Address Country"></v-text-field>
             </v-col>
             <v-col cols="4">
-              <v-text-field v-model="address.zipcode" label="Customer Zipcode"></v-text-field>
+              <v-text-field v-model="address.zipcode" label="Address Zipcode"></v-text-field>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="4">
-              <v-text-field v-model="address.state" label="Customer phone"></v-text-field>
+              <v-text-field v-model="address.state" label="Address State"></v-text-field>
             </v-col>
             <v-col cols="4">
-              <v-text-field v-model="address.city" label="Address Country"></v-text-field>
+              <v-text-field v-model="address.city" label="Address City"></v-text-field>
             </v-col>
             <v-col cols="4">
               <v-select
