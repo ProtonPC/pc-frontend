@@ -34,6 +34,10 @@
           <v-list-item prepend-icon="mdi-home" title="Suppliers"></v-list-item>
         </router-link>
 
+        <router-link to="/customers" class="text-white">
+          <v-list-item prepend-icon="mdi-home" title="Customers"></v-list-item>
+        </router-link>
+
         <router-link to="/warehouses" class="text-white">
           <v-list-item prepend-icon="mdi-home" title="Warehouses"></v-list-item>
         </router-link>
