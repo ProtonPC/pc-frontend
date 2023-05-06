@@ -32,15 +32,14 @@ export default {
   },
   methods: {
     loadData() {
-      (this.headers = [
-        {
+      (this.headers = {
           name: "Name",
           phone: "Location",
           country: "Country",
           zipcode: "Zip Code",
           state: "State",
-        },
-      ]),
+        }
+      ),
         (this.items = [
           {
             name: "John Doe",
