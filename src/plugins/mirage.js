@@ -93,6 +93,9 @@ export function makeServer({ environment = "development" } = {}) {
       // })
 
       this.passthrough("*")
+      this.passthrough((request) => {
+        return request.url.startsWith('https://zipapi.fly.dev');
+      }, { allowedHosts: ['zipapi.fly.dev'] });
     },
   })
 
