@@ -51,7 +51,7 @@ export default {
       return newProductType;
     },
     async submit() {
-      // save product type
+      // save product type => api.productTypes / api.productType(id)
       await fetch("/api/productTypes", {
         method: "POST",
         body: JSON.stringify(this.productType),

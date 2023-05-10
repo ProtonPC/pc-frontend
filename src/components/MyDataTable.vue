@@ -12,25 +12,25 @@
   ></v-text-field>
   <v-table hover>
     <thead>
-      <tr v-for="item in headers" :key="item.name">
+      <tr>
         <th class="w-0">
           <v-btn @click="deleteMany" color="danger" variant="text" icon="mdi-trash-can-outline">
           </v-btn>
         </th>
-        <th v-for="header in item" :key="header">{{ header }}</th>
+        <th v-for="header in headers" :key="header">{{ header }}</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in itemsLocal" :key="item.name">
+      <tr v-for="item in itemsLocal" :key="item.id">
         <td class="pt-4">
           <v-checkbox
             v-model="selectedItems"
             color="red"
-            :value="item.name"
+            :value="item.id"
           ></v-checkbox>
         </td>
-        <td v-for="content in item" :key="content">{{ content }}</td>
+        <td v-for="header in Object.keys(headers)" :key="item[header]">{{ item[header] }}</td>
         <td>
           <v-tooltip text="Edit Item" location="top">
             <template v-slot:activator="{ props }">
@@ -52,8 +52,8 @@
 export default {
   props: {
     headers: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: () => {},
     },
     items: {
       type: Array,
@@ -78,7 +78,7 @@ export default {
       setTimeout(() => {
         this.filterData();
         this.loading = !this.loading;
-      }, 200);
+      }, 2000);
     },
     filterData() {
       this.itemsLocal = this.items.filter((item) => {
@@ -86,16 +86,16 @@ export default {
           if (item[attribute].toString().toLowerCase().includes(this.search.toLowerCase()))
             return true;
         }
-      });
+      })
     },
     onClear() {
       this.search = "";
     },
     editItem(item) {
-      console.log("Item to edit: " + item.name);
+      console.log("Item to edit: " + item.id);
     },
     deleteItem(item) {
-      console.log("Item to delete: " + item.name);
+      console.log("Item to delete: " + item.id);
     },
     deleteMany() {
       this.itemsForDelete = [];
@@ -103,6 +103,11 @@ export default {
         this.itemsForDelete.push(item); // must to be item.id
       });
       console.log("Items to delete: " + this.itemsForDelete);
+    }
+  },
+  computed: {
+    validColumns(){
+      return this.headers
     }
   },
   watch: {

@@ -26,25 +26,16 @@ export default {
     };
   },
   async mounted() {
+    this.headers = {
+      name: "Name",
+      notes: "Notes",
+    }
     await this.loadData();
   },
   methods: {
     async loadData() {
-      let vm  = this
-      this.headers = [
-        {
-          name: "Name",
-          notes: "Notes",
-        }
-      ]
-      await fetch("/api/productTypes")
-      .then(response => response.json())
-      .then(data => {
-        //store.set
-        //const doubleValue = computed(() => store.doubleCount)
-        console.log(data)
-        vm.items =  data;
-      })
+      let items = await fetch("/api/productTypes").then(response => response.json())
+      this.items = items;
     },
   }
 };
