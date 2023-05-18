@@ -23,7 +23,10 @@
 export default {
   data() {
     return {
-      headers: [],
+      headers: {
+          name: "Name",
+          phone: "Phone",
+      },
       items: [],
     };
   },
@@ -32,13 +35,7 @@ export default {
   },
   methods: {
     loadData() {
-      (this.headers = [
-        {
-          name: "Name",
-          email: "Email",
-        },
-      ]),
-        (this.items = [
+      (this.items = [
           {
             name: "Jane Smith",
             phone: "+44-20-5555-0190",

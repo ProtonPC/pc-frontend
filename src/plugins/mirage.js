@@ -1,4 +1,4 @@
-import { createServer, Model } from "miragejs"
+import { createServer } from "miragejs"
 import { getItems, setItems } from "./local-storage"
 
 function camelize(str) {

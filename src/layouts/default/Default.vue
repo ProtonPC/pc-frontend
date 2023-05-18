@@ -57,7 +57,7 @@
 
 <script>
   export default {
-    data: () => ({ drawer: null, variavel: 'Purchase Order Control' }),
+    data: () => ({ drawer: null, variavel: 'Price Calculator' }),
   }
 </script>
 

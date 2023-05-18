@@ -62,7 +62,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/Suppliers.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Suppliers/Suppliers.vue'),
       },
       {
         path: 'warehouses',
@@ -102,7 +102,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/Users.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Users/Users.vue'),
       },
     ],
   },
@@ -116,7 +116,7 @@ const router = createRouter({
 router.beforeResolve((to, from, next) => {
   if (to.name) {
       NProgress.start();
-      document.title = to.name + " - Purchase Order Control";
+      document.title = to.name + " - Price Calculator";
   }
   next();
 });
