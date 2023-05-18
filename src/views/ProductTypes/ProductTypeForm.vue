@@ -27,6 +27,8 @@
   </div>
 </template>
 <script>
+import apiRoutes from '@/config/apiRoutes';
+
 export default {
   data() {
     return {
@@ -36,31 +38,49 @@ export default {
       },
     };
   },
-  mounted() {
-    this.loadData();
+  async mounted() {
+    await this.loadData();
+  },
+  computed: {
+    isUpdate(){
+      return this.$route.params.id !== 'new'
+    }
   },
   methods: {
-    loadData() {
-      if(this.$route.params.id === 'new') {
-        return;
+    async loadData() {
+      if(this.isUpdate) {
+        this.productType = await this.getProductType(this.$route.params.id)
       }
-      this.productType = this.getProductType(this.$route.params.id)
     },
-    getProductType(id) {
-      const newProductType = id; // Backend query searching for id
-      return newProductType;
-    },
-    async submit() {
-      // save product type => api.productTypes / api.productType(id)
-      await fetch("/api/productTypes", {
-        method: "POST",
-        body: JSON.stringify(this.productType),
+    async getProductType(id) {
+      let response = await fetch(apiRoutes.getProductType(id), {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         }
       })
       .then(response => response.json())
-      .then(console.log)
+      return response;
+    },
+    async submit() {
+
+      if(this.isUpdate) {
+        await fetch(apiRoutes.getProductType(this.$route.params.id), {
+          method: "PUT",
+          body: JSON.stringify(this.productType),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          }
+        })
+        //.then(response => response.json())
+      }else{
+        await fetch(apiRoutes.listProductTypes, {
+          method: "POST",
+          body: JSON.stringify(this.productType),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          }
+        })
+      }
       // after saving
       this.$router.push('/product-types');
     },

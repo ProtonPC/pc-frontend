@@ -16,6 +16,8 @@
   </div>
 </template>
 <script>
+import apiRoutes from '@/config/apiRoutes';
+
 //const store = useCounterStore()
 
 export default {
@@ -34,7 +36,7 @@ export default {
   },
   methods: {
     async loadData() {
-      let items = await fetch("/api/productTypes").then(response => response.json())
+      let items = await fetch(apiRoutes.listProductTypes).then(response => response.json())
       this.items = items;
     },
   }

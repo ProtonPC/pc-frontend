@@ -22,7 +22,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in itemsLocal" :key="item.id">
+      <tr v-if="!itemsLocal.length">
+        <td style="text-align: center;" :colspan="Object.keys(headers).length + 2">No data</td>
+      </tr>
+      <tr v-else v-for="item in itemsLocal" :key="item.id">
         <td class="pt-4">
           <v-checkbox
             v-model="selectedItems"
