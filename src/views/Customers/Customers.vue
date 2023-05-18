@@ -20,6 +20,8 @@
   </div>
 </template>
 <script>
+import apiRoutes from '@/config/apiRoutes';
+
 export default {
   data() {
     return {
@@ -30,46 +32,14 @@ export default {
       items: [],
     };
   },
-  mounted() {
-    this.loadData();
+  async mounted() {
+    await this.loadData();
   },
   methods: {
-    loadData() {
-      (this.items = [
-          {
-            name: "Jane Smith",
-            phone: "+44-20-5555-0190",
-          },
-          {
-            name: "Juan Perez",
-            phone: "+52-55-5555-0191",
-          },
-          {
-            name: "Maria Garcia",
-            phone: "+34-91-555-0192",
-          },
-          {
-            name: "Hiroshi Tanaka",
-            phone: "+81-3-5555-0193",
-          },
-          {
-            name: "Lena Müller",
-            phone: "+49-30-5555-0194",
-          },
-          {
-            name: "Francesco Rossi",
-            phone: "+39-06-5555-0195",
-          },
-          {
-            name: "Johan Svensson",
-            phone: "+46-8-5555-0196",
-          },
-          {
-            name: "Chen Wei",
-            phone: "+86-10-5555-0197",
-          },
-        ]);
-    },
+    async loadData() {
+      let items = await fetch(apiRoutes.listCustomers).then(response => response.json())
+      this.items = items;
+    }
   },
 };
 </script>

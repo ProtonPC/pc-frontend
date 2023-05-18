@@ -62,6 +62,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    onDelete: {
+      type: Function,
+      default: (item) => console.log(item)
+    }
   },
   data() {
     return {
@@ -94,11 +98,11 @@ export default {
     onClear() {
       this.search = "";
     },
-    editItem(item) {
-      console.log("Item to edit: " + item.id);
+    editItem(item){
+      this.onEdit(item.id)
     },
-    deleteItem(item) {
-      console.log("Item to delete: " + item.id);
+    deleteItem(item){
+      this.onDelete(item.id)
     },
     deleteMany() {
       this.itemsForDelete = [];

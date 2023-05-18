@@ -27,7 +27,9 @@
   </div>
 </template>
 <script>
+import { saveProductType } from '@/services/productTypes';
 import apiRoutes from '@/config/apiRoutes';
+import httpClient from '@/config/httpClient';
 
 export default {
   data() {
@@ -53,34 +55,11 @@ export default {
       }
     },
     async getProductType(id) {
-      let response = await fetch(apiRoutes.getProductType(id), {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        }
-      })
-      .then(response => response.json())
+      let response = await httpClient.get(apiRoutes.getProductType(id))
       return response;
     },
     async submit() {
-
-      if(this.isUpdate) {
-        await fetch(apiRoutes.getProductType(this.$route.params.id), {
-          method: "PUT",
-          body: JSON.stringify(this.productType),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          }
-        })
-        //.then(response => response.json())
-      }else{
-        await fetch(apiRoutes.listProductTypes, {
-          method: "POST",
-          body: JSON.stringify(this.productType),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          }
-        })
-      }
+      await saveProductType(this.productType)
       // after saving
       this.$router.push('/product-types');
     },

@@ -12,13 +12,13 @@
     <my-data-table
       v-model:headers="headers"
       v-model:items="items"
+      :onDelete="onDelete"
+      :onEdit="onEdit"
     ></my-data-table>
   </div>
 </template>
 <script>
-import apiRoutes from '@/config/apiRoutes';
-
-//const store = useCounterStore()
+import { getProductTypes } from '@/services/productTypes';
 
 export default {
   data() {
@@ -36,9 +36,16 @@ export default {
   },
   methods: {
     async loadData() {
-      let items = await fetch(apiRoutes.listProductTypes).then(response => response.json())
+      let items = await getProductTypes()
       this.items = items;
     },
+
+    onEdit(id){
+      console.log('edit: '+id)
+    },
+    onDelete(id){
+      console.log('delete: ' + id)
+    }
   }
 };
 </script>
