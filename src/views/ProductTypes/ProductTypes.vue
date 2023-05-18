@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-import { getProductTypes } from '@/services/productTypes';
+import { getProductTypes, deleteProductTypes } from '@/services/productTypes';
 
 export default {
   data() {
@@ -41,10 +41,12 @@ export default {
     },
 
     onEdit(id){
-      console.log('edit: '+id)
+      this.$router.push("/product-types/"+id)
     },
-    onDelete(id){
+    async onDelete(id){
+      await deleteProductTypes(id)
       console.log('delete: ' + id)
+      window.location.reload()
     }
   }
 };

@@ -65,6 +65,10 @@ export default {
     onDelete: {
       type: Function,
       default: (item) => console.log(item)
+    },
+    onEdit: {
+      type: Function,
+      default: (item) => console.log(item)
     }
   },
   data() {
@@ -101,8 +105,8 @@ export default {
     editItem(item){
       this.onEdit(item.id)
     },
-    deleteItem(item){
-      this.onDelete(item.id)
+    async deleteItem(item){
+      await this.onDelete(item.id)
     },
     deleteMany() {
       this.itemsForDelete = [];
