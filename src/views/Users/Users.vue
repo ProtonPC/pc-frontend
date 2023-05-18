@@ -2,10 +2,10 @@
 <template>
   <div class="py-5 px-5">
     <div class="d-flex justify-space-between">
-      <div class="">Select user type to change</div>
+      <div class="">Select user to change</div>
       <div class="">
-        <v-btn @click="$router.push('user-types/new')" rounded="xl" color="primary" append-icon="mdi-plus"
-          >Add user type</v-btn
+        <v-btn @click="$router.push('user/new')" rounded="xl" color="primary" append-icon="mdi-plus"
+          >Add user</v-btn
         >
       </div>
     </div>
