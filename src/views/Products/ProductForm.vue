@@ -92,41 +92,24 @@
             </span>
           </span>
           <v-row>
-            <v-col cols="4">
-              <v-text-field v-model="file.phone" label="file/product phone"></v-text-field>
+            <v-col cols="6">
+              <v-file-input
+                v-model="file.path"
+                chips
+                label="Select your file"
+              ></v-file-input>
             </v-col>
-            <v-col cols="4">
-              <v-text-field v-model="file.country" label="file Country"></v-text-field>
-            </v-col>
-            <v-col cols="4">
-              <v-text-field v-model="file.zipcode" label="file Zipcode"></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="4">
-              <v-text-field v-model="file.state" label="file State"></v-text-field>
-            </v-col>
-            <v-col cols="4">
-              <v-text-field v-model="file.city" label="file City"></v-text-field>
-            </v-col>
-            <v-col cols="4">
+            <v-col cols="6">
               <v-select
-                clearable
-                v-model="file.type"
                 label="File Type"
-                :items="['Headquarters', 'Subsidiary', 'Other']"
-              ></v-select>
+                v-model="file.file_type"
+                :items="file_types"
+                item-value="id"
+                item-title="name"
+              >
+              </v-select>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col cols="6">
-              <v-text-field v-model="file.street_1" label="file Street 1"></v-text-field>
-            </v-col>
-            <v-col cols="6">
-              <v-text-field v-model="file.street_2" label="file Street 2"></v-text-field>
-            </v-col>
-          </v-row>
-          <v-textarea v-model="file.notes" label="Notes"></v-textarea>
         </div>
 
         <v-row>
@@ -159,6 +142,7 @@ export default {
       product: {},
       files: [],
       product_types: [],
+      file_types: [],
     };
   },
   mounted() {
@@ -166,15 +150,25 @@ export default {
   },
   computed: {
     netWeightKgInKg() {
-      return this.product.net_weight_kg / 1000; // have to verify backend name
+      return this.product.net_weight_kg * 1000; // have to verify backend name
     },
     dutyTotal() {
       return this.product.duty * 1000;
+    },
+    dutyByKg() {
+      return this.product.duty * 1000;
+    },
+    missingDocuments() {
+      const allTypes = [];
+      return this.product.files
+        .map((file) => file.file_type)
+        .filter((type) => allTypes.contains(type)); // item not in array
     },
   },
   methods: {
     loadData() {
       this.product_types = this.getProductTypes();
+      this.file_types = this.getFileTypes();
       if(this.$route.params.id === 'new') {
         return;
       }
@@ -227,6 +221,30 @@ export default {
         {
           id: '3',
           name: 'Rice Syrup',
+        },
+      ];
+    },
+    getFileTypes() {
+      return [
+        {
+          id: '1',
+          name: 'Supplier Specification',
+        },
+        {
+          id: '2',
+          name: 'Glory Bee Specifications',
+        },
+        {
+          id: '3',
+          name: 'Packaging Specifications',
+        },
+        {
+          id: '4',
+          name: 'Stacking Specifications',
+        },
+        {
+          id: '5',
+          name: 'Other',
         },
       ];
     },
