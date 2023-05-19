@@ -100,6 +100,8 @@
   </div>
 </template>
 <script>
+import apiRoutes from '@/config/apiRoutes';
+
 export default {
   data() {
     return {
@@ -107,8 +109,15 @@ export default {
       addressess: [],
     };
   },
-  mounted() {
-    this.loadData();
+  computed: {
+    isUpdate(){
+      return this.$route.params.id !== 'new'
+    }
+  },
+  async mounted() {
+    if(this.isUpdate) {
+      this.productType = await this.getCustomer(this.$route.params.id)
+    }
   },
   methods: {
     loadData() {
@@ -118,12 +127,35 @@ export default {
       this.customer = this.getCustomer(this.$route.params.id)
       this.addressess = { ...this.customer.addressess };
     },
-    getCustomer(id) {
-      const newCustomer = id; // Backend query searching for id
-      return newCustomer;
+    async getCustomer(id) {
+      let response = await fetch(apiRoutes.getCustomer(id), {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+      })
+      .then(response => response.json())
+      return response;
     },
-    submit() {
+    async submit() {
       // save customer
+      if(this.isUpdate) {
+        await fetch(apiRoutes.getCustomer(this.$route.params.id), {
+          method: "PUT",
+          body: JSON.stringify(this.customer),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          }
+        })
+        //.then(response => response.json())
+      }else{
+        await fetch(apiRoutes.listCustomers, {
+          method: "POST",
+          body: JSON.stringify(this.customer),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          }
+        })
+      }
       // after saving
       this.$router.push('/customers');
     },

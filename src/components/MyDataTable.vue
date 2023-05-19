@@ -22,7 +22,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in itemsLocal" :key="item.id">
+      <tr v-if="!itemsLocal.length">
+        <td style="text-align: center;" :colspan="Object.keys(headers).length + 2">No data</td>
+      </tr>
+      <tr v-else v-for="item in itemsLocal" :key="item.id">
         <td class="pt-4">
           <v-checkbox
             v-model="selectedItems"
@@ -59,6 +62,14 @@ export default {
       type: Array,
       default: () => [],
     },
+    onDelete: {
+      type: Function,
+      default: (item) => console.log(item)
+    },
+    onEdit: {
+      type: Function,
+      default: (item) => console.log(item)
+    }
   },
   data() {
     return {
@@ -91,11 +102,11 @@ export default {
     onClear() {
       this.search = "";
     },
-    editItem(item) {
-      console.log("Item to edit: " + item.id);
+    editItem(item){
+      this.onEdit(item.id)
     },
-    deleteItem(item) {
-      console.log("Item to delete: " + item.id);
+    async deleteItem(item){
+      await this.onDelete(item.id)
     },
     deleteMany() {
       this.itemsForDelete = [];

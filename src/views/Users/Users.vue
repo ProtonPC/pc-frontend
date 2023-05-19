@@ -2,14 +2,10 @@
 <template>
   <div class="py-5 px-5">
     <div class="d-flex justify-space-between">
-      <div class="">Select customers to change</div>
+      <div class="">Select user to change</div>
       <div class="">
-        <v-btn
-          @click="$router.push('customers/new')"
-          rounded="xl"
-          color="primary"
-          append-icon="mdi-plus"
-          >Add costumer</v-btn
+        <v-btn @click="$router.push('user/new')" rounded="xl" color="primary" append-icon="mdi-plus"
+          >Add user</v-btn
         >
       </div>
     </div>
@@ -20,14 +16,14 @@
   </div>
 </template>
 <script>
-import apiRoutes from '@/config/apiRoutes';
+//const store = useCounterStore()
 
 export default {
   data() {
     return {
       headers: {
-          name: "Name",
-          phone: "Phone",
+        name: "Name",
+        email: "E-mails",
       },
       items: [],
     };
@@ -37,9 +33,10 @@ export default {
   },
   methods: {
     async loadData() {
-      let items = await fetch(apiRoutes.listCustomers).then(response => response.json())
+      let items = await fetch("/api/users").then(response => response.json())
       this.items = items;
-    }
-  },
+    },
+  }
 };
 </script>
+

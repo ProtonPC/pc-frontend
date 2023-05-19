@@ -1,4 +1,4 @@
-import { createServer, Model } from "miragejs"
+import { createServer } from "miragejs"
 import { getItems, setItems } from "./local-storage"
 
 function camelize(str) {
@@ -75,7 +75,7 @@ class MirageBuilder{
 export function makeServer({ environment = "development" } = {}) {
   let mirageBuilder = new MirageBuilder(
   )
-  mirageBuilder.setModels(["user", "product-type", "supplier", "port"])
+  mirageBuilder.setModels(["user", "product-type", "supplier", "port", "customer"])
 
   let server = createServer({
     environment,

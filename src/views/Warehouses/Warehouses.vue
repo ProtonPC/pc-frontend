@@ -23,7 +23,13 @@
 export default {
   data() {
     return {
-      headers: [],
+      headers: {
+          name: "Name",
+          phone: "Location",
+          country: "Country",
+          zipcode: "Zip Code",
+          state: "State",
+      },
       items: [],
     };
   },
@@ -32,15 +38,6 @@ export default {
   },
   methods: {
     loadData() {
-      (this.headers = [
-        {
-          name: "Name",
-          phone: "Location",
-          country: "Country",
-          zipcode: "Zip Code",
-          state: "State",
-        },
-      ]),
         (this.items = [
           {
             name: "John Doe",

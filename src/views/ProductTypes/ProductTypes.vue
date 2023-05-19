@@ -12,11 +12,13 @@
     <my-data-table
       v-model:headers="headers"
       v-model:items="items"
+      :onDelete="onDelete"
+      :onEdit="onEdit"
     ></my-data-table>
   </div>
 </template>
 <script>
-//const store = useCounterStore()
+import { getProductTypes, deleteProductTypes } from '@/services/productTypes';
 
 export default {
   data() {
@@ -34,9 +36,18 @@ export default {
   },
   methods: {
     async loadData() {
-      let items = await fetch("/api/productTypes").then(response => response.json())
+      let items = await getProductTypes()
       this.items = items;
     },
+
+    onEdit(id){
+      this.$router.push("/product-types/"+id)
+    },
+    async onDelete(id){
+      await deleteProductTypes(id)
+      console.log('delete: ' + id)
+      window.location.reload()
+    }
   }
 };
 </script>
