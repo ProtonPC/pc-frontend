@@ -9,7 +9,10 @@ const apiRoutes = {
   getProductType: (id) => apiUrl+`/api/productTypes/${id}`,
 
   listCustomers: apiUrl+'/api/customers',
-  getCustomer: (id) => apiUrl+`/api/customers/${id}`
+  getCustomer: (id) => apiUrl+`/api/customers/${id}`,
+
+  listProducts: apiUrl+'/api/products',
+  getProduct: (id) => apiUrl+`/api/products/${id}`,
 }
 
 export default apiRoutes
