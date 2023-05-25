@@ -75,7 +75,7 @@ class MirageBuilder{
 export function makeServer({ environment = "development" } = {}) {
   let mirageBuilder = new MirageBuilder(
   )
-  mirageBuilder.setModels(["user", "product-type", "supplier", "port", "customer"])
+  mirageBuilder.setModels(["user", "product-type", "supplier", "port", "customer", "product"])
 
   let server = createServer({
     environment,
