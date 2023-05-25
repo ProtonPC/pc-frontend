@@ -56,7 +56,7 @@
           <v-select
               label="Storage Type"
               v-model="product.storage_type"
-              :items="product_types"
+              :items="storage_type"
               item-value="id"
               item-title="name"
             >
@@ -66,7 +66,7 @@
           <v-select
               label="Packaging type"
               v-model="product.packaging_type"
-              :items="product_types"
+              :items="packaging_type"
               item-value="id"
               item-title="name"
             >
@@ -136,6 +136,11 @@
   </div>
 </template>
 <script>
+import { saveProduct } from "@/services/products";
+import apiRoutes from '@/config/apiRoutes';
+import httpClient from '@/config/httpClient';
+import types from '@/config/constants';
+
 export default {
   data() {
     return {
@@ -145,10 +150,13 @@ export default {
       file_types: [],
     };
   },
-  mounted() {
-    this.loadData();
+  async mounted() {
+    await this.loadData();
   },
   computed: {
+    isUpdate() {
+      return this.$route.params.id !== 'new'
+    },
     netWeightKgInKg() {
       return this.product.net_weight_kg * 1000; // have to verify backend name
     },
@@ -166,89 +174,43 @@ export default {
     },
   },
   methods: {
-    loadData() {
-      this.product_types = this.getProductTypes();
-      this.file_types = this.getFileTypes();
-      if(this.$route.params.id === 'new') {
-        return;
+    async loadData() {
+      if (this.isUpdate) {
+        this.product = await this.getProduct(this.$route.params.id)
+        this.files = this.product.files;
       }
-      this.product = this.getproduct(this.$route.params.id)
-      this.files = { ...this.product.files };
+      this.product_types = await this.getProductTypes();
+      this.storage_type = types.storageTypes;
+      this.packaging_type = types.packagingTypes;
+      this.file_types = types.fileTypes;
     },
-    getProduct(id) {
-      const newProduct = id; // Backend query searching for id
-      return newProduct;
+    async getProduct(id) {
+      return await httpClient.get(apiRoutes.getProduct(id));
     },
-    submit() {
-      // save product
+    async submit() {
+      this.product.files = this.files;
+      await saveProduct(this.product);
       // after saving
       this.$router.push('/products');
     },
-    submitAndCreateNew() {
-      // save product
+    async submitAndCreateNew() {
+      this.product.files = this.files;
+      await saveProduct(this.product);
       // after saving
       this.$router.push('/products/new');
     },
-    submitAndEdit() {
-      // save product and get id
-      const id = 5 // response.data.id
+    async submitAndEdit() {
+      this.product.files = this.files;
+      const resposta = await saveProduct(this.product);
       // after saving
-      this.$router.push(`/products/${id}`);
+      this.$router.push(`/products/${resposta[0].id}`);
     },
     addNewFile() {
-      this.files.push({
-        phone: '',
-        country: '',
-        zipcode: '',
-        state: '',
-        city: '',
-        street_1: '',
-        street_2: '',
-        type: '',
-        notes: '',
-      })
+      this.files.push({})
     },
-    getProductTypes() {
-      return [
-        {
-          id: '1',
-          name: 'Rice Syrup - India',
-        },
-        {
-          id: '2',
-          name: 'Rice Syrup - Bahamas',
-        },
-        {
-          id: '3',
-          name: 'Rice Syrup',
-        },
-      ];
+    async getProductTypes() {
+      return await httpClient.get(apiRoutes.listProductTypes);
     },
-    getFileTypes() {
-      return [
-        {
-          id: '1',
-          name: 'Supplier Specification',
-        },
-        {
-          id: '2',
-          name: 'Glory Bee Specifications',
-        },
-        {
-          id: '3',
-          name: 'Packaging Specifications',
-        },
-        {
-          id: '4',
-          name: 'Stacking Specifications',
-        },
-        {
-          id: '5',
-          name: 'Other',
-        },
-      ];
-    },
-
     removefile(key) {
       this.files.splice(key, 1);
     },
