@@ -63,16 +63,15 @@ export default {
       // after saving
       this.$router.push('/product-types');
     },
-    submitAndCreateNew() {
-      // save product type
+    async submitAndCreateNew() {
+      await saveProductType(this.productType)
       // after saving
       this.$router.push('/product-types/new');
     },
-    submitAndEdit() {
-      // save product type and get id
-      const id = 5 // response.data.id
+    async submitAndEdit() {
+      const response = await saveProductType(this.productType)
       // after saving
-      this.$router.push(`/product-types/${id}`);
+      this.$router.push(`/product-types/${response[0].id}`);
     },
   }
 };
