@@ -4,7 +4,13 @@
     <h3 class="py-5">
       <v-tooltip text="Go back" location="top">
         <template v-slot:activator="{ props }">
-          <v-btn v-bind="props" @click="$router.push('/products')" color="primary" variant="text" icon="mdi-arrow-left"></v-btn>
+          <v-btn
+            v-bind="props"
+            @click="$router.push('/products')"
+            color="primary"
+            variant="text"
+            icon="mdi-arrow-left"
+          ></v-btn>
         </template>
       </v-tooltip>
       {{ $route.params.id === 'new' ? 'Add' : 'Edit' }} product
@@ -187,29 +193,28 @@ export default {
     async getProduct(id) {
       return await httpClient.get(apiRoutes.getProduct(id));
     },
-    async submit() {
+    async save(){
       this.product.files = this.files;
-      await saveProduct(this.product);
-      // after saving
+      return await saveProduct(this.product);
+    },
+    async submit() {
+      await this.save()
       this.$router.push('/products');
     },
     async submitAndCreateNew() {
-      this.product.files = this.files;
-      await saveProduct(this.product);
-      // after saving
+      await this.save()
       this.$router.push('/products/new');
+      setTimeout(() => window.location.reload(), 50);
     },
     async submitAndEdit() {
-      this.product.files = this.files;
-      const resposta = await saveProduct(this.product);
-      // after saving
-      this.$router.push(`/products/${resposta[0].id}`);
-    },
-    addNewFile() {
-      this.files.push({})
+      const response = await this.save()
+      this.$router.push(`/products/${response[0].id}`);
     },
     async getProductTypes() {
       return await httpClient.get(apiRoutes.listProductTypes);
+    },
+    addNewFile() {
+      this.files.push({})
     },
     removefile(key) {
       this.files.splice(key, 1);

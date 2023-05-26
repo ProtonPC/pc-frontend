@@ -9,8 +9,9 @@
           rounded="xl"
           color="primary"
           append-icon="mdi-plus"
-          >Add product</v-btn
         >
+          Add product
+        </v-btn>
       </div>
     </div>
     <my-data-table
@@ -23,6 +24,7 @@
 </template>
 <script>
 import { getProducts, deleteProduct } from '@/services/products';
+
 export default {
   data() {
     return {
