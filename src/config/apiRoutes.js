@@ -13,6 +13,12 @@ const apiRoutes = {
 
   listProducts: apiUrl+'/api/products',
   getProduct: (id) => apiUrl+`/api/products/${id}`,
+
+  listPorts: apiUrl+'/api/ports',
+  getPort: (id) => apiUrl+`/api/ports/${id}`,
+
+  listWarehouses: apiUrl+'/api/warehouses',
+  getWarehouse: (id) => apiUrl+`/api/warehouses/${id}`,
 }
 
 export default apiRoutes
