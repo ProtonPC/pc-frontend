@@ -56,14 +56,23 @@
   </div>
 </template>
 <script>
+import { saveWarehouse } from '@/services/warehouses';
+import apiRoutes from '@/config/apiRoutes';
+import httpClient from '@/config/httpClient';
+
 export default {
   data() {
     return {
       warehouse: {},
     };
   },
-  mounted() {
-    this.loadData();
+  async mounted() {
+    await this.loadData();
+  },
+  computed: {
+    isUpdate() {
+      return this.$route.params.id !== 'new';
+    },
   },
   methods: {
     onInputBlur() {
@@ -82,31 +91,29 @@ export default {
       })
 
     },
-    loadData() {
-      if(this.$route.params.id === 'new') {
-        return;
+    async loadData() {
+      if(this.isUpdate) {
+        this.warehouse = this.getWarehouse(this.$route.params.id)
       }
-      this.warehouse = this.getWarehouse(this.$route.params.id)
     },
-    getWarehouse(id) {
-      const newWarehouse = id; // Backend query searching for id
-      return newWarehouse;
+    async getWarehouse(id) {
+      return await httpClient.get(apiRoutes.getWarehouse(id));
     },
-    submit() {
-      // save warehouse
-      // after saving
+    async save() {
+      return await saveWarehouse(this.warehouse);
+    },
+    async submit() {
+      await this.save();
       this.$router.push('/warehouses');
     },
-    submitAndCreateNew() {
-      // save warehouse
-      // after saving
+    async submitAndCreateNew() {
+      await this.save();
       this.$router.push('/warehouses/new');
+      setTimeout(() => window.location.reload(), 50);
     },
-    submitAndEdit() {
-      // save warehouse and get id
-      const id = 5 // response.data.id
-      // after saving
-      this.$router.push(`/warehouses/${id}`);
+    async submitAndEdit() {
+      const response = await this.save();
+      this.$router.push(`/warehouses/${response[0].id}`);
     },
   }
 };
