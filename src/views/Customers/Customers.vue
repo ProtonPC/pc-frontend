@@ -9,36 +9,46 @@
           rounded="xl"
           color="primary"
           append-icon="mdi-plus"
-          >Add costumer</v-btn
         >
+          Add costumer
+        </v-btn>
       </div>
     </div>
     <my-data-table
       v-model:headers="headers"
       v-model:items="items"
+      :onDelete="onDelete"
+      :onEdit="onEdit"
     ></my-data-table>
   </div>
 </template>
 <script>
-import apiRoutes from '@/config/apiRoutes';
+import { getCustomers, deleteCustomer } from '@/services/customers';
 
 export default {
   data() {
     return {
-      headers: {
-          name: "Name",
-          phone: "Phone",
-      },
+      headers: [],
       items: [],
     };
   },
   async mounted() {
+    this.headers = {
+      name: "Name",
+      email: "Email",
+    };
     await this.loadData();
   },
   methods: {
     async loadData() {
-      let items = await fetch(apiRoutes.listCustomers).then(response => response.json())
-      this.items = items;
+      this.items = await getCustomers();
+    },
+    onEdit(id){
+      this.$router.push("/customers/"+id)
+    },
+    async onDelete(id){
+      await deleteCustomer(id)
+      window.location.reload()
     }
   },
 };
