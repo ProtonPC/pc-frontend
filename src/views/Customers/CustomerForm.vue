@@ -100,7 +100,9 @@
   </div>
 </template>
 <script>
+import { saveCustomer } from '@/services/customers';
 import apiRoutes from '@/config/apiRoutes';
+import httpClient from '@/config/httpClient';
 
 export default {
   data() {
@@ -115,73 +117,37 @@ export default {
     }
   },
   async mounted() {
-    if(this.isUpdate) {
-      this.productType = await this.getCustomer(this.$route.params.id)
-    }
+    await this.loadData();
   },
   methods: {
-    loadData() {
-      if(this.$route.params.id === 'new') {
-        return;
+    async loadData() {
+      if(this.isUpdate) {
+        this.customer = await this.getCustomer(this.$route.params.id)
+        this.addressess = this.customer.addressess;
       }
-      this.customer = this.getCustomer(this.$route.params.id)
-      this.addressess = { ...this.customer.addressess };
     },
     async getCustomer(id) {
-      let response = await fetch(apiRoutes.getCustomer(id), {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        }
-      })
-      .then(response => response.json())
-      return response;
+      return httpClient.get(apiRoutes.getCustomer(id));
+    },
+    async save() {
+      this.customer.addressess = this.addressess;
+      return await saveCustomer(this.customer);
     },
     async submit() {
-      // save customer
-      if(this.isUpdate) {
-        await fetch(apiRoutes.getCustomer(this.$route.params.id), {
-          method: "PUT",
-          body: JSON.stringify(this.customer),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          }
-        })
-        //.then(response => response.json())
-      }else{
-        await fetch(apiRoutes.listCustomers, {
-          method: "POST",
-          body: JSON.stringify(this.customer),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          }
-        })
-      }
-      // after saving
+      await this.save();
       this.$router.push('/customers');
     },
-    submitAndCreateNew() {
-      // save customer
-      // after saving
+    async submitAndCreateNew() {
+      await this.save();
       this.$router.push('/customers/new');
+      setTimeout(() => window.location.reload(), 50);
     },
-    submitAndEdit() {
-      // save customer and get id
-      const id = 5 // response.data.id
-      // after saving
-      this.$router.push(`/customers/${id}`);
+    async submitAndEdit() {
+      const response = await this.save();
+      this.$router.push(`/customers/${response[0].id}`);
     },
     addNewAddress() {
-      this.addressess.push({
-        phone: '',
-        country: '',
-        zipcode: '',
-        state: '',
-        city: '',
-        street_1: '',
-        street_2: '',
-        type: '',
-        notes: '',
-      })
+      this.addressess.push({});
     },
     removeAddress(key) {
       this.addressess.splice(key, 1);

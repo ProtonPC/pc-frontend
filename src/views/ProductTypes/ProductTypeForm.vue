@@ -4,7 +4,13 @@
     <h3 class="py-5">
       <v-tooltip text="Go back" location="top">
         <template v-slot:activator="{ props }">
-          <v-btn v-bind="props" @click="$router.push('/product-types')" color="primary" variant="text" icon="mdi-arrow-left"></v-btn>
+          <v-btn
+            v-bind="props"
+            @click="$router.push('/product-types')"
+            color="primary"
+            variant="text"
+            icon="mdi-arrow-left"
+          ></v-btn>
         </template>
       </v-tooltip>
       {{ $route.params.id === 'new' ? 'Add' : 'Edit' }} product type
@@ -34,10 +40,7 @@ import httpClient from '@/config/httpClient';
 export default {
   data() {
     return {
-      productType: {
-        name: "",
-        notes: "",
-      },
+      productType: {},
     };
   },
   async mounted() {
@@ -58,21 +61,21 @@ export default {
       let response = await httpClient.get(apiRoutes.getProductType(id))
       return response;
     },
+    async save() {
+      return await saveProductType(this.productType)
+    },
     async submit() {
-      await saveProductType(this.productType)
-      // after saving
+      await this.save()
       this.$router.push('/product-types');
     },
-    submitAndCreateNew() {
-      // save product type
-      // after saving
-      this.$router.push('/product-types/new');
+    async submitAndCreateNew() {
+      await this.save()
+      this.$router.push('/product-types/new')
+      setTimeout(() => window.location.reload(), 50);
     },
-    submitAndEdit() {
-      // save product type and get id
-      const id = 5 // response.data.id
-      // after saving
-      this.$router.push(`/product-types/${id}`);
+    async submitAndEdit() {
+      const response = await this.save()
+      this.$router.push(`/product-types/${response[0].id}`);
     },
   }
 };

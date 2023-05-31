@@ -9,67 +9,49 @@
           rounded="xl"
           color="primary"
           append-icon="mdi-plus"
-          >Add product</v-btn
         >
+          Add product
+        </v-btn>
       </div>
     </div>
     <my-data-table
       v-model:headers="headers"
       v-model:items="items"
+      :onDelete="onDelete"
+      :onEdit="onEdit"
     ></my-data-table>
   </div>
 </template>
 <script>
+import { getProducts, deleteProduct } from '@/services/products';
+
 export default {
   data() {
     return {
-      headers: {
-        name: "Name",
-        email: "Email",
-      },
+      headers: [],
       items: [],
     };
   },
-  mounted() {
-    this.loadData();
+  async mounted() {
+    this.headers = {
+      name: "Name",
+      hts_code: "HTS Code",
+      glory_bee_number: "Glory Bee Number",
+    };
+    await this.loadData();
   },
   methods: {
-    loadData() {
-        (this.items = [
-          {
-            name: "Jane Smith",
-            phone: "+44-20-5555-0190",
-          },
-          {
-            name: "Juan Perez",
-            phone: "+52-55-5555-0191",
-          },
-          {
-            name: "Maria Garcia",
-            phone: "+34-91-555-0192",
-          },
-          {
-            name: "Hiroshi Tanaka",
-            phone: "+81-3-5555-0193",
-          },
-          {
-            name: "Lena Müller",
-            phone: "+49-30-5555-0194",
-          },
-          {
-            name: "Francesco Rossi",
-            phone: "+39-06-5555-0195",
-          },
-          {
-            name: "Johan Svensson",
-            phone: "+46-8-5555-0196",
-          },
-          {
-            name: "Chen Wei",
-            phone: "+86-10-5555-0197",
-          },
-        ]);
+    async loadData() {
+      this.items = await getProducts();
     },
+    onEdit(id){
+      this.$router.push("/products/"+id)
+    },
+    async onDelete(id){
+      await deleteProduct(id)
+      console.log('delete: ' + id)
+      window.location.reload()
+    }
   },
 };
 </script>

@@ -62,41 +62,47 @@
   </div>
 </template>
 <script>
+import { savePort } from '@/services/ports';
+import apiRoutes from '@/config/apiRoutes';
+import httpClient from '@/config/httpClient';
 export default {
   data() {
     return {
       port: {},
     };
   },
-  mounted() {
-    this.loadData();
+  async mounted() {
+    await this.loadData();
+  },
+  computed: {
+    isUpdate(){
+      return this.$route.params.id !== 'new'
+    }
   },
   methods: {
-    loadData() {
-      if (this.$route.params.id === "new") {
-        return;
+    async loadData() {
+      if(this.isUpdate) {
+        this.port = await this.getPort(this.$route.params.id)
       }
-      this.port = this.getPort(this.$route.params.id);
     },
-    getPort(id) {
-      const newport = id; // Backend query searching for id
-      return newport;
+    async getPort(id) {
+      return await httpClient.get(apiRoutes.getPort(id))
     },
-    submit() {
-      // save product type
-      // after saving
+    async save() {
+      return await savePort(this.port)
+    },
+    async submit() {
+      await this.save()
       this.$router.push("/ports");
     },
-    submitAndCreateNew() {
-      // save product type
-      // after saving
-      this.$router.push("/ports/new");
+    async submitAndCreateNew() {
+      await this.save()
+      this.$router.push("/ports/new")
+      setTimeout(() => window.location.reload(), 50);
     },
-    submitAndEdit() {
-      // save product type and get id
-      const id = 5; // response.data.id
-      // after saving
-      this.$router.push(`/ports/${id}`);
+    async submitAndEdit() {
+      const response = await this.save()
+      this.$router.push(`/ports/${response[0].id}`);
     },
   },
 };
