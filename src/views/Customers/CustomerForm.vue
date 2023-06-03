@@ -139,8 +139,10 @@ export default {
     },
     async submitAndCreateNew() {
       await this.save();
-      this.$router.push('/customers/new');
-      setTimeout(() => window.location.reload(), 50);
+      this.$router.push('/customers/new')
+      .then(() => {
+        window.location.reload();
+      })
     },
     async submitAndEdit() {
       const response = await this.save();

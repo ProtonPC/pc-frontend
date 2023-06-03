@@ -98,7 +98,9 @@ export default {
     async submitAndCreateNew() {
       await this.save()
       this.$router.push("/ports/new")
-      setTimeout(() => window.location.reload(), 50);
+      .then(() => {
+        window.location.reload();
+      })
     },
     async submitAndEdit() {
       const response = await this.save()

@@ -203,8 +203,10 @@ export default {
     },
     async submitAndCreateNew() {
       await this.save()
-      this.$router.push('/products/new');
-      setTimeout(() => window.location.reload(), 50);
+      this.$router.push('/products/new')
+      .then(() => {
+        window.location.reload();
+      })
     },
     async submitAndEdit() {
       const response = await this.save()
