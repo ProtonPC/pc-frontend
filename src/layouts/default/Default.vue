@@ -8,7 +8,36 @@
             {{ variavel }}
           </router-link>
         </v-toolbar-title>
-      icon
+        <v-menu
+          transition="slide-y-transition"
+        >
+          <template v-slot:activator="{ props }">
+            <v-btn
+              color="warning"
+              v-bind="props"
+            >
+              Profile
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item>
+              <v-list-item-title class="text-center">
+                <v-btn
+                  variant="text"
+                >
+                  Edit Profile
+                </v-btn>
+              </v-list-item-title>
+              <v-list-item-title class="text-center">
+                <v-btn
+                  variant="text"
+                >
+                  Logout
+                </v-btn>
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
     </v-app-bar>
 
     <v-navigation-drawer color="primary" v-model="drawer">
