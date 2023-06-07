@@ -19,6 +19,9 @@ const apiRoutes = {
 
   listWarehouses: apiUrl+'/api/warehouses',
   getWarehouse: (id) => apiUrl+`/api/warehouses/${id}`,
+
+  listUsers: apiUrl+'/api/users',
+  getUser: (id) => apiUrl+`/api/users/${id}`,
 }
 
 export default apiRoutes
