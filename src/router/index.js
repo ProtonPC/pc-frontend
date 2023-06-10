@@ -120,6 +120,22 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "home" */ '@/views/Users/UserForm.vue'),
       },
+      {
+        path: 'users/me',
+        name: 'UserMe',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Users/UserMe.vue'),
+      },
+      {
+        path: 'users/edit-password',
+        name: 'UserEditPassword',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Users/UserEditPassword.vue'),
+      },
     ],
   },
 ]
@@ -137,6 +153,7 @@ router.beforeResolve((to, from, next) => {
   next();
 });
 
+// eslint-disable-next-line no-unused-vars
 router.afterEach((to, from) => {
   NProgress.done()
 });
