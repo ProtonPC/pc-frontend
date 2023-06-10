@@ -24,6 +24,7 @@
               <v-list-item-title class="text-center">
                 <v-btn
                   variant="text"
+                  @click="$router.push('/users/me')"
                 >
                   Edit Profile
                 </v-btn>
