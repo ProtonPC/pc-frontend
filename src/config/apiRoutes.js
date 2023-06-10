@@ -22,6 +22,9 @@ const apiRoutes = {
 
   listUsers: apiUrl+'/api/users',
   getUser: (id) => apiUrl+`/api/users/${id}`,
+
+  listUserGroups: apiUrl+'/api/userGroups',
+  getUserGroup: (id) => apiUrl+`/api/usersGroups/${id}`,
 }
 
 export default apiRoutes
