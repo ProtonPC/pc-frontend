@@ -3,6 +3,8 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css'
 import { createRouter, createWebHistory } from 'vue-router'
 
+const isAuthenticated = true;
+
 const routes = [
   {
     path: '/',
@@ -138,6 +140,22 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/login',
+    name: 'Login',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "home" */ '@/views/Login.vue'),
+  },
+  {
+    path: '/reset-password',
+    name: 'ResetPassword',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "home" */ '@/views/ResetPassword.vue'),
+  },
 ]
 
 const router = createRouter({
@@ -152,6 +170,12 @@ router.beforeResolve((to, from, next) => {
   }
   next();
 });
+
+router.beforeEach((to, from, next) => {
+    if ((to.name !== "ResetPassword" && to.name !== "Login") && !isAuthenticated )
+      next({ name: "Login" });
+    else next();
+})
 
 // eslint-disable-next-line no-unused-vars
 router.afterEach((to, from) => {
