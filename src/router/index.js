@@ -3,7 +3,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css'
 import { createRouter, createWebHistory } from 'vue-router'
 
-const isAuthenticated = true;
+const isAuthenticated = false;
 
 const routes = [
   {
@@ -141,20 +141,26 @@ const routes = [
     ],
   },
   {
-    path: '/login',
-    name: 'Login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "home" */ '@/views/Login.vue'),
-  },
-  {
-    path: '/reset-password',
-    name: 'ResetPassword',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "home" */ '@/views/ResetPassword.vue'),
+    path: '/auth',
+    component: () => import('@/layouts/auth/Auth.vue'),
+    children: [
+      {
+        path: 'login',
+        name: 'Login',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Login.vue'),
+      },
+      {
+        path: 'reset-password',
+        name: 'ResetPassword',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/ResetPassword.vue'),
+      },
+    ],
   },
 ]
 
