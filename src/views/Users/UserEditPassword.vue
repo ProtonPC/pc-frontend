@@ -65,6 +65,7 @@ export default {
       passwordHidden: true,
       passwordConfirmationHidden: true,
       userGroups: [],
+      loggedInUser: 1
     };
   },
   async mounted() {
@@ -78,7 +79,7 @@ export default {
   methods: {
     async loadData() {
       if(this.isUpdate) {
-        this.user = await this.getUser(this.$route.params.id)
+        this.user = await this.getUser(this.loggedInUser)
       }
       this.userGroups = await getUserGroups();
     },
@@ -97,17 +98,6 @@ export default {
     async submit() {
       await this.save()
       this.$router.push('/users');
-    },
-    async submitAndCreateNew() {
-      await this.save()
-      this.$router.push('/users/new')
-      .then(() => {
-        window.location.reload();
-      })
-    },
-    async submitAndEdit() {
-      const response = await this.save()
-      this.$router.push(`/users/${response[0].id}`);
     },
   }
 };
