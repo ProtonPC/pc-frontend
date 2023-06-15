@@ -13,6 +13,7 @@ const routes = [
       {
         path: '',
         name: 'Home',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -21,6 +22,7 @@ const routes = [
       {
         path: 'product-types',
         name: 'ProductTypes',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -29,6 +31,7 @@ const routes = [
       {
         path: 'product-types/:id',
         name: 'ProductTypeForm',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -37,6 +40,7 @@ const routes = [
       {
         path: 'ports',
         name: 'Ports',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -45,6 +49,7 @@ const routes = [
       {
         path: 'ports/:id',
         name: 'PortsForm',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -53,6 +58,7 @@ const routes = [
       {
         path: 'products',
         name: 'Products',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -61,6 +67,7 @@ const routes = [
       {
         path: 'products/:id',
         name: 'ProductForm',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -69,6 +76,7 @@ const routes = [
       {
         path: 'suppliers',
         name: 'Suppliers',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -77,6 +85,7 @@ const routes = [
       {
         path: 'warehouses',
         name: 'Warehouses',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -85,6 +94,7 @@ const routes = [
       {
         path: 'warehouses/:id',
         name: 'WarehouseForm',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -93,6 +103,7 @@ const routes = [
       {
         path: 'customers',
         name: 'Customers',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -101,6 +112,7 @@ const routes = [
       {
         path: 'customers/:id',
         name: 'CustomerForm',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -109,6 +121,7 @@ const routes = [
       {
         path: 'users',
         name: 'Users',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -117,6 +130,7 @@ const routes = [
       {
         path: 'users/:id',
         name: 'UserForm',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -125,6 +139,7 @@ const routes = [
       {
         path: 'users/me',
         name: 'UserMe',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -133,6 +148,7 @@ const routes = [
       {
         path: 'users/edit-password',
         name: 'UserEditPassword',
+        meta: { requiresAuth: true },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -147,6 +163,7 @@ const routes = [
       {
         path: 'login',
         name: 'Login',
+        meta: { requiresAuth: false },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -155,6 +172,7 @@ const routes = [
       {
         path: 'reset-password',
         name: 'ResetPassword',
+        meta: { requiresAuth: false },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -178,7 +196,7 @@ router.beforeResolve((to, from, next) => {
 });
 
 router.beforeEach((to, from, next) => {
-    if ((to.name !== "ResetPassword" && to.name !== "Login") && !isAuthenticated )
+    if (to.meta.requiresAuth && !isAuthenticated )
       next({ name: "Login" });
     else next();
 })
