@@ -197,7 +197,12 @@ router.beforeResolve((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth && !isAuthenticated )
-      next({ name: "Login" });
+      next({ 
+        name: "Login",
+        query: {
+          redirect: to.fullPath,
+        },
+      });
     else next();
 })
 
