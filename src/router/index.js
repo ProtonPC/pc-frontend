@@ -167,7 +167,16 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/Login.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Auth/Login.vue'),
+      },
+      {
+        path: 'forget-password',
+        name: 'ForgetPassword',
+        meta: { requiresAuth: false },
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Auth/ForgetPassword.vue'),
       },
       {
         path: 'reset-password',
@@ -176,7 +185,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/ResetPassword.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Auth/ResetPassword.vue'),
       },
     ],
   },

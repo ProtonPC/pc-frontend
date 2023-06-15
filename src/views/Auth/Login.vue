@@ -28,7 +28,7 @@
         </v-text-field>
         <v-btn :disabled="!userNameRules" type="button" @click="submit" block color="primary">Login</v-btn>
         <span class="text-body-1 d-flex justify-center mt-3">
-          Forget your password?&nbsp;<router-link to="/auth/reset-password" color="primary">Click here!
+          Forget your password?&nbsp;<router-link to="/auth/forget-password" color="primary">Click here!
         </router-link>
         </span>
       </v-form>
