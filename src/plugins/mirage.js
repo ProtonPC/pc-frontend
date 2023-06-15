@@ -82,7 +82,8 @@ export function makeServer({ environment = "development" } = {}) {
     "port",
     "customer",
     "product",
-    'warehouse'
+    'warehouse',
+    'user-group'
   ])
 
   let server = createServer({

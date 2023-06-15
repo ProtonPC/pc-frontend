@@ -6,63 +6,47 @@
         <template v-slot:activator="{ props }">
           <v-btn
             v-bind="props"
-            @click="$router.push('/users')"
+            @click="$router.go(-1)"
             color="primary"
             variant="text"
             icon="mdi-arrow-left"
           ></v-btn>
         </template>
       </v-tooltip>
-      {{ $route.params.id === 'new' ? 'Add' : 'Edit' }} User
+      Edit your password
     </h3>
     <v-sheet class="mx-auto">
       <v-form @submit.prevent="submit">
-        <v-row>
-          <v-col cols="4">
+        <v-row justify-md="center">
+          <v-col cols="12" md="7">
             <v-text-field
-              v-model="user.name"
-              label="User Name"
+              v-model="user.old_password"
+              :type="oldPasswordHidden ? 'password' : 'text'"
+              :append-icon="!oldPasswordHidden ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append="oldPasswordHidden = !oldPasswordHidden"
+              label="Old Password"
             ></v-text-field>
           </v-col>
-          <v-col cols="4">
-            <v-text-field
-              v-model="user.email"
-              label="User Email"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="4">
-            <v-select
-              label="User Group"
-              v-model="user.user_group_id"
-              :items="userGroups"
-              item-value="id"
-              item-title="name"
-            ></v-select>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="6">
+          <v-col cols="12" md="7">
             <v-text-field
               v-model="user.password"
               :type="passwordHidden ? 'password' : 'text' "
               :append-icon="!passwordHidden ? 'mdi-eye' : 'mdi-eye-off'"
               @click:append="passwordHidden = !passwordHidden"
-              label="User Password"
+              label="New Password"
             ></v-text-field>
           </v-col>
-          <v-col cols="6">
+          <v-col cols="12" md="7">
             <v-text-field
               v-model="user.password_confirmation"
               :type="passwordConfirmationHidden ? 'password' : 'text'"
               :append-icon="!passwordConfirmationHidden ? 'mdi-eye' : 'mdi-eye-off'"
               @click:append="passwordConfirmationHidden = !passwordConfirmationHidden"
-              label="Password Confirmation"
+              label="New Password Confirmation"
             ></v-text-field>
           </v-col>
         </v-row>
         <v-btn @click="submit()" color="primary" class="mt-2">Submit</v-btn>
-        <v-btn @click="submitAndCreateNew()" color="secondary" class="ms-5 mt-2">Save and add another</v-btn>
-        <v-btn @click="submitAndEdit()" color="secondary" class="ms-5 mt-2">Save and continue editing</v-btn>
       </v-form>
     </v-sheet>
   </div>
@@ -77,9 +61,11 @@ export default {
   data() {
     return {
       user: {},
+      oldPasswordHidden: true,
       passwordHidden: true,
       passwordConfirmationHidden: true,
       userGroups: [],
+      loggedInUser: 1
     };
   },
   async mounted() {
@@ -93,7 +79,7 @@ export default {
   methods: {
     async loadData() {
       if(this.isUpdate) {
-        this.user = await this.getUser(this.$route.params.id)
+        this.user = await this.getUser(this.loggedInUser)
       }
       this.userGroups = await getUserGroups();
     },
@@ -112,17 +98,6 @@ export default {
     async submit() {
       await this.save()
       this.$router.push('/users');
-    },
-    async submitAndCreateNew() {
-      await this.save()
-      this.$router.push('/users/new')
-      .then(() => {
-        window.location.reload();
-      })
-    },
-    async submitAndEdit() {
-      const response = await this.save()
-      this.$router.push(`/users/${response[0].id}`);
     },
   }
 };
