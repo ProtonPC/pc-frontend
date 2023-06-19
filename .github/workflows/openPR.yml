@@ -16,9 +16,10 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          author: ${{ github.actor }}
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           commit-message: 'feat: creating pull request'
-          title: 'New pull request'
-          base: 'main'
+          title: 'PR - ${{ steps.cpr.outputs.pull-request-number }}'
+          branch: 'main'
+          reviewers: 'danieldsf'
           delete-branch: true
   
