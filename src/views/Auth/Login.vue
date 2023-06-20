@@ -20,8 +20,8 @@
         <v-text-field
           v-model="password"
           :type="passwordHidden ? 'password' : 'text' "
-          :append-icon="!passwordHidden ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append="passwordHidden = !passwordHidden"
+          :append-inner-icon="!passwordHidden ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append-inner="passwordHidden = !passwordHidden"
           :rules="passwordRules"
           label="Password"
         >
