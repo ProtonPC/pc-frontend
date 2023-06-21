@@ -3,7 +3,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css'
 import { createRouter, createWebHistory } from 'vue-router'
 
-const isAuthenticated = false;
+const isAuthenticated = true;
 
 const routes = [
   {
@@ -81,6 +81,15 @@ const routes = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "home" */ '@/views/Suppliers/Suppliers.vue'),
+      },
+      {
+        path: 'suppliers/:id',
+        name: 'SupplierForm',
+        meta: { requiresAuth: true },
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Suppliers/SupplierForm.vue'),
       },
       {
         path: 'warehouses',
@@ -206,7 +215,7 @@ router.beforeResolve((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth && !isAuthenticated )
-      next({ 
+      next({
         name: "Login",
         query: {
           redirect: to.fullPath,
