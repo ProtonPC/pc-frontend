@@ -51,7 +51,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col>
+          <v-col cols="11" class="pt-7">
             <v-select
               v-model="supplier.products"
               :items="products"
@@ -61,6 +61,19 @@
               label="Products"
               multiple
             ></v-select>
+          </v-col>
+          <v-col cols="1" class="align-self-center">
+            <v-tooltip text="Add a new product" location="top">
+                <template v-slot:activator="{ props }">
+                  <v-btn @click="addNewProduct" v-bind="props" icon="mdi-plus" class="bg-success" size="x-small"></v-btn>
+                </template>
+              </v-tooltip>
+          </v-col>
+          <v-col cols="12">
+            <v-textarea
+              v-model="supplier.notes"
+              label="Notes"
+            ></v-textarea>
           </v-col>
         </v-row>
         <v-row>
@@ -81,7 +94,7 @@
             </span>
           </span>
           <v-row>
-            <v-col cols="4">
+            <v-col cols="6">
               <v-text-field
                 label="Price"
                 type="number"
@@ -89,26 +102,71 @@
                 v-model="freightQuote.price"
               >
               </v-text-field>
+              <v-textarea
+                v-model="freightQuote.notes"
+                label="Notes"
+                rows="3"
+              ></v-textarea>
             </v-col>
-            <v-col cols="4">
-              <v-select
-                label="Origin"
-                v-model="freightQuote.origin"
-                :items="ports"
-                item-value="id"
-                item-title="name"
-              >
-              </v-select>
-            </v-col>
-            <v-col cols="4">
-              <v-select
-                label="Destination"
-                v-model="freightQuote.destination"
-                :items="ports"
-                item-value="id"
-                item-title="name"
-              >
-              </v-select>
+            <v-col cols="6">
+              <v-row>
+                <v-col cols="9">
+                  <v-select
+                    label="Origin"
+                    v-model="freightQuote.origin"
+                    :items="ports"
+                    item-value="id"
+                    item-title="name"
+                  >
+                  </v-select>
+                </v-col>
+                <v-col cols="3"  class="d-flex justify-space-between pt-6">
+                  <v-tooltip text="Add a new port" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn @click="addNewPort" v-bind="props" icon="mdi-plus" class="bg-success" size="x-small"></v-btn>
+                    </template>
+                  </v-tooltip>
+                  <v-tooltip text="Change selected port" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn @click="changePort(freightQuote.origin)" :disabled="!freightQuote.origin" v-bind="props" icon="mdi-pencil" class="bg-warning" size="x-small"></v-btn>
+                    </template>
+                  </v-tooltip>
+                  <v-tooltip text="Delete selected port" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn @click="deletePort(freightQuote.origin)" :disabled="!freightQuote.origin" v-bind="props" icon="mdi-delete" class="bg-danger" size="x-small"></v-btn>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="9">
+                  <v-select
+                    label="Destination"
+                    v-model="freightQuote.destination"
+                    :items="ports"
+                    item-value="id"
+                    item-title="name"
+                  >
+                  </v-select>
+                </v-col>
+                <v-col cols="3"  class="d-flex justify-space-between pt-6">
+                  <v-tooltip text="Add a new port" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn @click="addNewPort" v-bind="props" icon="mdi-plus" class="bg-success" size="x-small"></v-btn>
+                    </template>
+                  </v-tooltip>
+                  <v-tooltip text="Change selected port" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn @click="changePort(freightQuote.destination)" :disabled="!freightQuote.destination" v-bind="props" icon="mdi-pencil" class="bg-warning" size="x-small"></v-btn>
+                    </template>
+                  </v-tooltip>
+                  <v-tooltip text="Delete selected port" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn @click="deletePort(freightQuote.destination)" :disabled="!freightQuote.destination" v-bind="props" icon="mdi-delete" class="bg-danger" size="x-small"></v-btn>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
         </div>
@@ -195,6 +253,19 @@ export default {
     removeFreightQuote(key) {
       this.freightQuotes.splice(key, 1);
     },
+    addNewProduct() {
+      window.open('/products/new', '_blank', 'width=800,height=500')
+    },
+    addNewPort() {
+      window.open('/ports/new', '_blank', 'width=800,height=500')
+    },
+    changePort(id) {
+      window.open(`/ports/${id}`, '_blank', 'width=800,height=500')
+    },
+    deletePort(id) {
+      console.log(id);
+    },
+
   }
 };
 </script>
