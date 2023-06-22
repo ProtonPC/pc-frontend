@@ -1,51 +1,36 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <v-app>
-    <v-app-bar color="primary">
+    <v-app-bar v-if="!isModal" color="primary">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>
-          <router-link to="/" class="text-white">
-            {{ variavel }}
-          </router-link>
-        </v-toolbar-title>
-        <v-menu
-          transition="slide-y-transition"
-        >
-          <template v-slot:activator="{ props }">
-            <v-btn
-              color="warning"
-              v-bind="props"
-            >
-              Profile
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item>
-              <v-list-item-title class="text-center">
-                <v-btn
-                  variant="text"
-                  @click="$router.push('/users/me')"
-                >
-                  Edit Profile
-                </v-btn>
-              </v-list-item-title>
-              <v-list-item-title class="text-center">
-                <v-btn
-                  variant="text"
-                >
-                  Logout
-                </v-btn>
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+      <v-toolbar-title>
+        <router-link to="/" class="text-white">
+          {{ variavel }}
+        </router-link>
+      </v-toolbar-title>
+      <v-menu transition="slide-y-transition">
+        <template v-slot:activator="{ props }">
+          <v-btn color="warning" v-bind="props"> Profile </v-btn>
+        </template>
+        <v-list>
+          <v-list-item>
+            <v-list-item-title class="text-center">
+              <v-btn variant="text" @click="$router.push('/users/me')">
+                Edit Profile
+              </v-btn>
+            </v-list-item-title>
+            <v-list-item-title class="text-center">
+              <v-btn variant="text"> Logout </v-btn>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
-    <v-navigation-drawer color="primary" v-model="drawer">
+    <v-navigation-drawer v-if="!isModal" color="primary" v-model="drawer">
       <v-list>
         <router-link to="/" class="text-white">
-          <v-list-item prepend-icon="mdi-home" title="Home">
-          </v-list-item>
+          <v-list-item prepend-icon="mdi-home" title="Home"></v-list-item>
         </router-link>
 
         <router-link to="/product-types" class="text-white">
@@ -86,9 +71,14 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({ drawer: null, variavel: 'Price Calculator' }),
-  }
+export default {
+  data: () => ({ drawer: null, variavel: "Price Calculator" }),
+  computed: {
+    isModal() {
+      return this.$route.query.popup;
+    },
+  },
+};
 </script>
 
 <style scoped>
