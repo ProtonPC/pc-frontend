@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="py-5 px-5">
-    <h3 class="py-5">
+    <h3 v-if="!isModal" class="py-5">
       <v-tooltip text="Go back" location="top">
         <template v-slot:activator="{ props }">
           <v-btn
@@ -131,10 +131,10 @@
         </v-row>
 
         <v-btn @click="submit()" color="primary" class="mt-2">Submit</v-btn>
-        <v-btn @click="submitAndCreateNew()" color="secondary" class="ms-5 mt-2"
+        <v-btn v-if="!isModal" @click="submitAndCreateNew()" color="secondary" class="ms-5 mt-2"
           >Save and add another</v-btn
         >
-        <v-btn @click="submitAndEdit()" color="secondary" class="ms-5 mt-2"
+        <v-btn v-if="!isModal" @click="submitAndEdit()" color="secondary" class="ms-5 mt-2"
           >Save and continue editing</v-btn
         >
       </v-form>
@@ -162,6 +162,9 @@ export default {
   computed: {
     isUpdate() {
       return this.$route.params.id !== 'new'
+    },
+    isModal() {
+      return this.$route.query.popup
     },
     netWeightKgInKg() {
       return this.product.net_weight_kg * 1000; // have to verify backend name
@@ -199,6 +202,7 @@ export default {
     },
     async submit() {
       await this.save()
+      if (this.isModal) window.close()
       this.$router.push('/products');
     },
     async submitAndCreateNew() {

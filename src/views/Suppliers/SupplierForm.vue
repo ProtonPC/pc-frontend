@@ -254,18 +254,17 @@ export default {
       this.freightQuotes.splice(key, 1);
     },
     addNewProduct() {
-      window.open('/products/new', '_blank', 'width=800,height=500')
+      window.open('/products/new?popup=1', '_blank', 'width=800,height=500')
     },
     addNewPort() {
-      window.open('/ports/new', '_blank', 'width=800,height=500')
+      window.open('/ports/new?popup=1', '_blank', 'width=800,height=500')
     },
     changePort(id) {
-      window.open(`/ports/${id}`, '_blank', 'width=800,height=500')
+      window.open(`/ports/${id}?popup=1`, '_blank', 'width=800,height=500')
     },
     deletePort(id) {
       console.log(id);
     },
-
   }
 };
 </script>
