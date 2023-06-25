@@ -25,6 +25,6 @@ export function receiveMessageOtherTabs(fnReceiver){
   channel.addEventListener('message', function(event) {
     const data = event.data;
     fnReceiver(data)
-    console.log('Received data:', data);
+    console.debug('Received data:', data);
   });
 }

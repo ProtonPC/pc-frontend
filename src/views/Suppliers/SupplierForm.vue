@@ -198,14 +198,22 @@
 import { saveSupplier } from "@/services/suppliers";
 import apiRoutes from '@/config/apiRoutes';
 import httpClient from '@/config/httpClient';
+import { receiveMessageOtherTabs } from "@/services/channels";
 
 export default {
   data() {
     return {
-      supplier: {},
+      supplier: {
+        products: [],
+      },
       products: [],
       freightQuotes: [],
       ports: [],
+      callbackDict: {
+        product_id: "",
+        origin_id: "",
+        destination_id: ""
+      },
     };
   },
   async mounted() {
@@ -254,13 +262,22 @@ export default {
       this.freightQuotes.splice(key, 1);
     },
     addNewProduct() {
-      window.open('/products/new?popup=1', '_blank', 'width=800,height=500')
+      let target = 'product_id';
+      let code = Date.now().toString()
+      window.open(`/products/new?popup=1&target=${target}&code=${code}`, '_blank', 'width=800,height=500')
+      receiveMessageOtherTabs((data) => {
+        let { target: receivedTarget, code: receivedCode, entity } = data;
+        if(target == receivedTarget && code == receivedCode){
+          this.products.push(entity)
+          this.supplier.products.push(entity.id)
+        }
+      })
     },
     addNewPort() {
-      window.open('/ports/new?popup=1', '_blank', 'width=800,height=500')
+      window.open('/ports/new?popup=1&target=product_id', '_blank', 'width=800,height=500')
     },
     changePort(id) {
-      window.open(`/ports/${id}?popup=1`, '_blank', 'width=800,height=500')
+      window.open(`/ports/${id}?popup=1&target=product_id`, '_blank', 'width=800,height=500')
     },
     deletePort(id) {
       console.log(id);

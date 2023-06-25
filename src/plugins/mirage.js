@@ -41,9 +41,10 @@ class MirageBuilder{
       vm.mirageInstance.post(`/${pluralName}`, (_, request) => {
         let attrs = JSON.parse(request.requestBody);
         let all = getItems(model)
-        all.push({...attrs, id: all.length + 1})
+        let newItem = {...attrs, id: all.length + 1}
+        all.push(newItem)
         setItems(model, all)
-        return all
+        return newItem
       })
       // DELETE item:
       vm.mirageInstance.delete(`/${pluralName}/:id`, (_, request) => {

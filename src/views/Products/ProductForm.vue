@@ -146,6 +146,7 @@ import { saveProduct } from "@/services/products";
 import apiRoutes from '@/config/apiRoutes';
 import httpClient from '@/config/httpClient';
 import types from '@/config/constants';
+import { postMessageOtherTabs } from "@/services/channels";
 
 export default {
   data() {
@@ -198,7 +199,13 @@ export default {
     },
     async save(){
       this.product.files = this.files;
-      return await saveProduct(this.product);
+      let newProduct = await saveProduct(this.product);
+      postMessageOtherTabs({
+        entity: newProduct,
+        code: this.$route.query.code,
+        target: this.$route.query.target,
+      })
+      return newProduct
     },
     async submit() {
       await this.save()
