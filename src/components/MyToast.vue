@@ -10,16 +10,14 @@
 </template>
 
 <script>
-import { ref, watchEffect } from 'vue';
+import { receiveToastMessage } from '@/services/channels';
+import { ref } from 'vue';
+
 export default {
   props: {
     message: {
       type: String,
       default: "",
-    },
-    show: {
-      type: Boolean,
-      default: false,
     },
     color: {
       type: String,
@@ -28,14 +26,15 @@ export default {
   },
   setup(props) {
     let visible = ref(false);
-    watchEffect(() => {
-      if (props.show){
-        visible.value = true;
-        this.$emit("show", false);
-      }
-    });
+    receiveToastMessage(() => {
+      visible.value = true
+      setTimeout(() => {
+        visible.value = false
+        props.show = false
+      }, 2000)
+    })
     return {
-      visible,
+      visible
     }
   },
 };

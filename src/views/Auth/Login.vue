@@ -34,10 +34,8 @@
       </v-form>
 
       <my-toast
-        :timeout="2"
         v-model:message="message"
         v-model:color="color"
-        v-model:show="show"
       >
       </my-toast>
 
@@ -56,12 +54,13 @@
 </template>
 <script>
 
+import { postToastMessage } from '@/services/channels';
+
 export default {
   data() {
     return {
       message: '',
       color: '',
-      show: false,
       passwordHidden: true,
       username: '',
       userNameRules: [
@@ -91,7 +90,9 @@ export default {
       if ((this.canSubmit)){
         alert('logged in');
       } else {
-        this.show = !this.show
+        postToastMessage({
+          toggleVisible: true
+        })
         this.message = 'You must to provide a valid email/username and password'
         this.color = 'error'
       }
