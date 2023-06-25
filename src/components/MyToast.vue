@@ -24,13 +24,12 @@ export default {
       default: 'success',
     },
   },
-  setup(props) {
+  setup() {
     let visible = ref(false);
     receiveToastMessage(() => {
       visible.value = true
       setTimeout(() => {
         visible.value = false
-        props.show = false
       }, 2000)
     })
     return {
