@@ -4,7 +4,7 @@ import 'nprogress/nprogress.css'
 import { createRouter, createWebHistory } from 'vue-router'
 
 function isAuthenticated(){
-  if(process.env.NODE_ENV == 'dev'){
+  if(import.meta.env.MODE == 'development'){
     return true
   }
   // TODO: check if user is logged in

@@ -1,16 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <v-snackbar
-    :timeout="2000"
     :color="color"
     elevation="24"
-    v-model="snackbar"
+    v-model="visible"
   >
     {{ message }}
   </v-snackbar>
 </template>
 
 <script>
+import { ref, watchEffect } from 'vue';
 export default {
   props: {
     message: {
@@ -24,21 +24,19 @@ export default {
     color: {
       type: String,
       default: 'success',
-    }
-  },
-  data() {
-    return {
-      snackbar: false,
-    };
-  },
-  mounted() {
-  },
-  watch: {
-    show(){
-      console.log("mudou");
     },
   },
-  methods: {
+  setup(props) {
+    let visible = ref(false);
+    watchEffect(() => {
+      if (props.show){
+        visible.value = true;
+        this.$emit("show", false);
+      }
+    });
+    return {
+      visible,
+    }
   },
 };
 </script>

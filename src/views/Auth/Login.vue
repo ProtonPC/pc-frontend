@@ -32,14 +32,25 @@
         </router-link>
         </span>
       </v-form>
-      <v-snackbar
+
+      <my-toast
+        :timeout="2"
+        v-model:message="message"
+        v-model:color="color"
+        v-model:show="show"
+      >
+      </my-toast>
+
+      {{ show }}
+
+      <!-- <v-snackbar
         :timeout="2500"
         color="danger"
         elevation="24"
         v-model="snackbar"
       >
         You must to provide a valid email/username and password
-      </v-snackbar>
+      </v-snackbar> -->
     </v-sheet>
   </div>
 </template>
@@ -48,6 +59,9 @@
 export default {
   data() {
     return {
+      message: '',
+      color: '',
+      show: false,
       passwordHidden: true,
       username: '',
       userNameRules: [
@@ -63,21 +77,23 @@ export default {
           return 'Password must be at least 3 characters.'
         },
       ],
-      snackbar: false,
     };
   },
   computed: {
     canSubmit() {
-      if (this.username?.length > 3 && this.password?.length > 3) return true
+      if (this.username?.length > 3 && this.password?.length > 3)
+        return true;
       return false
     },
   },
   methods: {
     submit() {
-      if ((this.canSubmit === true)){
+      if ((this.canSubmit)){
         alert('logged in');
       } else {
-        this.snackbar = true;
+        this.show = !this.show
+        this.message = 'You must to provide a valid email/username and password'
+        this.color = 'error'
       }
     }
   },
