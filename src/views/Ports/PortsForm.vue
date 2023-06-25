@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="py-5 px-5">
-    <h3 v-if="!isModal" class="py-5">
-      <v-tooltip text="Go back" location="top">
+    <h3 class="py-5">
+      <v-tooltip v-if="!isModal" text="Go back" location="top">
         <template v-slot:activator="{ props }">
           <v-btn
             v-bind="props"

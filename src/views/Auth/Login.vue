@@ -39,16 +39,6 @@
       >
       </my-toast>
 
-      {{ show }}
-
-      <!-- <v-snackbar
-        :timeout="2500"
-        color="danger"
-        elevation="24"
-        v-model="snackbar"
-      >
-        You must to provide a valid email/username and password
-      </v-snackbar> -->
     </v-sheet>
   </div>
 </template>
