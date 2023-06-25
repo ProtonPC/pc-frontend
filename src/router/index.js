@@ -3,7 +3,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css'
 import { createRouter, createWebHistory } from 'vue-router'
 
-const isAuthenticated = true;
+const isAuthenticated = false;
 
 const routes = [
   {
