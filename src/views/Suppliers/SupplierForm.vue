@@ -123,12 +123,12 @@
                 <v-col cols="3"  class="d-flex justify-space-between pt-6">
                   <v-tooltip text="Add a new port" location="top">
                     <template v-slot:activator="{ props }">
-                      <v-btn @click="addNewPort" v-bind="props" icon="mdi-plus" class="bg-success" size="x-small"></v-btn>
+                      <v-btn @click="addNewOriginPort(key)" v-bind="props" icon="mdi-plus" class="bg-success" size="x-small"></v-btn>
                     </template>
                   </v-tooltip>
                   <v-tooltip text="Change selected port" location="top">
                     <template v-slot:activator="{ props }">
-                      <v-btn @click="changePort(freightQuote.origin)" :disabled="!freightQuote.origin" v-bind="props" icon="mdi-pencil" class="bg-warning" size="x-small"></v-btn>
+                      <v-btn @click="changePort(key, freightQuote.origin)" :disabled="!freightQuote.origin" v-bind="props" icon="mdi-pencil" class="bg-warning" size="x-small"></v-btn>
                     </template>
                   </v-tooltip>
                   <v-tooltip text="Delete selected port" location="top">
@@ -152,12 +152,12 @@
                 <v-col cols="3"  class="d-flex justify-space-between pt-6">
                   <v-tooltip text="Add a new port" location="top">
                     <template v-slot:activator="{ props }">
-                      <v-btn @click="addNewPort" v-bind="props" icon="mdi-plus" class="bg-success" size="x-small"></v-btn>
+                      <v-btn @click="addNewDestinationPort(key)" v-bind="props" icon="mdi-plus" class="bg-success" size="x-small"></v-btn>
                     </template>
                   </v-tooltip>
                   <v-tooltip text="Change selected port" location="top">
                     <template v-slot:activator="{ props }">
-                      <v-btn @click="changePort(freightQuote.destination)" :disabled="!freightQuote.destination" v-bind="props" icon="mdi-pencil" class="bg-warning" size="x-small"></v-btn>
+                      <v-btn @click="changePort(key, freightQuote.destination)" :disabled="!freightQuote.destination" v-bind="props" icon="mdi-pencil" class="bg-warning" size="x-small"></v-btn>
                     </template>
                   </v-tooltip>
                   <v-tooltip text="Delete selected port" location="top">
@@ -205,6 +205,7 @@ export default {
     return {
       supplier: {
         products: [],
+        freightQuotes: [],
       },
       products: [],
       freightQuotes: [],
@@ -273,11 +274,40 @@ export default {
         }
       })
     },
-    addNewPort() {
-      window.open('/ports/new?popup=1&target=product_id', '_blank', 'width=800,height=500')
+    addNewOriginPort(index) {
+      let target = 'origin_id';
+      let code = Date.now().toString()
+      window.open(`/ports/new?popup=1&target=${target}&code=${code}`, '_blank', 'width=800,height=500')
+      receiveMessageOtherTabs((data) => {
+        let { target: receivedTarget, code: receivedCode, entity } = data;
+        if(target == receivedTarget && code == receivedCode){
+          this.ports.push(entity)
+          this.freightQuotes[index].origin = entity.id
+        }
+      })
     },
-    changePort(id) {
-      window.open(`/ports/${id}?popup=1&target=product_id`, '_blank', 'width=800,height=500')
+    addNewDestinationPort(index) {
+      let target = 'destination_id';
+      let code = Date.now().toString()
+      window.open(`/ports/new?popup=1&target=${target}&code=${code}`, '_blank', 'width=800,height=500')
+      receiveMessageOtherTabs((data) => {
+        let { target: receivedTarget, code: receivedCode, entity } = data;
+        if(target == receivedTarget && code == receivedCode){
+          this.ports.push(entity)
+          this.freightQuotes[index].destination = entity.id
+        }
+      })
+    },
+    changePort(index, id) {
+      let target = 'update_port';
+      let code = Date.now().toString()
+      window.open(`/ports/${id}?popup=1&target=${target}&code=${code}`, '_blank', 'width=800,height=500')
+      receiveMessageOtherTabs((data) => {
+        let { target: receivedTarget, code: receivedCode, entity } = data;
+        if(target == receivedTarget && code == receivedCode){
+          this.ports[index] = entity
+        }
+      })
     },
     deletePort(id) {
       console.log(id);

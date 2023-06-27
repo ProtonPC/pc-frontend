@@ -65,6 +65,8 @@
 import { savePort } from '@/services/ports';
 import apiRoutes from '@/config/apiRoutes';
 import httpClient from '@/config/httpClient';
+import { postMessageOtherTabs } from "@/services/channels";
+
 export default {
   data() {
     return {
@@ -92,7 +94,13 @@ export default {
       return await httpClient.get(apiRoutes.getPort(id))
     },
     async save() {
-      return await savePort(this.port)
+      let newPort = await savePort(this.port)
+      postMessageOtherTabs({
+        entity: newPort,
+        code: this.$route.query.code,
+        target: this.$route.query.target,
+      })
+      return newPort
     },
     async submit() {
       await this.save()
