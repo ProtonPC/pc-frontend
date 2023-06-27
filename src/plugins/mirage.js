@@ -10,7 +10,8 @@ function camelize(str) {
 
 const ALLOWED_HOSTS = [
   'https://zipapi.fly.dev',
-  'https://pricecalculator.fly.dev/',
+  'https://pricecalculator.fly.dev',
+  'https://pc-upload.fly.dev',
 ]
 
 class MirageBuilder{
