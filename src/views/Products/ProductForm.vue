@@ -221,7 +221,7 @@ export default {
     },
     async submitAndEdit() {
       const response = await this.save()
-      this.$router.push(`/products/${response[0].id}`);
+      this.$router.push(`/products/${response.id}`);
     },
     async getProductTypes() {
       return await httpClient.get(apiRoutes.listProductTypes);

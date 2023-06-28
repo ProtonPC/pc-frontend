@@ -122,7 +122,7 @@ export default {
     },
     async submitAndEdit() {
       const response = await this.save()
-      this.$router.push(`/users/${response[0].id}`);
+      this.$router.push(`/users/${response.id}`);
     },
   }
 };

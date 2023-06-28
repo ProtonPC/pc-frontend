@@ -254,7 +254,7 @@ export default {
     },
     async submitAndEdit() {
       const response = await this.save()
-      this.$router.push(`/suppliers/${response[0].id}`);
+      this.$router.push(`/suppliers/${response.id}`);
     },
     addNewFreightQuote() {
       this.freightQuotes.push({})

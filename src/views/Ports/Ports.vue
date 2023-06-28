@@ -26,16 +26,15 @@ import { getPorts, deletePort } from '@/services/ports';
 export default {
   data() {
     return {
-      headers: [],
-      items: [],
-    };
-  },
-  async mounted() {
-    this.headers = {
+      headers: {
         name: "Name",
         country: "Country",
         state: "State",
       },
+      items: [],
+    };
+  },
+  async mounted() {
     await this.loadData();
   },
   methods: {

@@ -113,7 +113,7 @@ export default {
     },
     async submitAndEdit() {
       const response = await this.save();
-      this.$router.push(`/warehouses/${response[0].id}`);
+      this.$router.push(`/warehouses/${response.id}`);
     },
   }
 };

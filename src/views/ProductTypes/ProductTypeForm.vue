@@ -77,7 +77,7 @@ export default {
     },
     async submitAndEdit() {
       const response = await this.save()
-      this.$router.push(`/product-types/${response[0].id}`);
+      this.$router.push(`/product-types/${response.id}`);
     },
   }
 };
