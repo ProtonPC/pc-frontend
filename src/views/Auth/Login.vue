@@ -78,14 +78,16 @@ export default {
   methods: {
     submit() {
       if ((this.canSubmit)){
-        alert('logged in');
+        this.message = 'Logged in'
+        this.color = 'success'
       } else {
-        postToastMessage({
-          toggleVisible: true
-        })
         this.message = 'You must to provide a valid email/username and password'
         this.color = 'error'
       }
+
+      postToastMessage({
+        toggleVisible: true
+      })
     }
   },
 };
