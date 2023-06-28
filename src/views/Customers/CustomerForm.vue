@@ -146,7 +146,7 @@ export default {
     },
     async submitAndEdit() {
       const response = await this.save();
-      this.$router.push(`/customers/${response[0].id}`);
+      this.$router.push(`/customers/${response.id}`);
     },
     addNewAddress() {
       this.addressess.push({});

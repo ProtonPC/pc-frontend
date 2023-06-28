@@ -8,6 +8,12 @@ function camelize(str) {
 }
 
 
+const ALLOWED_HOSTS = [
+  'https://zipapi.fly.dev',
+  'https://pricecalculator.fly.dev',
+  'https://pc-upload.fly.dev',
+]
+
 class MirageBuilder{
 
   setModels(models){
@@ -41,9 +47,10 @@ class MirageBuilder{
       vm.mirageInstance.post(`/${pluralName}`, (_, request) => {
         let attrs = JSON.parse(request.requestBody);
         let all = getItems(model)
-        all.push({...attrs, id: all.length + 1})
+        let newItem = {...attrs, id: all.length + 1}
+        all.push(newItem)
         setItems(model, all)
-        return all
+        return newItem
       })
       // DELETE item:
       vm.mirageInstance.delete(`/${pluralName}/:id`, (_, request) => {
@@ -52,20 +59,21 @@ class MirageBuilder{
         let filteredItems = all.filter(item => item.id != id)
         //Sync DB
         setItems(model, filteredItems)
-        return filteredItems
+        return {status: "ok"}
       })
       // PUT item
       vm.mirageInstance.put(`/${pluralName}/:id`, (_, request) => {
         let id = request.params.id;
         let attrs = JSON.parse(request.requestBody);
         let all = getItems(model)
+        // [1,2,3] -> 3 => filtered => [1,2]
         let filteredItems = all.filter(item => item.id != id)
-        let item = all.filter(item => item.id == id)[0]
+        let [item] = all.filter(item => item.id == id)
         item = {...item, ...attrs};
         filteredItems.push(item)
         //Sync DB
         setItems(model, filteredItems)
-        return filteredItems
+        return item
       })
 
     })
@@ -103,8 +111,10 @@ export function makeServer({ environment = "development" } = {}) {
 
       this.passthrough("*")
       this.passthrough((request) => {
-        return request.url.startsWith('https://zipapi.fly.dev');
-      }, { allowedHosts: ['zipapi.fly.dev'] });
+        return ALLOWED_HOSTS.filter(allowedHost => request.url.startsWith(allowedHost)).length;
+      }, {
+        allowedHosts: ALLOWED_HOSTS.map(host => host.replace('https://', '').replace('http://', ''))
+      });
     },
   })
 

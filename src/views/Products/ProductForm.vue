@@ -2,7 +2,7 @@
 <template>
   <div class="py-5 px-5">
     <h3 class="py-5">
-      <v-tooltip text="Go back" location="top">
+      <v-tooltip v-if="!isModal" text="Go back" location="top">
         <template v-slot:activator="{ props }">
           <v-btn
             v-bind="props"
@@ -131,10 +131,10 @@
         </v-row>
 
         <v-btn @click="submit()" color="primary" class="mt-2">Submit</v-btn>
-        <v-btn @click="submitAndCreateNew()" color="secondary" class="ms-5 mt-2"
+        <v-btn v-if="!isModal" @click="submitAndCreateNew()" color="secondary" class="ms-5 mt-2"
           >Save and add another</v-btn
         >
-        <v-btn @click="submitAndEdit()" color="secondary" class="ms-5 mt-2"
+        <v-btn v-if="!isModal" @click="submitAndEdit()" color="secondary" class="ms-5 mt-2"
           >Save and continue editing</v-btn
         >
       </v-form>
@@ -146,6 +146,7 @@ import { saveProduct } from "@/services/products";
 import apiRoutes from '@/config/apiRoutes';
 import httpClient from '@/config/httpClient';
 import types from '@/config/constants';
+import { postMessageOtherTabs } from "@/services/channels";
 
 export default {
   data() {
@@ -162,6 +163,9 @@ export default {
   computed: {
     isUpdate() {
       return this.$route.params.id !== 'new'
+    },
+    isModal() {
+      return this.$route.query.popup
     },
     netWeightKgInKg() {
       return this.product.net_weight_kg * 1000; // have to verify backend name
@@ -195,10 +199,17 @@ export default {
     },
     async save(){
       this.product.files = this.files;
-      return await saveProduct(this.product);
+      let newProduct = await saveProduct(this.product);
+      postMessageOtherTabs({
+        entity: newProduct,
+        code: this.$route.query.code,
+        target: this.$route.query.target,
+      })
+      return newProduct
     },
     async submit() {
       await this.save()
+      if (this.isModal) window.close()
       this.$router.push('/products');
     },
     async submitAndCreateNew() {
@@ -210,7 +221,7 @@ export default {
     },
     async submitAndEdit() {
       const response = await this.save()
-      this.$router.push(`/products/${response[0].id}`);
+      this.$router.push(`/products/${response.id}`);
     },
     async getProductTypes() {
       return await httpClient.get(apiRoutes.listProductTypes);

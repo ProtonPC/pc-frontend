@@ -22,8 +22,8 @@
             <v-text-field
               v-model="user.old_password"
               :type="oldPasswordHidden ? 'password' : 'text'"
-              :append-icon="!oldPasswordHidden ? 'mdi-eye' : 'mdi-eye-off'"
-              @click:append="oldPasswordHidden = !oldPasswordHidden"
+              :append-inner-icon="!oldPasswordHidden ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append-inner="oldPasswordHidden = !oldPasswordHidden"
               label="Old Password"
             ></v-text-field>
           </v-col>
@@ -31,8 +31,8 @@
             <v-text-field
               v-model="user.password"
               :type="passwordHidden ? 'password' : 'text' "
-              :append-icon="!passwordHidden ? 'mdi-eye' : 'mdi-eye-off'"
-              @click:append="passwordHidden = !passwordHidden"
+              :append-inner-icon="!passwordHidden ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append-inner="passwordHidden = !passwordHidden"
               label="New Password"
             ></v-text-field>
           </v-col>
@@ -40,8 +40,8 @@
             <v-text-field
               v-model="user.password_confirmation"
               :type="passwordConfirmationHidden ? 'password' : 'text'"
-              :append-icon="!passwordConfirmationHidden ? 'mdi-eye' : 'mdi-eye-off'"
-              @click:append="passwordConfirmationHidden = !passwordConfirmationHidden"
+              :append-inner-icon="!passwordConfirmationHidden ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append-inner="passwordConfirmationHidden = !passwordConfirmationHidden"
               label="New Password Confirmation"
             ></v-text-field>
           </v-col>

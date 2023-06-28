@@ -45,8 +45,8 @@
             <v-text-field
               v-model="user.password"
               :type="passwordHidden ? 'password' : 'text' "
-              :append-icon="!passwordHidden ? 'mdi-eye' : 'mdi-eye-off'"
-              @click:append="passwordHidden = !passwordHidden"
+              :append-inner-icon="!passwordHidden ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append-inner="passwordHidden = !passwordHidden"
               label="User Password"
             ></v-text-field>
           </v-col>
@@ -54,8 +54,8 @@
             <v-text-field
               v-model="user.password_confirmation"
               :type="passwordConfirmationHidden ? 'password' : 'text'"
-              :append-icon="!passwordConfirmationHidden ? 'mdi-eye' : 'mdi-eye-off'"
-              @click:append="passwordConfirmationHidden = !passwordConfirmationHidden"
+              :append-inner-icon="!passwordConfirmationHidden ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append-inner="passwordConfirmationHidden = !passwordConfirmationHidden"
               label="Password Confirmation"
             ></v-text-field>
           </v-col>
@@ -122,7 +122,7 @@ export default {
     },
     async submitAndEdit() {
       const response = await this.save()
-      this.$router.push(`/users/${response[0].id}`);
+      this.$router.push(`/users/${response.id}`);
     },
   }
 };
