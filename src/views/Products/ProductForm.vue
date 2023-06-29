@@ -18,7 +18,7 @@
     <v-sheet class="mx-auto">
       <v-form>
         <v-row>
-          <v-col cols="4">
+          <v-col cols="10">
             <v-select
               label="Product type"
               v-model="product.type"
@@ -28,10 +28,27 @@
             >
             </v-select>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="2"  class="d-flex justify-space-between pt-6">
+            <v-tooltip text="Add a new Product type" location="top">
+              <template v-slot:activator="{ props }">
+                <v-btn @click="addNewProductType" v-bind="props" icon="mdi-plus" class="bg-success" size="x-small"></v-btn>
+              </template>
+            </v-tooltip>
+            <v-tooltip text="Change selected Product type" location="top">
+              <template v-slot:activator="{ props }">
+                <v-btn @click="changeProductType(product.type)" :disabled="!product.type" v-bind="props" icon="mdi-pencil" class="bg-warning" size="x-small"></v-btn>
+              </template>
+            </v-tooltip>
+            <v-tooltip text="Delete selected Product type" location="top">
+              <template v-slot:activator="{ props }">
+                <v-btn @click="deleteProductType(product.type)" :disabled="!product.type" v-bind="props" icon="mdi-delete" class="bg-danger" size="x-small"></v-btn>
+              </template>
+            </v-tooltip>
+          </v-col>
+          <v-col cols="6">
             <v-text-field v-model="product.name" label="Product Name"></v-text-field>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="6">
             <v-text-field v-model="product.hts_code" label="HTS Code"></v-text-field>
           </v-col>
         </v-row>
@@ -147,6 +164,7 @@ import apiRoutes from '@/config/apiRoutes';
 import httpClient from '@/config/httpClient';
 import types from '@/config/constants';
 import { postMessageOtherTabs } from "@/services/channels";
+import { receiveMessageOtherTabs } from "@/services/channels";
 
 export default {
   data() {
@@ -231,6 +249,33 @@ export default {
     },
     removefile(key) {
       this.files.splice(key, 1);
+    },
+    addNewProductType() {
+      let target = 'product_type_id';
+      let code = Date.now().toString()
+      window.open(`/product-types/new?popup=1&target=${target}&code=${code}`, '_blank', 'width=800,height=500')
+      receiveMessageOtherTabs((data) => {
+        let { target: receivedTarget, code: receivedCode, entity } = data;
+        if(target == receivedTarget && code == receivedCode){
+          this.product_types.push(entity)
+          this.product.type = entity.id
+        }
+      })
+    },
+    changeProductType(id) {
+      let target = 'update_port';
+      let code = Date.now().toString()
+      window.open(`/product-types/${id}?popup=1&target=${target}&code=${code}`, '_blank', 'width=800,height=500')
+      receiveMessageOtherTabs((data) => {
+        let { target: receivedTarget, code: receivedCode, entity } = data;
+        if(target == receivedTarget && code == receivedCode){
+          let index = this.product_types.findIndex((product_type) => product_type.id == entity.id)
+          this.product_types[index] = entity
+        }
+      })
+    },
+    deleteProductType(id) {
+      console.log(id);
     },
   }
 };
