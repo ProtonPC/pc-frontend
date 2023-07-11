@@ -1,3 +1,4 @@
+- feat: add changelog |  | Bruno Oliveira | 2023-07-11
 - Merge pull request #12 from ProtonPC/feat/suppliers |  | Daniel Farias | 2023-06-28
 - fix: improve put handling and add redirect config |  | Daniel Farias | 2023-06-28
 - fix: improve put handling and add redirect config |  | Daniel Farias | 2023-06-28
@@ -97,4 +98,3 @@
 - fix: remane NewEditProductType to ProductTypeForm |  | Bruno Oliveira | 2023-04-27
 - feat: reorganize folder and create new route |  | Bruno Oliveira | 2023-04-26
 - feat: create page for edit and create |  | Bruno Oliveira | 2023-04-26
-- style: add new color to layout |  | Bruno Oliveira | 2023-04-26
