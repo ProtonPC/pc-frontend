@@ -1,0 +1,100 @@
+- Merge pull request #12 from ProtonPC/feat/suppliers |  | Daniel Farias | 2023-06-28
+- fix: improve put handling and add redirect config |  | Daniel Farias | 2023-06-28
+- fix: improve put handling and add redirect config |  | Daniel Farias | 2023-06-28
+- fix: add upload api to mirage hosts |  | Daniel Farias | 2023-06-27
+- Merge branch 'feat/suppliers' of github.com:ProtonPC/pc-frontend into feat/suppliers |  | Daniel Farias | 2023-06-27
+- fix: improve PUT handling |  | Daniel Farias | 2023-06-27
+- feat: add multi janelas |  | Bruno Oliveira | 2023-06-26
+- fix: make multi-window work |  | Daniel Farias | 2023-06-25
+- fix: enviroment |  | Bruno Oliveira | 2023-06-25
+- remove props |  | Bruno Oliveira | 2023-06-25
+- feat: add event based capabilities to toast component |  | Daniel Farias | 2023-06-25
+- sync toast changes |  | Bruno Oliveira | 2023-06-25
+- fix: move authentication flag to env var |  | Daniel Farias | 2023-06-25
+- sync code |  | Bruno Oliveira | 2023-06-25
+- hide items for components when is modal |  | Bruno Oliveira | 2023-06-22
+- hide menu visibility when a popup is open |  | Bruno Oliveira | 2023-06-22
+- update supplier form |  | Bruno Oliveira | 2023-06-21
+- add supplier |  | Bruno Oliveira | 2023-06-20
+- style: add icon inside the password field |  | Bruno Oliveira | 2023-06-19
+- modify action |  | Bruno Oliveira | 2023-06-19
+- test auto pull request |  | Bruno Oliveira | 2023-06-19
+- Merge pull request #11 from ProtonPC/feat/users |  | Daniel Farias | 2023-06-15
+- feat: add reset password page |  | Bruno Oliveira | 2023-06-14
+- feat: add simple redirect url to use after login |  | Bruno Oliveira | 2023-06-14
+- feat: protect frontend routes |  | Bruno Oliveira | 2023-06-14
+- update user edit password |  | Bruno Oliveira | 2023-06-12
+- create login and reset password |  | Bruno Oliveira | 2023-06-12
+- add pages and routes to login and reset-password |  | Bruno Oliveira | 2023-06-09
+- add link to edit profile |  | Bruno Oliveira | 2023-06-09
+- add user groups routes |  | Bruno Oliveira | 2023-06-09
+- add user group to user form |  | Bruno Oliveira | 2023-06-09
+- add edit password page |  | Bruno Oliveira | 2023-06-09
+- add edit user page |  | Bruno Oliveira | 2023-06-09
+- add routes to edit user and to edit password |  | Bruno Oliveira | 2023-06-09
+- add user-group to mirage models |  | Bruno Oliveira | 2023-06-09
+- Merge pull request #10 from ProtonPC/feat/frontend-improvements |  | Daniel Farias | 2023-06-07
+- feat: create dropdown menu for logged user |  | Bruno Oliveira | 2023-06-05
+- Merge branch 'feat/frontend-improvements' of github.com:ProtonPC/pc-frontend into feat/users |  | Bruno Oliveira | 2023-06-05
+- feat: create users crud |  | Bruno Oliveira | 2023-06-02
+- fix: page reload after save |  | Bruno Oliveira | 2023-06-02
+- Merge pull request #9 from ProtonPC/feat/frontend-improvements |  | Daniel Farias | 2023-05-31
+- feat: implements a single function to save in all submit options |  | Bruno Oliveira | 2023-05-25
+- feat: make customers manage data from mirage |  | Bruno Oliveira | 2023-05-25
+- feat: make ports manage data from mirage |  | Bruno Oliveira | 2023-05-25
+- feat: make warehouses manage data from mirage |  | Bruno Oliveira | 2023-05-25
+- feat: create warehouses service |  | Bruno Oliveira | 2023-05-25
+- feat: create ports service |  | Bruno Oliveira | 2023-05-25
+- feat: create customers services |  | Bruno Oliveira | 2023-05-25
+- feat: add ports and warehouses routes and model |  | Bruno Oliveira | 2023-05-25
+- feat: make products manage data from mirage |  | Bruno Oliveira | 2023-05-24
+- feat: create a constants file |  | Bruno Oliveira | 2023-05-24
+- feat: create endpoints for products |  | Bruno Oliveira | 2023-05-24
+- feat: add api routes for products |  | Bruno Oliveira | 2023-05-24
+- add products to mirage |  | Bruno Oliveira | 2023-05-24
+- fix: add correct redirects after submit |  | Bruno Oliveira | 2023-05-24
+- Merge pull request #8 from ProtonPC/feat/products |  | Daniel Farias | 2023-05-18
+- Merge pull request #7 from ProtonPC/fix/frontend-improvements |  | Daniel Farias | 2023-05-18
+- feat: create all inputs |  | Bruno Oliveira | 2023-05-18
+- add delete function and create product types |  | Daniel Farias | 2023-05-18
+- fix: separate routes and create services |  | Daniel Farias | 2023-05-17
+- fix: make product types usage better |  | Daniel Farias | 2023-05-17
+- fix: add placeholder tables |  | Daniel Farias | 2023-05-17
+- fix: normalize table headers |  | Daniel Farias | 2023-05-17
+- Merge pull request #6 from ProtonPC/feat/products |  | Daniel Farias | 2023-05-17
+- feat: products |  | Bruno Oliveira | 2023-05-17
+- Merge pull request #4 from ProtonPC/fix/improve-pinia |  | Daniel Farias | 2023-05-10
+- Merge pull request #5 from ProtonPC/feat/add-zipapi |  | Daniel Farias | 2023-05-10
+- feat: integrate with zipapi |  | Daniel Farias | 2023-05-05
+- fix: improve datatables column exibition |  | Daniel Farias | 2023-05-05
+- Merge pull request #3 from ProtonPC/feat/customers |  | Daniel Farias | 2023-05-03
+- fix: verbiage issues |  | Bruno Oliveira | 2023-05-03
+- feat: create customers form |  | Bruno Oliveira | 2023-05-02
+- feat: create customers component index with fake data |  | Bruno Oliveira | 2023-05-02
+- feat: create customers routes |  | Bruno Oliveira | 2023-05-02
+- feat: add customers on sidebar |  | Bruno Oliveira | 2023-05-02
+- style: add light_gray on theme |  | Bruno Oliveira | 2023-05-02
+- style: add colors white and black to theme |  | Bruno Oliveira | 2023-05-02
+- feat: add local storage |  | Daniel Farias | 2023-04-28
+- feat: add primevue library |  | Daniel Farias | 2023-04-28
+- attempt to save prime vue |  | Daniel Farias | 2023-04-28
+- Merge pull request #2 from ProtonPC/dev/bruno |  | Daniel Farias | 2023-04-28
+- feat: create warehouse form |  | Bruno Oliveira | 2023-04-27
+- feat: add warehouses index |  | Bruno Oliveira | 2023-04-27
+- feat: remane trucking companies component and move to warehouses/ |  | Bruno Oliveira | 2023-04-27
+- feat: replace trucking companies route to warehouses |  | Bruno Oliveira | 2023-04-27
+- feat: add warehouses to sidebar |  | Bruno Oliveira | 2023-04-27
+- feat: create ports form |  | Bruno Oliveira | 2023-04-27
+- feat: add new fake data for ports |  | Bruno Oliveira | 2023-04-27
+- feat: create PortsForm |  | Bruno Oliveira | 2023-04-27
+- feat: add Ports index |  | Bruno Oliveira | 2023-04-27
+- feat: add Ports router |  | Bruno Oliveira | 2023-04-27
+- feat: add Ports on sidebar |  | Bruno Oliveira | 2023-04-27
+- Merge pull request #1 from ProtonPC/dev/bruno |  | Daniel Farias | 2023-04-27
+- fix: create one function for each submit type |  | Bruno Oliveira | 2023-04-27
+- fix: set the URL directly to btn |  | Bruno Oliveira | 2023-04-27
+- fix: identation |  | Bruno Oliveira | 2023-04-27
+- fix: remane NewEditProductType to ProductTypeForm |  | Bruno Oliveira | 2023-04-27
+- feat: reorganize folder and create new route |  | Bruno Oliveira | 2023-04-26
+- feat: create page for edit and create |  | Bruno Oliveira | 2023-04-26
+- style: add new color to layout |  | Bruno Oliveira | 2023-04-26
