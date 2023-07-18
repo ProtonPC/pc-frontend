@@ -54,43 +54,29 @@
                     <v-col cols="4">
                       <v-text-field v-model="total_mts" type="number" label="Total MTs" disabled></v-text-field>
                     </v-col>
-                  </v-row>
-                </v-sheet>
-                <v-divider class="py-3"></v-divider>
-                <v-sheet
-                  :elevation="1"
-                  color="light_grey"
-                  rounded
-                  border
-                  class="pa-5"
-                >
-                  <div class="pb-2 text-h6">
-                    FOB PRICE
-                  </div>
-                  <v-row>
                     <v-col cols="4">
                       <v-text-field v-model="quote.heating_pad" type="number" label="Heating PAD" required></v-text-field>
                     </v-col>
                     <v-col cols="4">
-                      <v-text-field v-model="quote.discount_more_than_500_mts"  type="number" label="Discount More than 500 MT"></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="fob_price" type="number" label="Total MTs" disabled></v-text-field>
+                      <v-text-field v-model="fob_price" type="number" label="FOB PRICE" disabled></v-text-field>
                     </v-col>
                   </v-row>
                 </v-sheet>
                 <v-divider class="py-3"></v-divider>
                 <v-sheet
-                  :elevation="1"
-                  color="light_grey"
-                  rounded
-                  border
-                  class="pa-5"
+                :elevation="1"
+                color="light_grey"
+                rounded
+                border
+                class="pa-5"
                 >
-                  <div class="pb-2 text-h6">
-                    CFR PRICE
-                  </div>
-                  <v-row>
+                <div class="pb-2 text-h6">
+                  CFR PRICE
+                </div>
+                <v-row>
+                    <v-col cols="4">
+                      <v-text-field v-model="quote.discount_more_than_500_mts"  type="number" label="Discount More than 500 MT"></v-text-field>
+                    </v-col>
                     <v-col cols="4">
                       <v-text-field v-model="quote.total_weight" type="number" label="Total Weight"></v-text-field>
                     </v-col>
@@ -263,8 +249,7 @@ export default {
       return this.quote.total_weight / 1000;
     },
     fob_price() {
-      let total = (Number.parseFloat(this.quote.total_weight) * Number.parseFloat(this.quote.fob_pricing_mt)) + Number.parseFloat(this.quote.heating_pad)
-      return (this.total_mts > 500) ? total - Number.parseFloat(this.quote.discount_more_than_500_mts) : total;
+      return this.total_mts * Number.parseFloat(this.quote.fob_pricing_mt) + Number.parseFloat(this.quote.heating_pad);
     }
   },
   methods: {
