@@ -57,6 +57,10 @@
           <v-list-item prepend-icon="mdi-home" title="Warehouses"></v-list-item>
         </router-link>
 
+        <router-link to="/quotes" class="text-white">
+          <v-list-item prepend-icon="mdi-home" title="Quotes"></v-list-item>
+        </router-link>
+
         <router-link to="/users" class="text-white">
           <v-list-item prepend-icon="mdi-home" title="Users"></v-list-item>
         </router-link>

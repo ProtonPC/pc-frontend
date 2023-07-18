@@ -28,6 +28,9 @@ const apiRoutes = {
 
   listSuppliers: apiUrl+'/api/suppliers',
   getSupplier: (id) => apiUrl+`/api/suppliers/${id}`,
+
+  listQuotes: apiUrl+'/api/quotes',
+  getQuote: (id) => apiUrl+`/api/quotes/${id}`,
 }
 
 export default apiRoutes

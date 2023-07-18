@@ -116,6 +116,24 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/Warehouses/WarehouseForm.vue'),
       },
       {
+        path: 'quotes',
+        name: 'Quotes',
+        meta: { requiresAuth: true },
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Quotes/Quotes.vue'),
+      },
+      {
+        path: 'quotes/:id',
+        name: 'QuoteForm',
+        meta: { requiresAuth: true },
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Quotes/QuoteForm.vue'),
+      },
+      {
         path: 'customers',
         name: 'Customers',
         meta: { requiresAuth: true },
