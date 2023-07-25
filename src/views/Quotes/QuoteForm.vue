@@ -105,10 +105,10 @@
                     </v-col>
                     <v-col cols="4">
                       <v-text-field :prepend-inner-icon="'mdi-currency-usd'" v-model="quote.duty_per_kgs_exact_value" type="number"
-                        label="Duty Per KG's (EXACT VALUE)" bg-color="light_grey"></v-text-field>
+                        label="Duty Per KG's (EXACT VALUE)" bg-color="light_grey" :hint="hint_duty_per_kgs_exact_value"></v-text-field>
                     </v-col>
                     <v-col cols="4">
-                      <v-text-field v-model="total_dutie" type="number" label="Fob Pricing MT" readonly></v-text-field>
+                      <v-text-field v-model="total_dutie" type="number" label="Total Dutie" readonly></v-text-field>
                     </v-col>
                   </v-row>
                 </v-sheet>
@@ -229,8 +229,11 @@ export default {
     cif_price_usd() {
       return Number.parseFloat(this.cif_price_mt) * Number.parseFloat(this.total_mts);
     },
+    hint_duty_per_kgs_exact_value () {
+      return (Number.parseFloat(this.quote.duty_per_kgs_exact_value) * Number.parseFloat(this.quote.total_weight)).toString();
+    },
     total_dutie() {
-      return (Number.parseFloat(this.quote.duty_per_fob_pricing_usd_percent) * Number.parseFloat(this.fob_price))
+      return (Number.parseFloat(this.quote.duty_per_fob_pricing_usd_percent) / 100)
         + (Number.parseFloat(this.quote.duty_per_kgs_exact_value) * Number.parseFloat(this.quote.total_weight));
     },
   },
