@@ -122,53 +122,27 @@
                   </div>
                   <v-row>
                     <v-col cols="4">
-                      <v-text-field v-model="quote.total_weight" type="number" label="Total Weight"
+                      <v-text-field v-model="quote.merchandise_processing_fee" type="number" label="Merchandise Processing Fee"
                         bg-color="light_grey"></v-text-field>
                     </v-col>
                     <v-col cols="4">
-                      <v-text-field v-model="total_mts" type="number" label="Total MTs" readonly></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="quote.fob_pricing_mt" type="number" label="Fob Pricing MT"
-                        bg-color="light_grey"></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-sheet>
-                <v-divider class="py-3"></v-divider>
-                <v-sheet :elevation="5" color="sheet_card" rounded border class="pa-5">
-                  <div class="pb-2 text-h6">
-                    TOTAL WAREHOUSE COST (CONTAINER)
-                  </div>
-                  <v-row>
-                    <v-col cols="4">
-                      <v-text-field v-model="quote.total_weight" type="number" label="Total Weight"
+                      <v-text-field v-model="quote.harbor_maintenance" type="number" label="Harbor Maintenance"
                         bg-color="light_grey"></v-text-field>
                     </v-col>
                     <v-col cols="4">
-                      <v-text-field v-model="total_mts" type="number" label="Total MTs" readonly></v-text-field>
+                      <v-text-field v-model="quote.broker_cost" type="number" label="Broker Cost" bg-color="light_grey"></v-text-field>
                     </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="quote.fob_pricing_mt" type="number" label="Fob Pricing MT"
-                        bg-color="light_grey"></v-text-field>
+                    <v-col cols="3">
+                      <v-text-field v-model="total_import" type="number" label="Total Import" readonly></v-text-field>
                     </v-col>
-                  </v-row>
-                </v-sheet>
-                <v-divider class="py-3"></v-divider>
-                <v-sheet :elevation="5" color="sheet_card" rounded border class="pa-5">
-                  <div class="pb-2 text-h6">
-                    TOTAL WAREHOUSE COST (PALLETS)
-                  </div>
-                  <v-row>
-                    <v-col cols="4">
-                      <v-text-field v-model="quote.total_weight" type="number" label="Total Weight"
-                        bg-color="light_grey"></v-text-field>
+                    <v-col cols="3">
+                      <v-text-field v-model="total_import_by_mt" type="number" label="Total Import  BY MT" readonly></v-text-field>
                     </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="total_mts" type="number" label="Total MTs" readonly></v-text-field>
+                    <v-col cols="3">
+                      <v-text-field v-model="ddp_price_mt" type="number" label="DDP Price MT" readonly></v-text-field>
                     </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="quote.fob_pricing_mt" type="number" label="Fob Pricing MT"
-                        bg-color="light_grey"></v-text-field>
+                    <v-col cols="3">
+                      <v-text-field v-model="ddp_price" type="number" label="DDP Price" readonly></v-text-field>
                     </v-col>
                   </v-row>
                 </v-sheet>
@@ -235,6 +209,18 @@ export default {
     total_dutie() {
       return (Number.parseFloat(this.quote.duty_per_fob_pricing_usd_percent) / 100)
         + (Number.parseFloat(this.quote.duty_per_kgs_exact_value) * Number.parseFloat(this.quote.total_weight));
+    },
+    total_import() {
+      return Number.parseFloat(this.quote.broker_cost) + Number.parseFloat(this.quote.merchandise_processing_fee) + Number.parseFloat(this.total_dutie);
+    },
+    total_import_by_mt() {
+      return Number.parseFloat(this.total_import) / Number.parseFloat(this.total_mts);
+    },
+    ddp_price_mt() {
+      return Number.parseFloat(this.total_import_by_mt) + Number.parseFloat(this.cif_price_mt);
+    },
+    ddp_price() {
+      return Number.parseFloat(this.ddp_price_mt) * Number.parseFloat(this.total_mts);
     },
   },
   methods: {
