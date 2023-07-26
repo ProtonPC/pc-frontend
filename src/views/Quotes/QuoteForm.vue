@@ -22,8 +22,8 @@
               bg-color="light_grey"></v-text-field>
           </v-col>
           <v-col cols="4">
-            <v-text-field v-model="quote.fob_pricing_mt" :prepend-inner-icon="'mdi-currency-usd'" type="number" label="Fob Pricing MT"
-              bg-color="light_grey"></v-text-field>
+            <v-text-field v-model="quote.fob_pricing_mt" :prepend-inner-icon="'mdi-currency-usd'" type="number"
+              label="Fob Pricing MT" bg-color="light_grey"></v-text-field>
           </v-col>
           <v-col cols="4">
             <v-text-field v-model="total_mts" type="number" label="Total MTs" readonly></v-text-field>
@@ -33,7 +33,8 @@
               bg-color="light_grey"></v-text-field>
           </v-col>
           <v-col cols="4">
-            <v-text-field v-model="fob_price" :prepend-inner-icon="'mdi-currency-usd'" type="number" label="FOB PRICE" readonly></v-text-field>
+            <v-text-field v-model="fob_price" :prepend-inner-icon="'mdi-currency-usd'" type="number" label="FOB PRICE"
+              readonly></v-text-field>
           </v-col>
         </v-row>
       </v-sheet>
@@ -56,8 +57,8 @@
                   </div>
                   <v-row>
                     <v-col cols="4">
-                      <v-text-field v-model="quote.discount_more_than_500_mts" :prepend-inner-icon="'mdi-currency-usd'" type="number"
-                        label="Discount More than 500 MT" bg-color="light_grey"></v-text-field>
+                      <v-text-field v-model="quote.discount_more_than_500_mts" :prepend-inner-icon="'mdi-currency-usd'"
+                        type="number" label="Discount More than 500 MT" bg-color="light_grey"></v-text-field>
                     </v-col>
                     <v-col cols="4">
                       <v-text-field v-model="quote.total_freight" type="number" label="Total Freight"
@@ -68,10 +69,12 @@
                         :prepend-inner-icon="'mdi-currency-usd'" label="Total MTs" readonly></v-text-field>
                     </v-col>
                     <v-col cols="4">
-                      <v-text-field v-model="cfr_price_mt" type="number" label="CFR price MT" readonly :prepend-inner-icon="'mdi-currency-usd'"></v-text-field>
+                      <v-text-field v-model="cfr_price_mt" type="number" label="CFR price MT" readonly
+                        :prepend-inner-icon="'mdi-currency-usd'"></v-text-field>
                     </v-col>
                     <v-col cols="4">
-                      <v-text-field v-model="cfr_price_usd" type="number" label="CFR price USD" readonly :prepend-inner-icon="'mdi-currency-usd'"></v-text-field>
+                      <v-text-field v-model="cfr_price_usd" type="number" label="CFR price USD" readonly
+                        :prepend-inner-icon="'mdi-currency-usd'"></v-text-field>
                     </v-col>
                   </v-row>
                 </v-sheet>
@@ -86,10 +89,12 @@
                         :prepend-inner-icon="'mdi-currency-usd'" bg-color="light_grey"></v-text-field>
                     </v-col>
                     <v-col cols="4">
-                      <v-text-field v-model="cif_price_mt" type="number" label="CIF PRICE MT" readonly :prepend-inner-icon="'mdi-currency-usd'"></v-text-field>
+                      <v-text-field v-model="cif_price_mt" type="number" label="CIF PRICE MT" readonly
+                        :prepend-inner-icon="'mdi-currency-usd'"></v-text-field>
                     </v-col>
                     <v-col cols="4">
-                      <v-text-field v-model="cif_price_usd" type="number" label="CIF PRICE USD" readonly :prepend-inner-icon="'mdi-currency-usd'"></v-text-field>
+                      <v-text-field v-model="cif_price_usd" type="number" label="CIF PRICE USD" readonly
+                        :prepend-inner-icon="'mdi-currency-usd'"></v-text-field>
                     </v-col>
                   </v-row>
                 </v-sheet>
@@ -100,12 +105,13 @@
                   </div>
                   <v-row>
                     <v-col cols="4">
-                      <v-text-field :append-inner-icon="'mdi-percent'" v-model="quote.duty_per_fob_pricing_usd_percent" type="number"
-                        label="Duty Per FOB Pricing USD (PERCENT)" bg-color="light_grey"></v-text-field>
+                      <v-text-field :append-inner-icon="'mdi-percent'" v-model="quote.duty_per_fob_pricing_usd_percent"
+                        type="number" label="Duty Per FOB Pricing USD (PERCENT)" bg-color="light_grey"></v-text-field>
                     </v-col>
                     <v-col cols="4">
-                      <v-text-field :prepend-inner-icon="'mdi-currency-usd'" v-model="quote.duty_per_kgs_exact_value" type="number"
-                        label="Duty Per KG's (EXACT VALUE)" bg-color="light_grey" :hint="hint_duty_per_kgs_exact_value"></v-text-field>
+                      <v-text-field :prepend-inner-icon="'mdi-currency-usd'" v-model="quote.duty_per_kgs_exact_value"
+                        type="number" label="Duty Per KG's (EXACT VALUE)" bg-color="light_grey"
+                        :hint="hint_duty_per_kgs_exact_value"></v-text-field>
                     </v-col>
                     <v-col cols="4">
                       <v-text-field v-model="total_dutie" type="number" label="Total Dutie" readonly></v-text-field>
@@ -122,27 +128,116 @@
                   </div>
                   <v-row>
                     <v-col cols="4">
-                      <v-text-field v-model="quote.merchandise_processing_fee" type="number" label="Merchandise Processing Fee"
-                        bg-color="light_grey"></v-text-field>
+                      <v-text-field v-model="quote.merchandise_processing_fee" type="number"
+                        label="Merchandise Processing Fee" bg-color="light_grey"></v-text-field>
                     </v-col>
                     <v-col cols="4">
                       <v-text-field v-model="quote.harbor_maintenance" type="number" label="Harbor Maintenance"
                         bg-color="light_grey"></v-text-field>
                     </v-col>
                     <v-col cols="4">
-                      <v-text-field v-model="quote.broker_cost" type="number" label="Broker Cost" bg-color="light_grey"></v-text-field>
+                      <v-text-field v-model="quote.broker_cost" type="number" label="Broker Cost"
+                        bg-color="light_grey"></v-text-field>
                     </v-col>
                     <v-col cols="3">
                       <v-text-field v-model="total_import" type="number" label="Total Import" readonly></v-text-field>
                     </v-col>
                     <v-col cols="3">
-                      <v-text-field v-model="total_import_by_mt" type="number" label="Total Import  BY MT" readonly></v-text-field>
+                      <v-text-field v-model="total_import_by_mt" type="number" label="Total Import  BY MT"
+                        readonly></v-text-field>
                     </v-col>
                     <v-col cols="3">
                       <v-text-field v-model="ddp_price_mt" type="number" label="DDP Price MT" readonly></v-text-field>
                     </v-col>
                     <v-col cols="3">
                       <v-text-field v-model="ddp_price" type="number" label="DDP Price" readonly></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-sheet>
+
+                <v-divider class="py-3"></v-divider>
+                <v-sheet :elevation="5" color="sheet_card" rounded border class="pa-5">
+                  <div class="pb-2 text-h6">
+                    TOTAL WAREHOUSE COST (Container)
+                  </div>
+                  <v-row>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.container_unload_floor_loaded" type="number"
+                        label="Container Unload Floor Loaded" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.container_unload_pallet_roll_off" type="number"
+                        label="Container Unload Pallert Roll Off" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.receipt_processing" type="number" label="Receipt Processing"
+                        bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="total_warehouse_cost_container" type="number"
+                        label="Total Warehouse Cost (Container)" readonly></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-sheet>
+
+                <v-divider class="py-3"></v-divider>
+                <v-sheet :elevation="5" color="sheet_card" rounded border class="pa-5">
+                  <div class="pb-2 text-h6">
+                    TOTAL WAREHOUSE COST (Pallets)
+                  </div>
+                  <v-row>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.pallet_cost" type="number"
+                        label="Pallet Cost" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.tote_cost" type="number"
+                        label="Tote Cost" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.testing" type="number"
+                        label="Testing" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.labour" type="number"
+                        label="Labour" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.slip_sheets_per_pallet_floor_load_only" type="number"
+                        label="Slip Sheets Per Pallet (Floor Load Only)" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.stretch_wrap_per_pallet_floor_load_only" type="number"
+                        label="Stretch Wrap Per Pallet (Floor Load Only)" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.banding_floor_loaded_drums" type="number"
+                        label="Banding (Floor loaded drums)" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.loose_drum_handling_floor_loaded_drums" type="number"
+                        label="Loose drum handling (Floor loaded drums)" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="quote.pallet_handling_in_out_1" type="number"
+                        label="Pallet Handling (in & out) 1" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="quote.pallet_handling_in_out_2" type="number"
+                        label="Pallet Handling (in & out) 2" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="quote.pallet_handling_in_out_3" type="number"
+                        label="Pallet Handling (in & out) 3" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="total_warehouse_costs_pallets" type="number" label="Total Warehouse Costs (Pallets)" readonly></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="total_warehouse" type="number" label="Total Warehouse" readonly></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="total_warehouse_mt" type="number" label="Total Warehouse MT" readonly></v-text-field>
                     </v-col>
                   </v-row>
                 </v-sheet>
@@ -203,7 +298,7 @@ export default {
     cif_price_usd() {
       return Number.parseFloat(this.cif_price_mt) * Number.parseFloat(this.total_mts);
     },
-    hint_duty_per_kgs_exact_value () {
+    hint_duty_per_kgs_exact_value() {
       return (Number.parseFloat(this.quote.duty_per_kgs_exact_value) * Number.parseFloat(this.quote.total_weight)).toString();
     },
     total_dutie() {
@@ -221,6 +316,28 @@ export default {
     },
     ddp_price() {
       return Number.parseFloat(this.ddp_price_mt) * Number.parseFloat(this.total_mts);
+    },
+    total_warehouse_cost_container() {
+      return (Number.parseFloat(this.quote.container_unload_floor_loaded) + Number.parseFloat(this.quote.container_unload_pallet_roll_off)) + Number.parseFloat(this.quote.receipt_processing);
+    },
+    total_warehouse_costs_pallets() {
+      return Number.parseFloat(this.quote.pallet_cost)  
+        + Number.parseFloat(this.quote.tote_cost)
+        + Number.parseFloat(this.quote.testing)
+        + Number.parseFloat(this.quote.labour)
+        + Number.parseFloat(this.quote.slip_sheets_per_pallet_floor_load_only)
+        + Number.parseFloat(this.quote.stretch_wrap_per_pallet_floor_load_only)
+        + Number.parseFloat(this.quote.banding_floor_loaded_drums)
+        + Number.parseFloat(this.quote.loose_drum_handling_floor_loaded_drums)
+        + Number.parseFloat(this.quote.pallet_handling_in_out_1)
+        + Number.parseFloat(this.quote.pallet_handling_in_out_2)
+        + Number.parseFloat(this.quote.pallet_handling_in_out_3);
+    },
+    total_warehouse() {
+      return Number.parseFloat(this.total_warehouse_costs_pallets) + Number.parseFloat(this.total_warehouse_cost_container);
+    },
+    total_warehouse_mt() {
+      return Number.parseFloat(this.total_warehouse) / Number.parseFloat(this.total_mts);
     },
   },
   methods: {
@@ -260,8 +377,6 @@ export default {
 };
 </script>
 
-<style>
-.cursorPointer:hover {
+<style>.cursorPointer:hover {
   cursor: pointer;
-}
-</style>
+}</style>
