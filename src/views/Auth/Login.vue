@@ -81,8 +81,9 @@ export default {
       if ((this.canSubmit)){
         this.message = 'Logged in'
         this.color = 'success'
-        if(login(this.username, this.password)){
-          this.$router.go('/')
+        let okay = login(this.username, this.password)
+        if(okay){
+          this.$router.push('/quotes')
         }
       } else {
         this.message = 'You must to provide a valid email/username and password'

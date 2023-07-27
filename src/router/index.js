@@ -11,7 +11,7 @@ function isAuthenticated(){
   }
   // TODO: check if user is logged in
   let user = getItem('user')
-  return user ? false : true
+  return user.username ? true : false
 }
 
 const routes = [
