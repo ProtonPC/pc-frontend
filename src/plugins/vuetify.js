@@ -28,6 +28,7 @@ export default createVuetify({
           white: '#FFFFFF',
           black: '#000000',
           light_grey: '#F5F5F5',
+          sheet_card: '#cce5f7',
         },
       },
     },
