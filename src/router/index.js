@@ -2,13 +2,16 @@
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css'
 import { createRouter, createWebHistory } from 'vue-router'
+import { getItem } from '@/plugins/local-storage';
+
 
 function isAuthenticated(){
   if(import.meta.env.MODE == 'development'){
     return true
   }
   // TODO: check if user is logged in
-  return false
+  let user = getItem('user')
+  return user ? false : true
 }
 
 const routes = [

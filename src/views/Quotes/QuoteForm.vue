@@ -43,8 +43,8 @@
         <v-card>
           <v-tabs next-icon="mdi-arrow-right-bold-box-outline" prev-icon="mdi-arrow-left-bold-box-outline" show-arrows
             v-model="tab" bg-color="primary">
-            <v-tab value="one">Item One</v-tab>
-            <v-tab value="two">Item Two</v-tab>
+            <v-tab value="one">FOB, CFR, CIF, Duties</v-tab>
+            <v-tab value="two">Import, Warehouse, DDP</v-tab>
           </v-tabs>
 
           <v-card-text>
@@ -321,7 +321,7 @@ export default {
       return (Number.parseFloat(this.quote.container_unload_floor_loaded) + Number.parseFloat(this.quote.container_unload_pallet_roll_off)) + Number.parseFloat(this.quote.receipt_processing);
     },
     total_warehouse_costs_pallets() {
-      return Number.parseFloat(this.quote.pallet_cost)  
+      return Number.parseFloat(this.quote.pallet_cost)
         + Number.parseFloat(this.quote.tote_cost)
         + Number.parseFloat(this.quote.testing)
         + Number.parseFloat(this.quote.labour)

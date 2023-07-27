@@ -1,5 +1,19 @@
 import apiRoutes from '@/config/apiRoutes';
 import httpClient from '@/config/httpClient';
+import { setItem } from '@/plugins/local-storage';
+
+export async function login(username, password){
+  if(username == "alex" && password == "brazilcoms"){
+    setItem({
+      name: "Alex",
+      username,
+      password,
+      role: "admin",
+    })
+    return true
+  }
+  return false
+}
 
 export async function getUsers(){
   return await httpClient.get(apiRoutes.listUsers)
