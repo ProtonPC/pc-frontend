@@ -49,7 +49,7 @@
             v-model="tab" bg-color="primary">
             <v-tab value="one">FOB, CFR, CIF, Duties</v-tab>
             <v-tab value="two">Import, Warehouse, DDP</v-tab>
-            <v-tab value="three">Item Three</v-tab>
+            <v-tab value="three">Storage, Cross-dock and Misc</v-tab>
           </v-tabs>
 
           <v-card-text>
