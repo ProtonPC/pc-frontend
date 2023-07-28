@@ -45,6 +45,7 @@
 <script>
 
 import { postToastMessage } from '@/services/channels';
+import { login } from '@/services/users';
 
 export default {
   data() {
@@ -80,6 +81,10 @@ export default {
       if ((this.canSubmit)){
         this.message = 'Logged in'
         this.color = 'success'
+        let okay = login(this.username, this.password)
+        if(okay){
+          this.$router.push('/quotes')
+        }
       } else {
         this.message = 'You must to provide a valid email/username and password'
         this.color = 'error'
