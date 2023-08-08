@@ -26,7 +26,7 @@
               label="Fob Pricing MT" bg-color="light_grey"></v-text-field>
           </v-col>
           <v-col cols="4">
-            <v-text-field v-model="quote.heating_pad" type="number" label="Heating PAD"
+            <v-text-field v-model="quote.heating_pad" type="number" label="Misc"
             bg-color="light_grey"></v-text-field>
           </v-col>
           <v-col cols="4">
