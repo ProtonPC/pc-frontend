@@ -34,8 +34,9 @@ export default {
   },
   async mounted() {
     this.headers = {
-      name: "Name",
-      country: "Country",
+      date: "Quote Date",
+      total_weight: "Total Weight",
+      fob_pricing_mt: "Fob Pricing MT",
     };
     await this.loadData();
   },
