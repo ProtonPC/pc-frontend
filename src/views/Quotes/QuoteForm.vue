@@ -129,6 +129,67 @@
                     </v-col>
                   </v-row>
                 </v-sheet>
+                  <v-divider class="py-3"></v-divider>
+                <v-sheet :elevation="5" color="sheet_card" rounded border class="pa-5">
+                  <div class="pb-2 text-h6">
+                    TOTAL WAREHOUSE COST (Pallets)
+                  </div>
+                  <v-row>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.pallet_cost" type="number"
+                        label="Pallet Cost" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.tote_cost" type="number"
+                        label="Tote Cost" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.testing" type="number"
+                        label="Testing" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.labour" type="number"
+                        label="Labour" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.slip_sheets_per_pallet_floor_load_only" type="number"
+                        label="Slip Sheets Per Pallet (Floor Load Only)" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.stretch_wrap_per_pallet_floor_load_only" type="number"
+                        label="Stretch Wrap Per Pallet (Floor Load Only)" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.banding_floor_loaded_drums" type="number"
+                        label="Banding (Floor loaded drums)" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.loose_drum_handling_floor_loaded_drums" type="number"
+                        label="Loose drum handling (Floor loaded drums)" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="quote.pallet_handling_in_out_1" type="number"
+                        label="Pallet Handling (in & out) 1" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="quote.pallet_handling_in_out_2" type="number"
+                        label="Pallet Handling (in & out) 2" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="quote.pallet_handling_in_out_3" type="number"
+                        label="Pallet Handling (in & out) 3" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="total_warehouse_costs_pallets" type="number" label="Total Warehouse Costs (Pallets)" readonly></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="total_warehouse" type="number" label="Total Warehouse" readonly></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="total_warehouse_mt" type="number" label="Total Warehouse MT" readonly></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-sheet>
               </v-window-item>
 
               <v-window-item value="two">
@@ -187,68 +248,6 @@
                     <v-col cols="3">
                       <v-text-field v-model="total_warehouse_cost_container" type="number"
                         label="Total Warehouse Cost (Container)" readonly></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-sheet>
-
-                <v-divider class="py-3"></v-divider>
-                <v-sheet :elevation="5" color="sheet_card" rounded border class="pa-5">
-                  <div class="pb-2 text-h6">
-                    TOTAL WAREHOUSE COST (Pallets)
-                  </div>
-                  <v-row>
-                    <v-col cols="3">
-                      <v-text-field v-model="quote.pallet_cost" type="number"
-                        label="Pallet Cost" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-text-field v-model="quote.tote_cost" type="number"
-                        label="Tote Cost" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-text-field v-model="quote.testing" type="number"
-                        label="Testing" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-text-field v-model="quote.labour" type="number"
-                        label="Labour" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-text-field v-model="quote.slip_sheets_per_pallet_floor_load_only" type="number"
-                        label="Slip Sheets Per Pallet (Floor Load Only)" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-text-field v-model="quote.stretch_wrap_per_pallet_floor_load_only" type="number"
-                        label="Stretch Wrap Per Pallet (Floor Load Only)" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-text-field v-model="quote.banding_floor_loaded_drums" type="number"
-                        label="Banding (Floor loaded drums)" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-text-field v-model="quote.loose_drum_handling_floor_loaded_drums" type="number"
-                        label="Loose drum handling (Floor loaded drums)" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="quote.pallet_handling_in_out_1" type="number"
-                        label="Pallet Handling (in & out) 1" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="quote.pallet_handling_in_out_2" type="number"
-                        label="Pallet Handling (in & out) 2" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="quote.pallet_handling_in_out_3" type="number"
-                        label="Pallet Handling (in & out) 3" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="total_warehouse_costs_pallets" type="number" label="Total Warehouse Costs (Pallets)" readonly></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="total_warehouse" type="number" label="Total Warehouse" readonly></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="total_warehouse_mt" type="number" label="Total Warehouse MT" readonly></v-text-field>
                     </v-col>
                   </v-row>
                 </v-sheet>
