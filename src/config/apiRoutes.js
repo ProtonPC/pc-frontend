@@ -1,36 +1,36 @@
-const { host, protocol } = window.location;
+// const { host, protocol } = window.location;
 
-const apiUrl = `${protocol}//${host}`
+const apiUrl = 'http://127.0.0.1:8000/api';
 
 console.log(apiUrl)
 
 const apiRoutes = {
-  listProductTypes: apiUrl+'/api/productTypes',
-  getProductType: (id) => apiUrl+`/api/productTypes/${id}`,
+  listProductTypes: apiUrl+'/products-types',
+  getProductType: (id) => apiUrl+`/products-types/${id}`,
 
-  listCustomers: apiUrl+'/api/customers',
-  getCustomer: (id) => apiUrl+`/api/customers/${id}`,
+  listCustomers: apiUrl+'/customers',
+  getCustomer: (id) => apiUrl+`/customers/${id}`,
 
-  listProducts: apiUrl+'/api/products',
-  getProduct: (id) => apiUrl+`/api/products/${id}`,
+  listProducts: apiUrl+'/products',
+  getProduct: (id) => apiUrl+`/products/${id}`,
 
-  listPorts: apiUrl+'/api/ports',
-  getPort: (id) => apiUrl+`/api/ports/${id}`,
+  listPorts: apiUrl+'/ports',
+  getPort: (id) => apiUrl+`/ports/${id}`,
 
-  listWarehouses: apiUrl+'/api/warehouses',
-  getWarehouse: (id) => apiUrl+`/api/warehouses/${id}`,
+  listWarehouses: apiUrl+'/warehouses',
+  getWarehouse: (id) => apiUrl+`/warehouses/${id}`,
 
-  listUsers: apiUrl+'/api/users',
-  getUser: (id) => apiUrl+`/api/users/${id}`,
+  listUsers: apiUrl+'/users',
+  getUser: (id) => apiUrl+`/users/${id}`,
 
-  listUserGroups: apiUrl+'/api/userGroups',
-  getUserGroup: (id) => apiUrl+`/api/usersGroups/${id}`,
+  listUserGroups: apiUrl+'/users-groups',
+  getUserGroup: (id) => apiUrl+`/users-groups/${id}`,
 
-  listSuppliers: apiUrl+'/api/suppliers',
-  getSupplier: (id) => apiUrl+`/api/suppliers/${id}`,
+  listSuppliers: apiUrl+'/suppliers',
+  getSupplier: (id) => apiUrl+`/suppliers/${id}`,
 
-  listQuotes: apiUrl+'/api/quotes',
-  getQuote: (id) => apiUrl+`/api/quotes/${id}`,
+  listQuotes: apiUrl+'/quotes',
+  getQuote: (id) => apiUrl+`/quotes/${id}`,
 }
 
 export default apiRoutes
