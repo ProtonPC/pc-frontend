@@ -17,28 +17,36 @@
           INITIAL VALUES
         </div>
         <v-row>
-          <v-col cols="4">
+          <v-col cols="3">
             <v-text-field v-model="quote.total_weight" type="number" label="Total Weight"
               bg-color="light_grey"></v-text-field>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="3">
             <v-text-field v-model="quote.fob_pricing_mt" :prepend-inner-icon="'mdi-currency-usd'" type="number"
               label="Fob Pricing MT" bg-color="light_grey"></v-text-field>
           </v-col>
-          <v-col cols="4">
-            <v-text-field v-model="quote.heating_pad" type="number" label="Heating PAD"
+          <v-col cols="3">
+            <v-text-field v-model="quote.heating_pad" type="number" label="Misc"
             bg-color="light_grey"></v-text-field>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="3">
+            <v-text-field v-model="total_weight_lb" type="number" label="Total Weight LB"
+            readonly></v-text-field>
+          </v-col>
+          <v-col cols="3">
             <v-text-field v-model="quote.date" type="date" label="Quote Date"
             bg-color="light_grey"></v-text-field>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="3">
             <v-text-field v-model="total_mts" type="number" label="Total MTs" readonly></v-text-field>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="3">
             <v-text-field v-model="fob_price" :prepend-inner-icon="'mdi-currency-usd'" type="number" label="FOB PRICE"
               readonly></v-text-field>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field v-model="quote.total_pallets_per_container" type="number"
+              label="Total Pallets per Container" bg-color="light_grey" :disabled="!quote.has_storage"></v-text-field>
           </v-col>
         </v-row>
       </v-sheet>
@@ -61,11 +69,11 @@
                     CFR PRICE
                   </div>
                   <v-row>
-                    <v-col cols="4">
+                    <v-col cols="6">
                       <v-text-field v-model="quote.discount_more_than_500_mts" :prepend-inner-icon="'mdi-currency-usd'"
                         type="number" label="Discount More than 500 MT" bg-color="light_grey"></v-text-field>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="6">
                       <v-text-field v-model="quote.total_freight" type="number" label="Total Freight"
                         :prepend-inner-icon="'mdi-currency-usd'" bg-color="light_grey"></v-text-field>
                     </v-col>
@@ -178,7 +186,7 @@
                     </v-col>
                     <v-col cols="3">
                       <v-text-field v-model="quote.container_unload_pallet_roll_off" type="number"
-                        label="Container Unload Pallert Roll Off" bg-color="light_grey"></v-text-field>
+                        label="Container Unload Pallet Roll Off" bg-color="light_grey"></v-text-field>
                     </v-col>
                     <v-col cols="3">
                       <v-text-field v-model="quote.receipt_processing" type="number" label="Receipt Processing"
@@ -190,13 +198,20 @@
                     </v-col>
                   </v-row>
                 </v-sheet>
-
                 <v-divider class="py-3"></v-divider>
                 <v-sheet :elevation="5" color="sheet_card" rounded border class="pa-5">
                   <div class="pb-2 text-h6">
                     TOTAL WAREHOUSE COST (Pallets)
                   </div>
                   <v-row>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.cross_dock_fee_temp_controlled" type="number"
+                        label="Cross-dock fee Temp-Controlled" bg-color="light_grey"></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="quote.cross_dock_fee_ambient" type="number"
+                        label="Cross-dock fee Ambient" bg-color="light_grey"></v-text-field>
+                    </v-col>
                     <v-col cols="3">
                       <v-text-field v-model="quote.pallet_cost" type="number"
                         label="Pallet Cost" bg-color="light_grey"></v-text-field>
@@ -229,25 +244,25 @@
                       <v-text-field v-model="quote.loose_drum_handling_floor_loaded_drums" type="number"
                         label="Loose drum handling (Floor loaded drums)" bg-color="light_grey"></v-text-field>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="3">
                       <v-text-field v-model="quote.pallet_handling_in_out_1" type="number"
                         label="Pallet Handling (in & out) 1" bg-color="light_grey"></v-text-field>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="3">
                       <v-text-field v-model="quote.pallet_handling_in_out_2" type="number"
                         label="Pallet Handling (in & out) 2" bg-color="light_grey"></v-text-field>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="3">
                       <v-text-field v-model="quote.pallet_handling_in_out_3" type="number"
                         label="Pallet Handling (in & out) 3" bg-color="light_grey"></v-text-field>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="3">
                       <v-text-field v-model="total_warehouse_costs_pallets" type="number" label="Total Warehouse Costs (Pallets)" readonly></v-text-field>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="3">
                       <v-text-field v-model="total_warehouse" type="number" label="Total Warehouse" readonly></v-text-field>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="3">
                       <v-text-field v-model="total_warehouse_mt" type="number" label="Total Warehouse MT" readonly></v-text-field>
                     </v-col>
                   </v-row>
@@ -270,15 +285,15 @@
                       hide-details
                       ></v-switch>
                     </v-col>
-                    <v-col cols="3">
+                    <v-col cols="4">
                       <v-text-field v-model="quote.months_on_hand" min="0" type="number"
                         label="Months on hand" bg-color="light_grey" :disabled="!quote.has_storage"></v-text-field>
                     </v-col>
-                    <v-col cols="3">
+                    <v-col cols="4">
                       <v-text-field v-model="quote.initial_storage_ambient" type="number"
                         label="Initial Storage Ambient" bg-color="light_grey" :disabled="!quote.has_storage"></v-text-field>
                     </v-col>
-                    <v-col cols="3">
+                    <v-col cols="4">
                       <v-text-field v-model="quote.recurring_storage_ambient" type="number"
                         label="Recurring Storage Ambient" bg-color="light_grey" :disabled="!quote.has_storage"></v-text-field>
                     </v-col>
@@ -297,10 +312,6 @@
                     <v-col cols="3">
                       <v-text-field v-model="quote.recurring_storage_reefer" type="number"
                         label="Recurring Storage Reefer" bg-color="light_grey" :disabled="!quote.has_storage"></v-text-field>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-text-field v-model="quote.total_pallets_per_container" type="number"
-                        label="Total Pallets per Container" bg-color="light_grey" :disabled="!quote.has_storage"></v-text-field>
                     </v-col>
                     <v-col cols="4">
                       <v-text-field v-model="recurring_months" type="number" label="Recurring Months" readonly></v-text-field>
@@ -335,36 +346,25 @@
                 <v-divider class="py-3"></v-divider>
                 <v-sheet :elevation="5" color="sheet_card" rounded border class="pa-5">
                   <div class="pb-2 text-h6">
-                    CROSS DOCK AND MISC
+                    MISC
                   </div>
                   <v-row>
-                    <v-col cols="4">
-                      <v-text-field v-model="quote.cross_dock_fee_temp_controlled" type="number"
-                        label="Cross-dock fee Temp-Controlled" bg-color="light_grey"></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="quote.cross_dock_fee_ambient" type="number"
-                        label="Cross-dock fee Ambient" bg-color="light_grey"></v-text-field>
-                    </v-col>
                     <v-col cols="4">
                       <v-text-field v-model="quote.dray_freight_to_warehouse" type="number"
                         label="Dray Freight to Warehouse" bg-color="light_grey"></v-text-field>
                     </v-col>
-                    <v-col cols="6">
+                    <v-col cols="4">
                       <v-text-field v-model="quote.misc_1" type="number"
                         label="Misc 1" bg-color="light_grey"></v-text-field>
                     </v-col>
-                    <v-col cols="6">
+                    <v-col cols="4">
                       <v-text-field v-model="quote.misc_2" type="number"
                         label="Misc 2" bg-color="light_grey"></v-text-field>
                     </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="total_dray" type="number" label="Total Dray" readonly></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
+                    <v-col cols="6">
                       <v-text-field v-model="total_misc" type="number" label="Total Misc" readonly></v-text-field>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="6">
                       <v-text-field v-model="total_dray_mt" type="number" label="Total Dray MT" readonly></v-text-field>
                     </v-col>
                   </v-row>
@@ -376,14 +376,17 @@
                     TOTAL COSTS
                   </div>
                   <v-row>
-                    <v-col cols="4">
+                    <v-col cols="3">
                       <v-text-field v-model="total_cost_usd" type="number" label="Total Cost USD" readonly></v-text-field>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="3">
                       <v-text-field v-model="total_cost_by_mt" type="number" label="Total Cost by MT" readonly></v-text-field>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="3">
                       <v-text-field v-model="total_cost_by_lb" type="number" label="Total Cost by LB" readonly></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field v-model="total_cost_kg" type="number" label="Total Weight by KG" readonly></v-text-field>
                     </v-col>
                   </v-row>
                 </v-sheet>
@@ -406,6 +409,7 @@
 import { saveQuote } from "@/services/quotes";
 import apiRoutes from '@/config/apiRoutes';
 import httpClient from '@/config/httpClient';
+import { formatNumber } from '@/utils/index';
 
 export default {
   data() {
@@ -416,68 +420,122 @@ export default {
   },
   async mounted() {
     await this.loadData();
+    if (!this.isUpdate) {
+      this.quote.total_weight = this.quote.total_weight ? this.quote.total_weight : 0;
+      this.quote.fob_pricing_mt = this.quote.fob_pricing_mt ? this.quote.fob_pricing_mt : 0;
+      this.quote.heating_pad = this.quote.heating_pad ? this.quote.heating_pad : 0;
+      this.quote.discount_more_than_500_mts = this.quote.discount_more_than_500_mts ? this.quote.discount_more_than_500_mts : 0;
+      this.quote.total_freight = this.quote.total_freight ? this.quote.total_freight : 0;
+      this.quote.insurance_per_mt = this.quote.insurance_per_mt ? this.quote.insurance_per_mt : 0;
+      this.quote.duty_per_fob_pricing_usd_percent = this.quote.duty_per_fob_pricing_usd_percent ? this.quote.duty_per_fob_pricing_usd_percent : 0;
+      this.quote.duty_per_kgs_exact_value = this.quote.duty_per_kgs_exact_value ? this.quote.duty_per_kgs_exact_value : 0;
+      this.quote.merchandise_processing_fee = this.quote.merchandise_processing_fee ? this.quote.merchandise_processing_fee : 0;
+      this.quote.harbor_maintenance = this.quote.harbor_maintenance ? this.quote.harbor_maintenance : 0;
+      this.quote.broker_cost = this.quote.broker_cost ? this.quote.broker_cost : 0;
+      this.quote.container_unload_floor_loaded = this.quote.container_unload_floor_loaded ? this.quote.container_unload_floor_loaded : 0;
+      this.quote.container_unload_pallet_roll_off = this.quote.container_unload_pallet_roll_off ? this.quote.container_unload_pallet_roll_off : 0;
+      this.quote.receipt_processing = this.quote.receipt_processing ? this.quote.receipt_processing : 0;
+      this.quote.cross_dock_fee_temp_controlled = this.quote.cross_dock_fee_temp_controlled ? this.quote.cross_dock_fee_temp_controlled : 0;
+      this.quote.cross_dock_fee_ambient = this.quote.cross_dock_fee_ambient ? this.quote.cross_dock_fee_ambient : 0;
+      this.quote.pallet_cost = this.quote.pallet_cost ? this.quote.pallet_cost : 0;
+      this.quote.tote_cost = this.quote.tote_cost ? this.quote.tote_cost : 0;
+      this.quote.testing = this.quote.testing ? this.quote.testing : 0;
+      this.quote.labour = this.quote.labour ? this.quote.labour : 0;
+      this.quote.slip_sheets_per_pallet_floor_load_only = this.quote.slip_sheets_per_pallet_floor_load_only ? this.quote.slip_sheets_per_pallet_floor_load_only : 0;
+      this.quote.stretch_wrap_per_pallet_floor_load_only = this.quote.stretch_wrap_per_pallet_floor_load_only ? this.quote.stretch_wrap_per_pallet_floor_load_only : 0;
+      this.quote.banding_floor_loaded_drums = this.quote.banding_floor_loaded_drums ? this.quote.banding_floor_loaded_drums : 0;
+      this.quote.loose_drum_handling_floor_loaded_drums = this.quote.loose_drum_handling_floor_loaded_drums ? this.quote.loose_drum_handling_floor_loaded_drums : 0;
+      this.quote.pallet_handling_in_out_1 = this.quote.pallet_handling_in_out_1 ? this.quote.pallet_handling_in_out_1 : 0;
+      this.quote.pallet_handling_in_out_2 = this.quote.pallet_handling_in_out_2 ? this.quote.pallet_handling_in_out_2 : 0;
+      this.quote.pallet_handling_in_out_3 = this.quote.pallet_handling_in_out_3 ? this.quote.pallet_handling_in_out_3 : 0;
+      this.quote.months_on_hand = this.quote.months_on_hand ? this.quote.months_on_hand : 0;
+      this.quote.initial_storage_ambient = this.quote.initial_storage_ambient ? this.quote.initial_storage_ambient : 0;
+      this.quote.recurring_storage_ambient = this.quote.recurring_storage_ambient ? this.quote.recurring_storage_ambient : 0;
+      this.quote.initial_storage_temp_controlled = this.quote.initial_storage_temp_controlled ? this.quote.initial_storage_temp_controlled : 0;
+      this.quote.recurring_storage_temp_controlled = this.quote.recurring_storage_temp_controlled ? this.quote.recurring_storage_temp_controlled : 0;
+      this.quote.initial_storage_reefer = this.quote.initial_storage_reefer ? this.quote.initial_storage_reefer : 0;
+      this.quote.recurring_storage_reefer = this.quote.recurring_storage_reefer ? this.quote.recurring_storage_reefer : 0;
+      this.quote.dray_freight_to_warehouse = this.quote.dray_freight_to_warehouse ? this.quote.dray_freight_to_warehouse : 0;
+      this.quote.misc_1 = this.quote.misc_1 ? this.quote.misc_1 : 0;
+      this.quote.misc_2 = this.quote.misc_2 ? this.quote.misc_2 : 0;
+    }
   },
   computed: {
     isUpdate() {
       return this.$route.params.id !== 'new'
     },
     total_mts() {
-      return this.quote.total_weight / 1000;
+      const result = this.quote.total_weight / 1000;
+      return formatNumber(result);
     },
     fob_price() {
-      return this.total_mts * Number.parseFloat(this.quote.fob_pricing_mt) 
-        + Number.parseFloat(this.quote.heating_pad);
+      const result = this.total_mts * Number.parseFloat(this.quote.fob_pricing_mt) 
+      + Number.parseFloat(this.quote.heating_pad);
+      return formatNumber(result);
     },
     total_freight_divided_by_number_of_metric_tons() {
-      return Number.parseFloat(this.quote.total_freight) / Number.parseFloat(this.total_mts);
+      const result = Number.parseFloat(this.quote.total_freight) / Number.parseFloat(this.total_mts);
+      return formatNumber(result);
     },
     cfr_price_mt() {
-      return Number.parseFloat(this.quote.fob_pricing_mt) +
+      const result = Number.parseFloat(this.quote.fob_pricing_mt) +
         Number.parseFloat(this.total_freight_divided_by_number_of_metric_tons) -
         Number.parseFloat(this.quote.discount_more_than_500_mts);
+      return formatNumber(result);
     },
     cfr_price_usd() {
-      return Number.parseFloat(this.cfr_price_mt) * Number.parseFloat(this.total_mts);
+      const result = Number.parseFloat(this.cfr_price_mt) * Number.parseFloat(this.total_mts);
+      return formatNumber(result);
     },
     cif_price_mt() {
-      return Number.parseFloat(this.cfr_price_mt) + Number.parseFloat(this.quote.insurance_per_mt);
+      const result = Number.parseFloat(this.cfr_price_mt) + Number.parseFloat(this.quote.insurance_per_mt);
+      return formatNumber(result);
     },
     cif_price_usd() {
-      return Number.parseFloat(this.cif_price_mt) * Number.parseFloat(this.total_mts);
+      const result = Number.parseFloat(this.cif_price_mt) * Number.parseFloat(this.total_mts);
+      return formatNumber(result);
     },
     total_duty_per_fob_pricing() {
-      return Number.parseFloat(this.quote.duty_per_fob_pricing_usd_percent)
+      const result = Number.parseFloat(this.quote.duty_per_fob_pricing_usd_percent)
         * Number.parseFloat(this.total_mts)
         * Number.parseFloat(this.quote.fob_pricing_mt);
+      return formatNumber(result);
     },
     total_duty_per_kgs() {
-      return Number.parseFloat(this.quote.duty_per_kgs_exact_value) * Number.parseFloat(this.quote.total_weight);
+      const result = Number.parseFloat(this.quote.duty_per_kgs_exact_value) * Number.parseFloat(this.quote.total_weight);
+      return formatNumber(result);
     },
     total_dutie() {
-      return Number.parseFloat(this.total_duty_per_fob_pricing) + Number.parseFloat(this.total_duty_per_kgs);
+      const result = Number.parseFloat(this.total_duty_per_fob_pricing) + Number.parseFloat(this.total_duty_per_kgs);
+      return formatNumber(result);
     },
     total_import() {
-      return Number.parseFloat(this.quote.broker_cost) 
+      const result = Number.parseFloat(this.quote.broker_cost) 
         + Number.parseFloat(this.quote.merchandise_processing_fee)
         + Number.parseFloat(this.quote.harbor_maintenance)
         + Number.parseFloat(this.total_dutie);
+      return formatNumber(result);
     },
     total_import_by_mt() {
-      return Number.parseFloat(this.total_import) / Number.parseFloat(this.total_mts);
+      const result = Number.parseFloat(this.total_import) / Number.parseFloat(this.total_mts);
+      return formatNumber(result);
     },
     ddp_price_mt() {
-      return Number.parseFloat(this.total_import_by_mt) + Number.parseFloat(this.cif_price_mt);
+      const result = Number.parseFloat(this.total_import_by_mt) + Number.parseFloat(this.cif_price_mt);
+      return formatNumber(result);
     },
     ddp_price() {
-      return Number.parseFloat(this.ddp_price_mt) * Number.parseFloat(this.total_mts);
+      const result = Number.parseFloat(this.ddp_price_mt) * Number.parseFloat(this.total_mts);
+      return formatNumber(result);
     },
     total_warehouse_cost_container() {
-      return (Number.parseFloat(this.quote.container_unload_floor_loaded) 
+      const result = (Number.parseFloat(this.quote.container_unload_floor_loaded) 
         + Number.parseFloat(this.quote.container_unload_pallet_roll_off)) 
         + Number.parseFloat(this.quote.receipt_processing);
+      return formatNumber(result);
     },
     total_warehouse_costs_pallets() {
-      return Number.parseFloat(this.quote.pallet_cost)
+      const result = Number.parseFloat(this.quote.pallet_cost)
         + Number.parseFloat(this.quote.tote_cost)
         + Number.parseFloat(this.quote.testing)
         + Number.parseFloat(this.quote.labour)
@@ -488,48 +546,58 @@ export default {
         + Number.parseFloat(this.quote.pallet_handling_in_out_1)
         + Number.parseFloat(this.quote.pallet_handling_in_out_2)
         + Number.parseFloat(this.quote.pallet_handling_in_out_3);
+      return formatNumber(result);
     },
     total_warehouse() {
-      return Number.parseFloat(this.total_warehouse_costs_pallets) 
+      const result = Number.parseFloat(this.total_warehouse_costs_pallets) 
         + Number.parseFloat(this.total_warehouse_cost_container);
+      return formatNumber(result);
     },
     total_warehouse_mt() {
-      return Number.parseFloat(this.total_warehouse) / Number.parseFloat(this.total_mts);
+      const result = Number.parseFloat(this.total_warehouse) / Number.parseFloat(this.total_mts);
+      return formatNumber(result);
     },
     recurring_months() {
-      return Number.parseFloat(this.quote.months_on_hand) > 0 
+      const result = Number.parseFloat(this.quote.months_on_hand) > 0 
         ? Number.parseFloat(this.quote.months_on_hand) - 1 
         : 0;
+      return formatNumber(result);
     },
     initial_storage_ambient_total() {
-      return Number.parseFloat(this.quote.initial_storage_ambient) 
+      const result = Number.parseFloat(this.quote.initial_storage_ambient) 
         * Number.parseFloat(this.quote.total_pallets_per_container);
+      return formatNumber(result);
     },
     recurring_storage_ambient_total() {
-      return Number.parseFloat(this.quote.recurring_storage_ambient) 
+      const result = Number.parseFloat(this.quote.recurring_storage_ambient) 
         * Number.parseFloat(this.quote.total_pallets_per_container)
         * Number.parseFloat(this.recurring_months);
+      return formatNumber(result);
     },
     initial_storage_temp_controlled_total() {
-      return Number.parseFloat(this.quote.initial_storage_temp_controlled) 
+      const result = Number.parseFloat(this.quote.initial_storage_temp_controlled) 
         * Number.parseFloat(this.quote.total_pallets_per_container);
+      return formatNumber(result);
     },
     recurring_storage_temp_controlled_total() {
-      return Number.parseFloat(this.quote.recurring_storage_temp_controlled) 
+      const result = Number.parseFloat(this.quote.recurring_storage_temp_controlled) 
         * Number.parseFloat(this.quote.total_pallets_per_container)
         * Number.parseFloat(this.recurring_months);
+      return formatNumber(result);
     },
     initial_storage_reefer_total() {
-      return Number.parseFloat(this.quote.initial_storage_reefer) 
+      const result = Number.parseFloat(this.quote.initial_storage_reefer) 
         * Number.parseFloat(this.quote.total_pallets_per_container);
+      return formatNumber(result);
     },
     recurring_storage_reefer_total() {
-      return Number.parseFloat(this.quote.recurring_storage_reefer) 
+      const result = Number.parseFloat(this.quote.recurring_storage_reefer) 
         * Number.parseFloat(this.quote.total_pallets_per_container)
         * Number.parseFloat(this.recurring_months);
+      return formatNumber(result);
     },
     total_storage() {
-      return this.quote.has_storage 
+      const result = this.quote.has_storage 
         ? Number.parseFloat(this.initial_storage_ambient_total) 
           + Number.parseFloat(this.recurring_storage_ambient_total)
           + Number.parseFloat(this.initial_storage_temp_controlled_total)
@@ -537,49 +605,60 @@ export default {
           + Number.parseFloat(this.initial_storage_reefer_total)
           + Number.parseFloat(this.recurring_storage_reefer_total)
         : 0 
-      },
-      total_storage_by_mt() {
-        return Number.parseFloat(this.total_storage) / Number.parseFloat(this.total_mts);
-      },
-      total_dray() {
-        return Number.parseFloat(this.quote.cross_dock_fee_temp_controlled) 
-          + Number.parseFloat(this.quote.cross_dock_fee_ambient)
-          + Number.parseFloat(this.quote.dray_freight_to_warehouse);
-      },
-      total_misc() {
-        return Number.parseFloat(this.quote.misc_1) 
-          + Number.parseFloat(this.quote.misc_2);
-      },
-      total_dray_mt() {
-        return Number.parseFloat(this.total_dray) 
-          + Number.parseFloat(this.total_misc);
-      },
-      total_cost_usd() {
-        return Number.parseFloat(this.ddp_price) 
-          + Number.parseFloat(this.total_warehouse_cost_container)
-          + Number.parseFloat(this.total_warehouse_costs_pallets)
-          + Number.parseFloat(this.total_storage)
-          + Number.parseFloat(this.total_dray) // or total_dutie ????
-          + Number.parseFloat(this.total_misc);
-      },
-      total_cost_by_mt() {
-        return Number.parseFloat(this.total_cost_usd) 
-          / Number.parseFloat(this.total_mts);
-      },
-      total_cost_by_lb() {
-        return Number.parseFloat(this.total_cost_usd) 
-          / (Number.parseFloat(this.total_weight) * 0.22);
-      },
+      return formatNumber(result);
+    },
+    total_storage_by_mt() {
+      const result = Number.parseFloat(this.total_storage) / Number.parseFloat(this.total_mts);
+      return formatNumber(result);
+    },
+    total_dray() {
+      const result = Number.parseFloat(this.quote.cross_dock_fee_temp_controlled) 
+        + Number.parseFloat(this.quote.cross_dock_fee_ambient)
+        + Number.parseFloat(this.quote.dray_freight_to_warehouse);
+      return formatNumber(result);
+    },
+    total_misc() {
+      const result = Number.parseFloat(this.quote.misc_1) 
+        + Number.parseFloat(this.quote.misc_2);
+      return formatNumber(result);
+    },
+    total_dray_mt() {
+      const result = Number.parseFloat(this.total_dray) 
+        + Number.parseFloat(this.total_misc);
+      return formatNumber(result);
+    },
+    total_cost_usd() {
+      const result = Number.parseFloat(this.ddp_price) 
+        + Number.parseFloat(this.total_warehouse_cost_container)
+        + Number.parseFloat(this.total_warehouse_costs_pallets)
+        + Number.parseFloat(this.total_storage)
+        + Number.parseFloat(this.total_dray) // or total_dutie ????
+        + Number.parseFloat(this.total_misc);
+      return formatNumber(result);
+    },
+    total_cost_by_mt() {
+      const result = Number.parseFloat(this.total_cost_usd) 
+        / Number.parseFloat(this.total_mts);
+      return formatNumber(result);
+    },
+    total_cost_by_lb() {
+      const result = Number.parseFloat(this.total_cost_usd) / Number.parseFloat(this.total_weight_lb);
+      return formatNumber(result);
+    },
+    total_weight_lb() {
+      const result = Number.parseFloat(this.quote.total_weight) * 2.20462;
+      return formatNumber(result);
+    },
+    total_cost_kg() {
+      const result = Number.parseFloat(this.total_cost_usd) / Number.parseFloat(this.quote.total_weight);
+      return formatNumber(result);
+    },
   },
   methods: {
     async loadData() {
       if (this.isUpdate) {
         this.quote = await this.getQuote(this.$route.params.id)
       }
-      this.quote.heating_pad = this.quote.heating_pad ? this.quote.heating_pad : 0;
-      this.quote.insurance_per_mt = this.quote.insurance_per_mt ? this.quote.insurance_per_mt : 0;
-      this.quote.duty_per_fob_pricing_usd_percent = this.quote.duty_per_fob_pricing_usd_percent ? this.quote.duty_per_fob_pricing_usd_percent : 0;
-      this.quote.duty_per_kgs_exact_value = this.quote.duty_per_kgs_exact_value ? this.quote.duty_per_kgs_exact_value : 0;
     },
     async getQuote(id) {
       return await httpClient.get(apiRoutes.getQuote(id));
