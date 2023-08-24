@@ -44,6 +44,7 @@
 </template>
 <script>
 
+import { firebaseLogin } from '@/plugins/firebase';
 import { postToastMessage } from '@/services/channels';
 import { login } from '@/services/users';
 
@@ -81,7 +82,7 @@ export default {
       if ((this.canSubmit)){
         this.message = 'Logged in'
         this.color = 'success'
-        let okay = login(this.username, this.password)
+        let okay = firebaseLogin(this.username, this.password)
         if(okay){
           this.$router.push('/quotes')
         }

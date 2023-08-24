@@ -17,8 +17,10 @@
     "primevue": "^3.27.0",
     "roboto-fontface": "*",
     "store": "^2.0.12",
+    "uuid": "^9.0.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.0",
+    "vuefire": "^3.1.15",
     "vuetify": "^3.0.0",
     "webfontloader": "^1.0.0"
   },
