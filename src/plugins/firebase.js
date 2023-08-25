@@ -1,9 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from 'firebase/auth';
-import { getFirestore, getDocs, collection } from 'firebase/firestore';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, getDoc, deleteDoc, getFirestore, getDocs, collection } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { setItem } from '@/plugins/local-storage'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -26,21 +28,27 @@ export const analytics = getAnalytics(app);
 
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
+
 
 export async function getData(table){
   return await getDocs(collection(db, table))
   //, orderBy("name"), limit(3));
 }
 
-import { doc, setDoc, deleteDoc } from "firebase/firestore";
-
 export async function saveData(table, payload){
+  // Normalize object:
+  payload = JSON.parse(JSON.stringify(payload));
+
   if (!payload.id){
-    const newId = uuidv4(); // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
-    return await setDoc(doc(db, table, newId), {...payload, id: newId});
+    let newId = uuidv4(); // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
+    payload = {...payload, id: newId}
+    await setDoc(doc(db, table, newId), payload);
+  }else{
+    let cityRef = doc(db, table, payload.id);
+    await setDoc(cityRef, payload, { merge: true });
   }
-  const cityRef = doc(db, table, payload.id);
-  await setDoc(cityRef, payload, { merge: true });
+  return payload
 }
 
 export async function getItem(table, id){
@@ -69,17 +77,29 @@ export async function deleteData(table, id){
 }
 
 export async function firebaseLogin(email, password){
-  const userCredential = await auth.signInWithEmailAndPassword(
+  let userData = await signInWithEmailAndPassword(
+    auth,
     email,
     password
   );
-  return userCredential;
+  setItem('user', userData.user)
+  return userData
 }
 
 export async function firebaseRegistration(email, password){
-  const userCredential = await auth.createUserWithEmailAndPassword(
+  let userData = await createUserWithEmailAndPassword(
+    auth,
     email,
     password
   );
-  return userCredential;
+  setItem('user', userData.user)
+  return userData
+}
+
+export async function uploadFile(file){
+  const storageRef = ref(storage, `files/${file.name}`)
+  let snapshot = await uploadBytes(storageRef, file)
+  console.log(snapshot)
+  console.log('Uploaded a blob or file!');
+  return snapshot.metadata
 }

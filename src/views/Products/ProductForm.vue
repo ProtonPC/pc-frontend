@@ -117,6 +117,7 @@
           <v-row>
             <v-col cols="6">
               <v-file-input
+                @change="handleFile"
                 v-model="file.path"
                 chips
                 label="Select your file"
@@ -159,9 +160,11 @@
   </div>
 </template>
 <script>
-import { saveProduct } from "@/services/products";
-import apiRoutes from '@/config/apiRoutes';
-import httpClient from '@/config/httpClient';
+import { getProductTypes  } from "@/services/productTypes";
+import { saveProduct, getProduct } from "@/services/products";
+//import apiRoutes from '@/config/apiRoutes';
+//import httpClient from '@/config/httpClient';
+import { uploadFile } from "@/plugins/firebase";
 import types from '@/config/constants';
 import { postMessageOtherTabs } from "@/services/channels";
 import { receiveMessageOtherTabs } from "@/services/channels";
@@ -169,10 +172,14 @@ import { receiveMessageOtherTabs } from "@/services/channels";
 export default {
   data() {
     return {
-      product: {},
-      files: [],
+      product: {
+        files: [],
+      },
       product_types: [],
-      file_types: [],
+      file_types: types.fileTypes,
+      storage_type: types.storageTypes,
+      packaging_type: types.packagingTypes,
+      file_types: types.fileTypes,
     };
   },
   async mounted() {
@@ -202,21 +209,26 @@ export default {
     },
   },
   methods: {
+    async handleFile(evt){
+      let { files } = evt.target
+      let file = files[0]
+      console.log(file)
+      console.log('New file added')
+      let { bucket, fullPath } = await uploadFile(file)
+      console.log(bucket, fullPath)
+    },
     async loadData() {
       if (this.isUpdate) {
-        this.product = await this.getProduct(this.$route.params.id)
-        this.files = this.product.files;
+        this.product = await getProduct(this.$route.params.id)
+        //this.files = this.product.files;
       }
-      this.product_types = await this.getProductTypes();
-      this.storage_type = types.storageTypes;
-      this.packaging_type = types.packagingTypes;
-      this.file_types = types.fileTypes;
+      this.product_types = await getProductTypes();
     },
-    async getProduct(id) {
-      return await httpClient.get(apiRoutes.getProduct(id));
-    },
+    // async getProduct(id) {
+    //   return await getProduct(id);
+    // },
     async save(){
-      this.product.files = this.files;
+      //this.product.files = this.files;
       let newProduct = await saveProduct(this.product);
       postMessageOtherTabs({
         entity: newProduct,
@@ -241,14 +253,14 @@ export default {
       const response = await this.save()
       this.$router.push(`/products/${response.id}`);
     },
-    async getProductTypes() {
-      return await httpClient.get(apiRoutes.listProductTypes);
-    },
+    // async getProductTypes() {
+    //   return await httpClient.get(apiRoutes.listProductTypes);
+    // },
     addNewFile() {
-      this.files.push({})
+      this.product.files.push({})
     },
     removefile(key) {
-      this.files.splice(key, 1);
+      this.product.files.splice(key, 1);
     },
     addNewProductType() {
       let target = 'product_type_id';

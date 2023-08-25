@@ -1,8 +1,13 @@
 //import apiRoutes from '@/config/apiRoutes';
 //import httpClient from '@/config/httpClient';
-import { deleteData, getData, saveData } from '@/plugins/firebase'; // Import the initialized firebase instance
+import { deleteData, getData, saveData, getItem } from '@/plugins/firebase'; // Import the initialized firebase instance
 
 const TABLE_NAME = "product-types"
+
+export async function getProductType(id){
+  //let snapshot = await getData(TABLE_NAME);
+  return await getItem(TABLE_NAME, id)
+}
 
 export async function getProductTypes(){
   let snapshot = await getData(TABLE_NAME);

@@ -6,12 +6,13 @@ import { getItem } from '@/plugins/local-storage';
 
 
 function isAuthenticated(){
-  if(import.meta.env.MODE == 'development'){
-    return true
-  }
+  // if(import.meta.env.MODE == 'development'){
+  //   return true
+  // }
   // TODO: check if user is logged in
   let user = getItem('user')
-  return user.username ? true : false
+  return user?.uid
+  // ? true : false
 }
 
 const routes = [

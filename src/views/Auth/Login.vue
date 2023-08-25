@@ -78,13 +78,14 @@ export default {
     },
   },
   methods: {
-    submit() {
+    async submit() {
       if ((this.canSubmit)){
         this.message = 'Logged in'
         this.color = 'success'
-        let okay = firebaseLogin(this.username, this.password)
-        if(okay){
-          this.$router.push('/quotes')
+        let userData = await firebaseLogin(this.username, this.password)
+        console.log(userData)
+        if(userData?.user?.uid){
+          await this.$router.push('/quotes')
         }
       } else {
         this.message = 'You must to provide a valid email/username and password'

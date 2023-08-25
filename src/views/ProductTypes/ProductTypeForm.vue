@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-import { saveProductType } from '@/services/productTypes';
+import { saveProductType, getProductType } from '@/services/productTypes';
 import apiRoutes from '@/config/apiRoutes';
 import httpClient from '@/config/httpClient';
 import { postMessageOtherTabs } from "@/services/channels";
@@ -58,11 +58,11 @@ export default {
   methods: {
     async loadData() {
       if(this.isUpdate) {
-        this.productType = await this.getProductType(this.$route.params.id)
+        this.productType = await getProductType(this.$route.params.id)
       }
     },
     async getProductType(id) {
-      let response = await httpClient.get(apiRoutes.getProductType(id))
+      let response = await this.getProductType(apiRoutes.getProductType(id))
       return response;
     },
     async save() {
