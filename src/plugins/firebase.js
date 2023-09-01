@@ -5,7 +5,8 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } f
 import { doc, setDoc, getDoc, deleteDoc, getFirestore, getDocs, collection } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { setItem } from '@/plugins/local-storage'
+import { setToStorage } from "./local-storage";
+//import { setItem } from '@/plugins/local-storage'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -26,9 +27,9 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
 
-const auth = getAuth(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 
 export async function getData(table){
@@ -82,7 +83,7 @@ export async function firebaseLogin(email, password){
     email,
     password
   );
-  setItem('user', userData.user)
+  //setToStorage('user', userData.user)
   return userData
 }
 
@@ -92,7 +93,7 @@ export async function firebaseRegistration(email, password){
     email,
     password
   );
-  setItem('user', userData.user)
+  setToStorage('user', userData.user)
   return userData
 }
 

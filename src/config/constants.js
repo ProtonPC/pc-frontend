@@ -1,6 +1,8 @@
+export const entities = {
+  users: "users"
+}
 
-const types = {
-  fileTypes: [
+export const fileTypes = [
     {
       id: '1',
       name: 'Supplier Specification',
@@ -21,8 +23,9 @@ const types = {
       id: '5',
       name: 'Other',
     },
-  ],
-  storageTypes: [
+  ];
+
+export const storageTypes = [
     {
       id: '4',
       name: 'Stacking Specifications',
@@ -31,8 +34,9 @@ const types = {
       id: '5',
       name: 'Other',
     },
-  ],
-  packagingTypes: [
+  ]
+
+export const packagingTypes = [
     {
       id: '2',
       name: 'Glory Bee Specifications',
@@ -45,7 +49,4 @@ const types = {
       id: '5',
       name: 'Other',
     },
-  ],
-}
-
-export default types
+]

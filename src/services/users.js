@@ -1,16 +1,5 @@
 import apiRoutes from '@/config/apiRoutes';
 import httpClient from '@/config/httpClient';
-import { setItems } from '@/plugins/local-storage';
-
-export function login(username, password){
-  setItems('user', {
-    name: "Alex",
-    username,
-    password,
-    role: "admin",
-  })
-  return true
-}
 
 export async function getUsers(){
   return await httpClient.get(apiRoutes.listUsers)

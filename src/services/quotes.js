@@ -1,6 +1,3 @@
-//import apiRoutes from '@/config/apiRoutes';
-//import httpClient from '@/config/httpClient';
-
 import { deleteData, getData, saveData, getItem } from '@/plugins/firebase'; // Import the initialized firebase instance
 
 const TABLE_NAME = "quotes"

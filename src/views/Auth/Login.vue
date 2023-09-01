@@ -44,17 +44,16 @@
 </template>
 <script>
 
-import { firebaseLogin } from '@/plugins/firebase';
+import { login } from '@/services/auth';
 import { postToastMessage } from '@/services/channels';
-import { login } from '@/services/users';
 
 export default {
   data() {
     return {
       message: '',
       color: '',
-      passwordHidden: true,
       username: '',
+      passwordHidden: true,
       userNameRules: [
         value => {
           if (value?.length > 3) return true
@@ -72,29 +71,23 @@ export default {
   },
   computed: {
     canSubmit() {
-      if (this.username?.length > 3 && this.password?.length > 3)
-        return true;
-      return false
-    },
+      return this.username?.length > 3 && this.password?.length > 3
+    }
   },
   methods: {
     async submit() {
       if ((this.canSubmit)){
-        this.message = 'Logged in'
-        this.color = 'success'
-        let userData = await firebaseLogin(this.username, this.password)
-        console.log(userData)
-        if(userData?.user?.uid){
-          await this.$router.push('/quotes')
-        }
+        await login(this.username, this.password)
+        await this.$router.push('/quotes')
       } else {
         this.message = 'You must to provide a valid email/username and password'
         this.color = 'error'
+
+        postToastMessage({
+          toggleVisible: true
+        })
       }
 
-      postToastMessage({
-        toggleVisible: true
-      })
     }
   },
 };

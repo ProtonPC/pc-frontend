@@ -20,7 +20,7 @@
               </v-btn>
             </v-list-item-title>
             <v-list-item-title class="text-center">
-              <v-btn variant="text"> Logout </v-btn>
+              <v-btn @click="logout" variant="text"> Logout </v-btn>
             </v-list-item-title>
           </v-list-item>
         </v-list>
@@ -75,6 +75,8 @@
 </template>
 
 <script>
+import { logout } from '@/services/auth';
+
 export default {
   data: () => ({ drawer: null, variavel: "Price Calculator" }),
   computed: {
@@ -82,6 +84,9 @@ export default {
       return this.$route.query.popup;
     },
   },
+  methods: {
+    logout: logout
+  }
 };
 </script>
 

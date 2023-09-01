@@ -79,7 +79,7 @@
           <v-select
               label="Storage Type"
               v-model="product.storage_type"
-              :items="storage_type"
+              :items="storageTypes"
               item-value="id"
               item-title="name"
             >
@@ -89,7 +89,7 @@
           <v-select
               label="Packaging type"
               v-model="product.packaging_type"
-              :items="packaging_type"
+              :items="packagingTypes"
               item-value="id"
               item-title="name"
             >
@@ -106,7 +106,7 @@
           </v-col>
         </v-row>
 
-        <div v-for="(file, key) in files" :key="key" class="">
+        <div v-for="(file, key) in product.files" :key="key" class="">
           <v-divider :thickness="4" class="border-opacity-100" color="info"></v-divider>
           <span class="d-flex justify-space-between bg-light_grey px-3 mb-2">
             <span class="">product file: #{{ key + 1 }}</span>
@@ -116,9 +116,9 @@
           </span>
           <v-row>
             <v-col cols="6">
+              <!-- v-model="file.path" -->
               <v-file-input
-                @change="handleFile"
-                v-model="file.path"
+                @change="handleFile($event, file)"
                 chips
                 label="Select your file"
               ></v-file-input>
@@ -127,7 +127,7 @@
               <v-select
                 label="File Type"
                 v-model="file.file_type"
-                :items="file_types"
+                :items="fileTypes"
                 item-value="id"
                 item-title="name"
               >
@@ -162,10 +162,8 @@
 <script>
 import { getProductTypes  } from "@/services/productTypes";
 import { saveProduct, getProduct } from "@/services/products";
-//import apiRoutes from '@/config/apiRoutes';
-//import httpClient from '@/config/httpClient';
 import { uploadFile } from "@/plugins/firebase";
-import types from '@/config/constants';
+import { packagingTypes, storageTypes, fileTypes } from '@/config/constants';
 import { postMessageOtherTabs } from "@/services/channels";
 import { receiveMessageOtherTabs } from "@/services/channels";
 
@@ -176,10 +174,9 @@ export default {
         files: [],
       },
       product_types: [],
-      file_types: types.fileTypes,
-      storage_type: types.storageTypes,
-      packaging_type: types.packagingTypes,
-      file_types: types.fileTypes,
+      storageTypes,
+      packagingTypes,
+      fileTypes,
     };
   },
   async mounted() {
@@ -202,20 +199,19 @@ export default {
       return this.product.duty * 1000;
     },
     missingDocuments() {
-      const allTypes = [];
-      return this.product.files
-        .map((file) => file.file_type)
-        .filter((type) => allTypes.contains(type)); // item not in array
+      let existing = JSON.parse(JSON.stringify(this.product.files))
+      return existing
+      .filter((type) => fileTypes.contains(type))
+        //.map((file) => file.file_type)
+        ; // item not in array
     },
   },
   methods: {
-    async handleFile(evt){
+    async handleFile(evt, fileRef){
       let { files } = evt.target
       let file = files[0]
-      console.log(file)
-      console.log('New file added')
       let { bucket, fullPath } = await uploadFile(file)
-      console.log(bucket, fullPath)
+      fileRef.path = fullPath
     },
     async loadData() {
       if (this.isUpdate) {
@@ -224,9 +220,6 @@ export default {
       }
       this.product_types = await getProductTypes();
     },
-    // async getProduct(id) {
-    //   return await getProduct(id);
-    // },
     async save(){
       //this.product.files = this.files;
       let newProduct = await saveProduct(this.product);
@@ -253,9 +246,6 @@ export default {
       const response = await this.save()
       this.$router.push(`/products/${response.id}`);
     },
-    // async getProductTypes() {
-    //   return await httpClient.get(apiRoutes.listProductTypes);
-    // },
     addNewFile() {
       this.product.files.push({})
     },

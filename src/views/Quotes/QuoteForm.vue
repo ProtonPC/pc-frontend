@@ -406,7 +406,7 @@
   </div>
 </template>
 <script>
-import { saveQuote } from "@/services/quotes";
+import { getQuote, saveQuote } from "@/services/quotes";
 import apiRoutes from '@/config/apiRoutes';
 import httpClient from '@/config/httpClient';
 import { formatNumber } from '@/utils/index';
@@ -469,7 +469,7 @@ export default {
       return formatNumber(result);
     },
     fob_price() {
-      const result = this.total_mts * Number.parseFloat(this.quote.fob_pricing_mt) 
+      const result = this.total_mts * Number.parseFloat(this.quote.fob_pricing_mt)
       + Number.parseFloat(this.quote.heating_pad);
       return formatNumber(result);
     },
@@ -510,7 +510,7 @@ export default {
       return formatNumber(result);
     },
     total_import() {
-      const result = Number.parseFloat(this.quote.broker_cost) 
+      const result = Number.parseFloat(this.quote.broker_cost)
         + Number.parseFloat(this.quote.merchandise_processing_fee)
         + Number.parseFloat(this.quote.harbor_maintenance)
         + Number.parseFloat(this.total_dutie);
@@ -529,8 +529,8 @@ export default {
       return formatNumber(result);
     },
     total_warehouse_cost_container() {
-      const result = (Number.parseFloat(this.quote.container_unload_floor_loaded) 
-        + Number.parseFloat(this.quote.container_unload_pallet_roll_off)) 
+      const result = (Number.parseFloat(this.quote.container_unload_floor_loaded)
+        + Number.parseFloat(this.quote.container_unload_pallet_roll_off))
         + Number.parseFloat(this.quote.receipt_processing);
       return formatNumber(result);
     },
@@ -549,7 +549,7 @@ export default {
       return formatNumber(result);
     },
     total_warehouse() {
-      const result = Number.parseFloat(this.total_warehouse_costs_pallets) 
+      const result = Number.parseFloat(this.total_warehouse_costs_pallets)
         + Number.parseFloat(this.total_warehouse_cost_container);
       return formatNumber(result);
     },
@@ -558,53 +558,53 @@ export default {
       return formatNumber(result);
     },
     recurring_months() {
-      const result = Number.parseFloat(this.quote.months_on_hand) > 0 
-        ? Number.parseFloat(this.quote.months_on_hand) - 1 
+      const result = Number.parseFloat(this.quote.months_on_hand) > 0
+        ? Number.parseFloat(this.quote.months_on_hand) - 1
         : 0;
       return formatNumber(result);
     },
     initial_storage_ambient_total() {
-      const result = Number.parseFloat(this.quote.initial_storage_ambient) 
+      const result = Number.parseFloat(this.quote.initial_storage_ambient)
         * Number.parseFloat(this.quote.total_pallets_per_container);
       return formatNumber(result);
     },
     recurring_storage_ambient_total() {
-      const result = Number.parseFloat(this.quote.recurring_storage_ambient) 
+      const result = Number.parseFloat(this.quote.recurring_storage_ambient)
         * Number.parseFloat(this.quote.total_pallets_per_container)
         * Number.parseFloat(this.recurring_months);
       return formatNumber(result);
     },
     initial_storage_temp_controlled_total() {
-      const result = Number.parseFloat(this.quote.initial_storage_temp_controlled) 
+      const result = Number.parseFloat(this.quote.initial_storage_temp_controlled)
         * Number.parseFloat(this.quote.total_pallets_per_container);
       return formatNumber(result);
     },
     recurring_storage_temp_controlled_total() {
-      const result = Number.parseFloat(this.quote.recurring_storage_temp_controlled) 
+      const result = Number.parseFloat(this.quote.recurring_storage_temp_controlled)
         * Number.parseFloat(this.quote.total_pallets_per_container)
         * Number.parseFloat(this.recurring_months);
       return formatNumber(result);
     },
     initial_storage_reefer_total() {
-      const result = Number.parseFloat(this.quote.initial_storage_reefer) 
+      const result = Number.parseFloat(this.quote.initial_storage_reefer)
         * Number.parseFloat(this.quote.total_pallets_per_container);
       return formatNumber(result);
     },
     recurring_storage_reefer_total() {
-      const result = Number.parseFloat(this.quote.recurring_storage_reefer) 
+      const result = Number.parseFloat(this.quote.recurring_storage_reefer)
         * Number.parseFloat(this.quote.total_pallets_per_container)
         * Number.parseFloat(this.recurring_months);
       return formatNumber(result);
     },
     total_storage() {
-      const result = this.quote.has_storage 
-        ? Number.parseFloat(this.initial_storage_ambient_total) 
+      const result = this.quote.has_storage
+        ? Number.parseFloat(this.initial_storage_ambient_total)
           + Number.parseFloat(this.recurring_storage_ambient_total)
           + Number.parseFloat(this.initial_storage_temp_controlled_total)
           + Number.parseFloat(this.recurring_storage_temp_controlled_total)
           + Number.parseFloat(this.initial_storage_reefer_total)
           + Number.parseFloat(this.recurring_storage_reefer_total)
-        : 0 
+        : 0
       return formatNumber(result);
     },
     total_storage_by_mt() {
@@ -612,23 +612,23 @@ export default {
       return formatNumber(result);
     },
     total_dray() {
-      const result = Number.parseFloat(this.quote.cross_dock_fee_temp_controlled) 
+      const result = Number.parseFloat(this.quote.cross_dock_fee_temp_controlled)
         + Number.parseFloat(this.quote.cross_dock_fee_ambient)
         + Number.parseFloat(this.quote.dray_freight_to_warehouse);
       return formatNumber(result);
     },
     total_misc() {
-      const result = Number.parseFloat(this.quote.misc_1) 
+      const result = Number.parseFloat(this.quote.misc_1)
         + Number.parseFloat(this.quote.misc_2);
       return formatNumber(result);
     },
     total_dray_mt() {
-      const result = Number.parseFloat(this.total_dray) 
+      const result = Number.parseFloat(this.total_dray)
         + Number.parseFloat(this.total_misc);
       return formatNumber(result);
     },
     total_cost_usd() {
-      const result = Number.parseFloat(this.ddp_price) 
+      const result = Number.parseFloat(this.ddp_price)
         + Number.parseFloat(this.total_warehouse_cost_container)
         + Number.parseFloat(this.total_warehouse_costs_pallets)
         + Number.parseFloat(this.total_storage)
@@ -637,7 +637,7 @@ export default {
       return formatNumber(result);
     },
     total_cost_by_mt() {
-      const result = Number.parseFloat(this.total_cost_usd) 
+      const result = Number.parseFloat(this.total_cost_usd)
         / Number.parseFloat(this.total_mts);
       return formatNumber(result);
     },
@@ -657,11 +657,8 @@ export default {
   methods: {
     async loadData() {
       if (this.isUpdate) {
-        this.quote = await this.getQuote(this.$route.params.id)
+        this.quote = await getQuote(this.$route.params.id)
       }
-    },
-    async getQuote(id) {
-      return await httpClient.get(apiRoutes.getQuote(id));
     },
     async save() {
       return await saveQuote(this.quote);
