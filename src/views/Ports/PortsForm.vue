@@ -30,7 +30,7 @@
             <v-text-field v-model="port.country" label="Address Country"></v-text-field>
           </v-col>
           <v-col cols="6">
-            <v-text-field v-model="port.zipcode" label="Address Zipcode"></v-text-field>
+            <v-text-field @blur="onInputBlur" v-model="port.zipcode" label="Address Zipcode"></v-text-field>
           </v-col>
         </v-row>
         <v-row>
@@ -62,9 +62,11 @@
   </div>
 </template>
 <script>
-import { savePort } from '@/services/ports';
-import apiRoutes from '@/config/apiRoutes';
-import httpClient from '@/config/httpClient';
+import { getZip } from '@/services/zip';
+import { savePort, getPort } from "@/services/ports";
+
+//import apiRoutes from '@/config/apiRoutes';
+//import httpClient from '@/config/httpClient';
 import { postMessageOtherTabs } from "@/services/channels";
 
 export default {
@@ -85,13 +87,17 @@ export default {
     },
   },
   methods: {
-    async loadData() {
-      if(this.isUpdate) {
-        this.port = await this.getPort(this.$route.params.id)
+    async onInputBlur() {
+      let { zipcode, country } = this.port
+      let data = await getZip(zipcode, country)
+      for (let key in data) {
+        this.port[key] = data[key]
       }
     },
-    async getPort(id) {
-      return await httpClient.get(apiRoutes.getPort(id))
+    async loadData() {
+      if(this.isUpdate) {
+        this.port = await getPort(this.$route.params.id)
+      }
     },
     async save() {
       let newPort = await savePort(this.port)

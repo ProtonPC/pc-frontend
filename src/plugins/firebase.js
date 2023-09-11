@@ -4,7 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, getDoc, deleteDoc, getFirestore, getDocs, collection } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { setToStorage } from "./local-storage";
 //import { setItem } from '@/plugins/local-storage'
 // TODO: Add SDKs for Firebase products that you want to use
@@ -98,9 +98,11 @@ export async function firebaseRegistration(email, password){
 }
 
 export async function uploadFile(file){
-  const storageRef = ref(storage, `files/${file.name}`)
-  let snapshot = await uploadBytes(storageRef, file)
-  console.log(snapshot)
-  console.log('Uploaded a blob or file!');
-  return snapshot.metadata
+  let fileRef = ref(storage, `files/${file.name}`)
+  let snapshot = await uploadBytes(fileRef, file)
+  //
+  //let storageRef = ref(storage, `files/${file.name}`)
+  let url = await getDownloadURL(fileRef)
+  console.log(url)
+  return {...snapshot.metadata, url}
 }

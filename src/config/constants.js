@@ -27,26 +27,30 @@ export const fileTypes = [
 
 export const storageTypes = [
     {
-      id: '4',
-      name: 'Stacking Specifications',
+      id: '1',
+      name: 'Ambient',
     },
     {
-      id: '5',
-      name: 'Other',
+      id: '2',
+      name: 'Temp Controlled',
+    },
+    {
+      id: '3',
+      name: 'Frozen',
     },
   ]
 
 export const packagingTypes = [
     {
-      id: '2',
-      name: 'Glory Bee Specifications',
+      id: '1',
+      name: 'Drum',
     },
+    // {
+    //   id: '2',
+    //   name: 'Packaging Specifications',
+    // },
     {
       id: '3',
-      name: 'Packaging Specifications',
-    },
-    {
-      id: '5',
       name: 'Other',
     },
 ]

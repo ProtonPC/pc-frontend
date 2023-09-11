@@ -24,7 +24,7 @@
             <v-text-field v-model="warehouse.country" label="Address Country"></v-text-field>
           </v-col>
           <v-col cols="6">
-            <v-text-field v-model="warehouse.zipcode" label="Address Zipcode" @blur="onInputBlur"></v-text-field>
+            <v-text-field @blur="onInputBlur" v-model="warehouse.zipcode" label="Address Zipcode" ></v-text-field>
           </v-col>
         </v-row>
         <v-row>
@@ -56,9 +56,10 @@
   </div>
 </template>
 <script>
-import { saveWarehouse } from '@/services/warehouses';
-import apiRoutes from '@/config/apiRoutes';
-import httpClient from '@/config/httpClient';
+import { saveWarehouse, getWarehouse } from '@/services/warehouses';
+import { getZip } from '@/services/zip';
+//import apiRoutes from '@/config/apiRoutes';
+//import httpClient from '@/config/httpClient';
 
 export default {
   data() {
@@ -75,21 +76,12 @@ export default {
     },
   },
   methods: {
-    onInputBlur() {
-      // code to be executed when the input loses focus (i.e., when the user exits the input)
-      // e.g., you can trigger an event here
-      let wa = this.warehouse
-      let { country, zipcode } = wa
-
-      fetch(`https://zipapi.fly.dev/?country=${country}&zip=${zipcode}`)
-      .then(response => response.json())
-      .then((data) => {
-        wa.street1 = data.street1
-        wa.street2 = data.street2
-        wa.state = data.state
-        wa.city = data.city
-      })
-
+    async onInputBlur() {
+      let { zipcode, country } = this.warehouse
+      let data = await getZip(zipcode, country)
+      for (let key in data) {
+        this.port[key] = data[key]
+      }
     },
     async loadData() {
       if(this.isUpdate) {

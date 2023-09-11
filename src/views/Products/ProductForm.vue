@@ -45,35 +45,46 @@
               </template>
             </v-tooltip>
           </v-col>
-          <v-col cols="6">
+          <v-col cols="4">
             <v-text-field v-model="product.name" label="Product Name"></v-text-field>
           </v-col>
-          <v-col cols="6">
+          <v-col cols="4">
             <v-text-field v-model="product.hts_code" label="HTS Code"></v-text-field>
           </v-col>
-        </v-row>
-        <v-row>
           <v-col cols="4">
             <v-text-field v-model="product.glory_bee_number" label="Glory Bee Number"></v-text-field>
           </v-col>
-          <v-col cols="4">
-            <v-text-field type="number" min="1" v-model="product.units_per_pallet_20_feet" label="Units per pallet (20 feet)"></v-text-field>
-          </v-col>
-          <v-col cols="4">
-            <v-text-field type="number" min="1" v-model="product.units_per_container_20_feet" label="Units per container (20 feet)"></v-text-field>
-          </v-col>
         </v-row>
         <v-row>
-          <v-col cols="4">
-            <v-text-field type="number" min="1" v-model="product.units_per_pallet_40_feet" label="Units per pallet (40 feet)"></v-text-field>
-          </v-col>
-          <v-col cols="4">
-            <v-text-field type="number" min="1" v-model="product.units_per_container_40_feet" label="Units per container (40 feet)"></v-text-field>
-          </v-col>
-          <v-col cols="4">
+
+          <v-col cols="6">
             <v-text-field type="number" min="1" step="0.5" v-model="product.net_weight_lb" label="Net Weight LB"></v-text-field>
           </v-col>
+
+          <v-col cols="6">
+            <v-text-field readonly v-model="product.total_weight" type="number" label="Net Weight"
+            bg-color="light_grey"></v-text-field>
+          </v-col>
         </v-row>
+
+        <v-row>
+
+          <v-col cols="3">
+            <v-text-field type="number" min="1" v-model="product.units_per_pallet_20_feet" label="Units per pallet (20 feet)"></v-text-field>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field type="number" min="1" v-model="product.units_per_container_20_feet" label="Units per container (20 feet)"></v-text-field>
+          </v-col>
+
+          <v-col cols="3">
+            <v-text-field type="number" min="1" v-model="product.units_per_pallet_40_feet" label="Units per pallet (40 feet)"></v-text-field>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field type="number" min="1" v-model="product.units_per_container_40_feet" label="Units per container (40 feet)"></v-text-field>
+          </v-col>
+
+        </v-row>
+
         <v-row>
           <v-col cols="6">
           <v-select
@@ -117,7 +128,13 @@
           <v-row>
             <v-col cols="6">
               <!-- v-model="file.path" -->
+              <v-btn
+              primary
+              target="_blank"
+              :href="file.url"
+              v-if="file.url">Download File</v-btn>
               <v-file-input
+                v-else
                 @change="handleFile($event, file)"
                 chips
                 label="Select your file"
@@ -182,6 +199,15 @@ export default {
   async mounted() {
     await this.loadData();
   },
+  watch: {
+    'product.net_weight_lb'(newValue) {
+      console.log(newValue)
+      if(newValue)
+        this.product.total_weight = Math.ceil(parseFloat(newValue) / 2.2046)
+      else
+        this.product.total_weight = 0
+    }
+  },
   computed: {
     isUpdate() {
       return this.$route.params.id !== 'new'
@@ -210,18 +236,18 @@ export default {
     async handleFile(evt, fileRef){
       let { files } = evt.target
       let file = files[0]
-      let { bucket, fullPath } = await uploadFile(file)
+      let { bucket, fullPath, url } = await uploadFile(file)
       fileRef.path = fullPath
+      fileRef.bucket = bucket
+      fileRef.url = url
     },
     async loadData() {
       if (this.isUpdate) {
         this.product = await getProduct(this.$route.params.id)
-        //this.files = this.product.files;
       }
       this.product_types = await getProductTypes();
     },
     async save(){
-      //this.product.files = this.files;
       let newProduct = await saveProduct(this.product);
       postMessageOtherTabs({
         entity: newProduct,
@@ -243,7 +269,7 @@ export default {
       })
     },
     async submitAndEdit() {
-      const response = await this.save()
+      let response = await this.save()
       this.$router.push(`/products/${response.id}`);
     },
     addNewFile() {

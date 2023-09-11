@@ -18,8 +18,16 @@
         </div>
         <v-row>
           <v-col cols="3">
-            <v-text-field v-model="quote.total_weight" type="number" label="Total Weight"
-              bg-color="light_grey"></v-text-field>
+            <v-select
+                label="Product"
+                v-model="product"
+                :items="products"
+                item-title="name"
+                return-object
+                >
+              <!--  -->
+              </v-select>
+            <!---->
           </v-col>
           <v-col cols="3">
             <v-text-field v-model="quote.fob_pricing_mt" :prepend-inner-icon="'mdi-currency-usd'" type="number"
@@ -407,20 +415,70 @@
 </template>
 <script>
 import { getQuote, saveQuote } from "@/services/quotes";
-import apiRoutes from '@/config/apiRoutes';
-import httpClient from '@/config/httpClient';
+import { getProducts } from "@/services/products"
 import { formatNumber } from '@/utils/index';
+import { formMixin } from "@/utils/mixins"
+
+const initialColumns = [
+  'total_weight',
+  'fob_pricing_mt',
+  'heating_pad',
+  'discount_more_than_500_mts',
+  'total_freight',
+  'insurance_per_mt',
+  'duty_per_fob_pricing_usd_percent',
+  'duty_per_kgs_exact_value',
+  'merchandise_processing_fee',
+  'harbor_maintenance',
+  'broker_cost',
+  'container_unload_floor_loaded',
+  'container_unload_pallet_roll_off',
+  'receipt_processing',
+  'cross_dock_fee_temp_controlled',
+  'cross_dock_fee_ambient',
+  'pallet_cost',
+  'tote_cost',
+  'testing',
+  'labour',
+  'slip_sheets_per_pallet_floor_load_only',
+  'stretch_wrap_per_pallet_floor_load_only',
+  'banding_floor_loaded_drums',
+  'loose_drum_handling_floor_loaded_drums',
+  'pallet_handling_in_out_1',
+  'pallet_handling_in_out_2',
+  'pallet_handling_in_out_3',
+  'months_on_hand',
+  'initial_storage_ambient',
+  'recurring_storage_ambient',
+  'initial_storage_temp_controlled',
+  'recurring_storage_temp_controlled',
+  'initial_storage_reefer',
+  'recurring_storage_reefer',
+  'dray_freight_to_warehouse',
+  'misc_1',
+  'misc_2'
+]
 
 export default {
+  mixins: [formMixin],
+
   data() {
     return {
-      quote: {},
       tab: null,
+      product: null,
+      quote: {
+
+      },
+      products: []
     };
   },
   async mounted() {
     await this.loadData();
     if (!this.isUpdate) {
+      for(let column of initialColumns){
+        this.quote[column] = 0
+      }
+      /*
       this.quote.total_weight = this.quote.total_weight ? this.quote.total_weight : 0;
       this.quote.fob_pricing_mt = this.quote.fob_pricing_mt ? this.quote.fob_pricing_mt : 0;
       this.quote.heating_pad = this.quote.heating_pad ? this.quote.heating_pad : 0;
@@ -458,12 +516,19 @@ export default {
       this.quote.dray_freight_to_warehouse = this.quote.dray_freight_to_warehouse ? this.quote.dray_freight_to_warehouse : 0;
       this.quote.misc_1 = this.quote.misc_1 ? this.quote.misc_1 : 0;
       this.quote.misc_2 = this.quote.misc_2 ? this.quote.misc_2 : 0;
+      */
     }
   },
-  computed: {
-    isUpdate() {
-      return this.$route.params.id !== 'new'
+  watch:{
+    product(newVal){
+      if(newVal){
+        this.quote.total_weight = newVal.total_weight
+        this.quote.total_weight_lb = newVal.net_weight_lb
+      }
+      //console.log(newVal)
     },
+  },
+  computed: {
     total_mts() {
       const result = this.quote.total_weight / 1000;
       return formatNumber(result);
@@ -646,8 +711,8 @@ export default {
       return formatNumber(result);
     },
     total_weight_lb() {
-      const result = Number.parseFloat(this.quote.total_weight) * 2.20462;
-      return formatNumber(result);
+      //const result = Number.parseFloat(this.quote.total_weight) * 2.20462;
+      return formatNumber(this.quote.total_weight_lb);
     },
     total_cost_kg() {
       const result = Number.parseFloat(this.total_cost_usd) / Number.parseFloat(this.quote.total_weight);
@@ -656,6 +721,7 @@ export default {
   },
   methods: {
     async loadData() {
+      this.products = await getProducts()
       if (this.isUpdate) {
         this.quote = await getQuote(this.$route.params.id)
       }

@@ -46,7 +46,7 @@
               <v-text-field v-model="address.country" label="Address Country"></v-text-field>
             </v-col>
             <v-col cols="4">
-              <v-text-field v-model="address.zipcode" label="Address Zipcode"></v-text-field>
+              <v-text-field @blur="onInputBlur(address)" v-model="address.zipcode" label="Address Zipcode"></v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -67,10 +67,10 @@
           </v-row>
           <v-row>
             <v-col cols="6">
-              <v-text-field v-model="address.street_1" label="Address Street 1"></v-text-field>
+              <v-text-field v-model="address.street1" label="Address Street 1"></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-text-field v-model="address.street_2" label="Address Street 2"></v-text-field>
+              <v-text-field v-model="address.street2" label="Address Street 2"></v-text-field>
             </v-col>
           </v-row>
           <v-textarea v-model="address.notes" label="Notes"></v-textarea>
@@ -100,9 +100,8 @@
   </div>
 </template>
 <script>
-import { saveCustomer } from '@/services/customers';
-import apiRoutes from '@/config/apiRoutes';
-import httpClient from '@/config/httpClient';
+import { saveCustomer, getCustomer } from '@/services/customers';
+import { getZip } from '@/services/zip';
 
 export default {
   data() {
@@ -120,14 +119,18 @@ export default {
     await this.loadData();
   },
   methods: {
-    async loadData() {
-      if(this.isUpdate) {
-        this.customer = await this.getCustomer(this.$route.params.id)
-        this.addressess = this.customer.addressess;
+    async onInputBlur(ref) {
+      let { zipcode, country } = ref
+      let data = await getZip(zipcode, country)
+      for (let key in data) {
+        ref[key] = data[key]
       }
     },
-    async getCustomer(id) {
-      return httpClient.get(apiRoutes.getCustomer(id));
+    async loadData() {
+      if(this.isUpdate) {
+        this.customer = await getCustomer(this.$route.params.id)
+        this.addressess = this.customer.addressess;
+      }
     },
     async save() {
       this.customer.addressess = this.addressess;
