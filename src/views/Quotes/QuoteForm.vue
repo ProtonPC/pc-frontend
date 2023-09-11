@@ -724,9 +724,11 @@ export default {
       this.products = await getProducts()
       if (this.isUpdate) {
         this.quote = await getQuote(this.$route.params.id)
+        this.product = this.quote.product
       }
     },
     async save() {
+      this.quote.product = this.product
       return await saveQuote(this.quote);
     },
     async submit() {
@@ -742,7 +744,9 @@ export default {
     },
     async submitAndEdit() {
       const response = await this.save()
-      this.$router.push(`/quotes/${response.id}`);
+      if(!this.isUpdate){
+        this.$router.push(`/quotes/${response.id}`);
+      }
     },
     changeTab(tabindex) {
       this.tab = `tab-${tabindex}`;
