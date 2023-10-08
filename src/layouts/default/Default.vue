@@ -5,7 +5,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <router-link to="/" class="text-white">
-          {{ variavel }}
+          {{ title }}
         </router-link>
       </v-toolbar-title>
       <v-menu transition="slide-y-transition">
@@ -75,18 +75,13 @@
 </template>
 
 <script>
-import { logout } from '@/services/auth';
+import { baseMixin } from "@/utils/mixins"
 
 export default {
-  data: () => ({ drawer: null, variavel: "Price Calculator" }),
-  computed: {
-    isModal() {
-      return this.$route.query.popup;
-    },
-  },
-  methods: {
-    logout: logout
-  }
+  mixins: [baseMixin],
+  data: () => ({
+    drawer: null,
+  })
 };
 </script>
 

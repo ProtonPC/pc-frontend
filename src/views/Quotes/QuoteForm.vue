@@ -38,7 +38,7 @@
             bg-color="light_grey"></v-text-field>
           </v-col>
           <v-col cols="3">
-            <v-text-field v-model="total_weight_lb" type="number" label="Total Weight LB"
+            <v-text-field v-model="quote.total_weight_lb" type="number" label="Total Weight LB"
             readonly></v-text-field>
           </v-col>
           <v-col cols="3">
@@ -46,10 +46,10 @@
             bg-color="light_grey"></v-text-field>
           </v-col>
           <v-col cols="3">
-            <v-text-field v-model="total_mts" type="number" label="Total MTs" readonly></v-text-field>
+            <v-text-field v-model="quote.total_mts" type="number" label="Total MTs" readonly></v-text-field>
           </v-col>
           <v-col cols="3">
-            <v-text-field v-model="fob_price" :prepend-inner-icon="'mdi-currency-usd'" type="number" label="FOB PRICE"
+            <v-text-field v-model="quote.fob_price" :prepend-inner-icon="'mdi-currency-usd'" type="number" label="FOB PRICE"
               readonly></v-text-field>
           </v-col>
           <v-col cols="3">
@@ -414,10 +414,14 @@
   </div>
 </template>
 <script>
-import { getQuote, saveQuote } from "@/services/quotes";
-import { getProducts } from "@/services/products"
+//import { saveQuote } from "@/services/quotes";
+//import { getProducts } from "@/services/products"
 import { formatNumber } from '@/utils/index';
-import { formMixin } from "@/utils/mixins"
+import { baseMixin } from "@/utils/mixins"
+
+//import { useDocument, useCollection, useFirestore } from 'vuefire'
+//import { doc, collection } from 'firebase/firestore'
+import { getFirebaseHandler } from '@/services/firebase'
 
 const initialColumns = [
   'total_weight',
@@ -459,17 +463,21 @@ const initialColumns = [
   'misc_2'
 ]
 
+function getFobPrice(quote) {
+  return quote.total_mts * Number.parseFloat(quote.fob_pricing_mt)
+        + Number.parseFloat(quote.heating_pad);
+}
+
 export default {
-  mixins: [formMixin],
+  mixins: [baseMixin],
 
   data() {
     return {
       tab: null,
       product: null,
-      quote: {
-
-      },
-      products: []
+      quote: {},
+      products: [],
+      quotesHandler: getFirebaseHandler('quotes'),
     };
   },
   async mounted() {
@@ -478,66 +486,35 @@ export default {
       for(let column of initialColumns){
         this.quote[column] = 0
       }
-      /*
-      this.quote.total_weight = this.quote.total_weight ? this.quote.total_weight : 0;
-      this.quote.fob_pricing_mt = this.quote.fob_pricing_mt ? this.quote.fob_pricing_mt : 0;
-      this.quote.heating_pad = this.quote.heating_pad ? this.quote.heating_pad : 0;
-      this.quote.discount_more_than_500_mts = this.quote.discount_more_than_500_mts ? this.quote.discount_more_than_500_mts : 0;
-      this.quote.total_freight = this.quote.total_freight ? this.quote.total_freight : 0;
-      this.quote.insurance_per_mt = this.quote.insurance_per_mt ? this.quote.insurance_per_mt : 0;
-      this.quote.duty_per_fob_pricing_usd_percent = this.quote.duty_per_fob_pricing_usd_percent ? this.quote.duty_per_fob_pricing_usd_percent : 0;
-      this.quote.duty_per_kgs_exact_value = this.quote.duty_per_kgs_exact_value ? this.quote.duty_per_kgs_exact_value : 0;
-      this.quote.merchandise_processing_fee = this.quote.merchandise_processing_fee ? this.quote.merchandise_processing_fee : 0;
-      this.quote.harbor_maintenance = this.quote.harbor_maintenance ? this.quote.harbor_maintenance : 0;
-      this.quote.broker_cost = this.quote.broker_cost ? this.quote.broker_cost : 0;
-      this.quote.container_unload_floor_loaded = this.quote.container_unload_floor_loaded ? this.quote.container_unload_floor_loaded : 0;
-      this.quote.container_unload_pallet_roll_off = this.quote.container_unload_pallet_roll_off ? this.quote.container_unload_pallet_roll_off : 0;
-      this.quote.receipt_processing = this.quote.receipt_processing ? this.quote.receipt_processing : 0;
-      this.quote.cross_dock_fee_temp_controlled = this.quote.cross_dock_fee_temp_controlled ? this.quote.cross_dock_fee_temp_controlled : 0;
-      this.quote.cross_dock_fee_ambient = this.quote.cross_dock_fee_ambient ? this.quote.cross_dock_fee_ambient : 0;
-      this.quote.pallet_cost = this.quote.pallet_cost ? this.quote.pallet_cost : 0;
-      this.quote.tote_cost = this.quote.tote_cost ? this.quote.tote_cost : 0;
-      this.quote.testing = this.quote.testing ? this.quote.testing : 0;
-      this.quote.labour = this.quote.labour ? this.quote.labour : 0;
-      this.quote.slip_sheets_per_pallet_floor_load_only = this.quote.slip_sheets_per_pallet_floor_load_only ? this.quote.slip_sheets_per_pallet_floor_load_only : 0;
-      this.quote.stretch_wrap_per_pallet_floor_load_only = this.quote.stretch_wrap_per_pallet_floor_load_only ? this.quote.stretch_wrap_per_pallet_floor_load_only : 0;
-      this.quote.banding_floor_loaded_drums = this.quote.banding_floor_loaded_drums ? this.quote.banding_floor_loaded_drums : 0;
-      this.quote.loose_drum_handling_floor_loaded_drums = this.quote.loose_drum_handling_floor_loaded_drums ? this.quote.loose_drum_handling_floor_loaded_drums : 0;
-      this.quote.pallet_handling_in_out_1 = this.quote.pallet_handling_in_out_1 ? this.quote.pallet_handling_in_out_1 : 0;
-      this.quote.pallet_handling_in_out_2 = this.quote.pallet_handling_in_out_2 ? this.quote.pallet_handling_in_out_2 : 0;
-      this.quote.pallet_handling_in_out_3 = this.quote.pallet_handling_in_out_3 ? this.quote.pallet_handling_in_out_3 : 0;
-      this.quote.months_on_hand = this.quote.months_on_hand ? this.quote.months_on_hand : 0;
-      this.quote.initial_storage_ambient = this.quote.initial_storage_ambient ? this.quote.initial_storage_ambient : 0;
-      this.quote.recurring_storage_ambient = this.quote.recurring_storage_ambient ? this.quote.recurring_storage_ambient : 0;
-      this.quote.initial_storage_temp_controlled = this.quote.initial_storage_temp_controlled ? this.quote.initial_storage_temp_controlled : 0;
-      this.quote.recurring_storage_temp_controlled = this.quote.recurring_storage_temp_controlled ? this.quote.recurring_storage_temp_controlled : 0;
-      this.quote.initial_storage_reefer = this.quote.initial_storage_reefer ? this.quote.initial_storage_reefer : 0;
-      this.quote.recurring_storage_reefer = this.quote.recurring_storage_reefer ? this.quote.recurring_storage_reefer : 0;
-      this.quote.dray_freight_to_warehouse = this.quote.dray_freight_to_warehouse ? this.quote.dray_freight_to_warehouse : 0;
-      this.quote.misc_1 = this.quote.misc_1 ? this.quote.misc_1 : 0;
-      this.quote.misc_2 = this.quote.misc_2 ? this.quote.misc_2 : 0;
-      */
     }
   },
   watch:{
     product(newVal){
       if(newVal){
-        this.quote.total_weight = newVal.total_weight
-        this.quote.total_weight_lb = newVal.net_weight_lb
+        let quote = this.quote
+        quote.total_weight = newVal.total_weight
+        quote.total_weight_lb = newVal.net_weight_lb
+        quote.total_mts = quote.total_weight / 1000
+        //
+        quote.fob_price = getFobPrice(quote)
       }
-      //console.log(newVal)
     },
+    'quote.heating_pd'(){
+      this.quote.fob_price = getFobPrice(this.quote)
+    },
+    'quote.fob_pricing_mt'(){
+      this.quote.fob_price = getFobPrice(this.quote)
+    }
   },
   computed: {
-    total_mts() {
-      const result = this.quote.total_weight / 1000;
-      return formatNumber(result);
-    },
-    fob_price() {
-      const result = this.total_mts * Number.parseFloat(this.quote.fob_pricing_mt)
-      + Number.parseFloat(this.quote.heating_pad);
-      return formatNumber(result);
-    },
+    // total_mts() {
+    //   const result = ;
+    //   return formatNumber(result);
+    // },
+    // fob_price() {
+    //   const result = ;
+    //   return formatNumber(result);
+    // },
     total_freight_divided_by_number_of_metric_tons() {
       const result = Number.parseFloat(this.quote.total_freight) / Number.parseFloat(this.total_mts);
       return formatNumber(result);
@@ -719,17 +696,19 @@ export default {
       return formatNumber(result);
     },
   },
+  //
   methods: {
     async loadData() {
-      this.products = await getProducts()
+      let productsHandler = getFirebaseHandler("products")
+      this.products = await productsHandler.getAllAsync()
       if (this.isUpdate) {
-        this.quote = await getQuote(this.$route.params.id)
+        this.quote = await this.quotesHandler.get(this.id)
         this.product = this.quote.product
       }
     },
     async save() {
       this.quote.product = this.product
-      return await saveQuote(this.quote);
+      return await this.quotesHandler.save(this.quote);
     },
     async submit() {
       await this.save()
@@ -739,11 +718,11 @@ export default {
       await this.save()
       this.$router.push('/quotes/new')
         .then(() => {
-          window.location.reload();
+          this.reload();
         })
     },
     async submitAndEdit() {
-      const response = await this.save()
+      let response = await this.save()
       if(!this.isUpdate){
         this.$router.push(`/quotes/${response.id}`);
       }

@@ -23,34 +23,35 @@
   </div>
 </template>
 <script>
-import { getProducts, deleteProduct } from '@/services/products';
+import { getFirebaseHandler } from '@/services/firebase';
+import { baseMixin } from '@/utils/mixins';
 
 export default {
   data() {
     return {
-      headers: [],
+      headers: {
+        name: "Name",
+        hts_code: "HTS Code",
+        glory_bee_number: "Glory Bee Number",
+      },
       items: [],
+      productHandler: getFirebaseHandler("products"),
     };
   },
-  async mounted() {
-    this.headers = {
-      name: "Name",
-      hts_code: "HTS Code",
-      glory_bee_number: "Glory Bee Number",
-    };
-    await this.loadData();
+  mixins: [baseMixin],
+  mounted() {
+    this.loadData()
   },
   methods: {
-    async loadData() {
-      this.items = await getProducts();
+    loadData() {
+      this.items = this.productHandler.getAll()
     },
     onEdit(id){
       this.$router.push("/products/"+id)
     },
     async onDelete(id){
-      await deleteProduct(id)
-      console.log('delete: ' + id)
-      window.location.reload()
+      await this.productHandler.delete(id)
+      this.reload()
     }
   },
 };

@@ -1,13 +1,29 @@
-export const formMixin = {
+import { logout } from '@/services/auth';
+
+export const baseMixin = {
   data: function () {
     return {
-      message: 'hello',
-      foo: 'abc'
+      title: "Price Calculator"
     }
   },
   computed: {
-    isUpdate() {
-      return this.$route.params.id !== 'new'
+    id(){
+      return this.$route.params.id
     },
+    isUpdate() {
+      return this.id !== 'new'
+    },
+    isModal() {
+      return this.$route.query.popup;
+    },
+  },
+  methods: {
+    logout: logout,
+    reload(){
+      window.location.reload()
+    },
+    goBack(){
+      history.back()
+    }
   }
 }

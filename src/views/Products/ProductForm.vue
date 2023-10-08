@@ -177,12 +177,14 @@
   </div>
 </template>
 <script>
-import { getProductTypes  } from "@/services/productTypes";
-import { saveProduct, getProduct } from "@/services/products";
+//import { getProductTypes  } from "@/services/productTypes";
+//import { saveProduct, getProduct } from "@/services/products";
 import { uploadFile } from "@/plugins/firebase";
 import { packagingTypes, storageTypes, fileTypes } from '@/config/constants';
 import { postMessageOtherTabs } from "@/services/channels";
 import { receiveMessageOtherTabs } from "@/services/channels";
+import { getFirebaseHandler } from "@/services/firebase"
+import { baseMixin } from '@/utils/mixins'
 
 export default {
   data() {
@@ -194,14 +196,16 @@ export default {
       storageTypes,
       packagingTypes,
       fileTypes,
+      productHandler: getFirebaseHandler("products"),
+      productTypesHandler: getFirebaseHandler("product-types"),
     };
   },
+  mixins: [baseMixin],
   async mounted() {
     await this.loadData();
   },
   watch: {
     'product.net_weight_lb'(newValue) {
-      console.log(newValue)
       if(newValue)
         this.product.total_weight = Math.ceil(parseFloat(newValue) / 2.2046)
       else
@@ -209,12 +213,6 @@ export default {
     }
   },
   computed: {
-    isUpdate() {
-      return this.$route.params.id !== 'new'
-    },
-    isModal() {
-      return this.$route.query.popup
-    },
     netWeightKgInKg() {
       return this.product.net_weight_kg * 1000; // have to verify backend name
     },
@@ -228,8 +226,8 @@ export default {
       let existing = JSON.parse(JSON.stringify(this.product.files))
       return existing
       .filter((type) => fileTypes.contains(type))
-        //.map((file) => file.file_type)
-        ; // item not in array
+      //.map((file) => file.file_type)
+      ; // item not in array
     },
   },
   methods: {
@@ -243,12 +241,12 @@ export default {
     },
     async loadData() {
       if (this.isUpdate) {
-        this.product = await getProduct(this.$route.params.id)
+        this.product = await this.productHandler.get(this.id)
       }
-      this.product_types = await getProductTypes();
+      this.product_types = await this.productTypesHandler.getAllAsync()
     },
     async save(){
-      let newProduct = await saveProduct(this.product);
+      let newProduct = await this.productHandler.save(this.product);
       postMessageOtherTabs({
         entity: newProduct,
         code: this.$route.query.code,
@@ -258,14 +256,15 @@ export default {
     },
     async submit() {
       await this.save()
-      if (this.isModal) window.close()
-      this.$router.push('/products');
+      if (this.isModal)
+        window.close()
+      this.$router.push('/products')
     },
     async submitAndCreateNew() {
       await this.save()
       this.$router.push('/products/new')
       .then(() => {
-        window.location.reload();
+        this.reload()
       })
     },
     async submitAndEdit() {
@@ -276,7 +275,7 @@ export default {
       this.product.files.push({})
     },
     removefile(key) {
-      this.product.files.splice(key, 1);
+      this.product.files.splice(key, 1)
     },
     addNewProductType() {
       let target = 'product_type_id';
@@ -302,8 +301,8 @@ export default {
         }
       })
     },
-    deleteProductType(id) {
-      console.log(id);
+    async deleteProductType(id) {
+      await this.productTypesHandler.delete(id)
     },
   }
 };

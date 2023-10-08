@@ -1,56 +1,52 @@
-import { doc, setDoc, getDoc, deleteDoc, getDocs, collection } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
-import { db } from '@/plugins/firebase';
+import { useCollection, useFirestore } from 'vuefire'
+import { Timestamp, getDocs, query, orderBy, limit, collection } from 'firebase/firestore'
+export const getFirebaseHandler = (dbKey) => {
+  let key = dbKey
+  let db = useFirestore()
 
-async function getData(table){
-  return await getDocs(collection(db, table))
-}
+  return {
+    get: async function (id){
+      let docRef = doc(db, key, id)
+      let docSnap = await getDoc(docRef)
+      return docSnap.exists() ? docSnap.data() : false
+    },
 
-async function saveData(table, payload){
-  // Normalize object:
-  payload = JSON.parse(JSON.stringify(payload))
+    getAllAsync: async function (){
+      let output = []
+      let docs = await getDocs(collection(db, key))
+      docs.forEach(doc => {
+        output.push(doc.data())
+      })
+      return output
+    },
 
-  if (!payload.id){
-    let newId = uuidv4()
-    payload = {...payload, id: newId}
-    await setDoc(doc(db, table, newId), payload)
-  }else{
-    let cityRef = doc(db, table, payload.id);
-    await setDoc(cityRef, payload, { merge: true })
-  }
-  return payload
-}
+    getAll: function (maxAmount = 50, orderByColumn = "createdAt"){
+      let c = collection(db, key)
+      let q = query(c, orderBy(orderByColumn), limit(maxAmount))
+      return useCollection(q)
+    },
 
-async function getItem(table, id){
-  let docRef = doc(db, table, id);
-  let docSnap = await getDoc(docRef);
-  return docSnap.exists() ? docSnap.data() : false
-}
+    delete: async function(id){
+      return await deleteDoc(doc(db, key, id));
+    },
 
-async function deleteData(table, id){
-  return await deleteDoc(doc(db, table, id));
-}
+    save: async function(payload){
+      // Normalize object:
+      payload = JSON.parse(JSON.stringify(payload))
 
-export const firebaseClient = {
-  setTable(table){
-    this.table = table
-    return this
-  },
-  table: "",
-  getItem: async function (id){
-    return await getItem(this.table, id)
-  },
-
-  getItems: async function (){
-    let snapshot = await getData(this.table);
-    return snapshot.docs.map(doc => doc.data())
-  },
-
-  deleteItem: async function (id){
-    return deleteData(this.table, id)
-  },
-
-  saveItem: async function (payload){
-    return await saveData(this.table, payload)
+      if (!payload.id){
+        let createdAt = Timestamp.fromDate(new Date())
+        let newId = uuidv4()
+        payload = {...payload, id: newId, createdAt }
+        await setDoc(doc(db, key, newId), payload)
+      }else{
+        let updatedAt = Timestamp.fromDate(new Date())
+        let cityRef = doc(db, key, payload.id);
+        payload = { ...payload, updatedAt }
+        await setDoc(cityRef, payload, { merge: true })
+      }
+      return payload
+    }
   }
 }

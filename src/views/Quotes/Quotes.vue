@@ -23,34 +23,37 @@
   </div>
 </template>
 <script>
-import { getQuotes, deleteQuote } from '@/services/quotes';
+import { baseMixin } from '@/utils/mixins';
+import { getFirebaseHandler } from '@/services/firebase'
+
 
 export default {
   data() {
     return {
       headers: [],
       items: [],
+      quotesHandler: getFirebaseHandler("quotes"),
     };
   },
-  async mounted() {
+  mixins: [baseMixin],
+  mounted() {
     this.headers = {
       date: "Quote Date",
       total_weight: "Total Weight",
       fob_pricing_mt: "Fob Pricing MT",
     };
-    await this.loadData();
+    this.loadData();
   },
   methods: {
-    async loadData() {
-      this.items = await getQuotes();
+    loadData() {
+      this.items = this.quotesHandler.getAll()
     },
     onEdit(id){
-      this.$router.push("/quotes/"+id)
+      this.$router.push(`/quotes/${id}`)
     },
     async onDelete(id){
-      await deleteQuote(id)
-      console.log('delete: ' + id)
-      window.location.reload()
+      await this.quotesHandler.delete(id)
+      this.reload()
     }
   },
 };
